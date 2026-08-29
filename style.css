@@ -227,3 +227,11 @@ body {
 .char-chip:hover { transform: translateY(-2px); }
 .char-chip.selected { border-color: var(--gold); color: var(--gold); }
 .char-chip canvas { image-rendering: auto; }
+/* ---------- bandeau marque WONDRA ---------- */
+.brand-hero{width:min(980px,calc(100% - 32px));margin:28px auto 8px;padding:38px 38px 34px;border:1px solid rgba(255,255,255,.11);border-radius:22px;background:radial-gradient(circle at 82% 18%,rgba(118,83,255,.24),transparent 36%),linear-gradient(135deg,rgba(19,30,45,.97),rgba(11,17,28,.98));box-shadow:0 22px 70px rgba(0,0,0,.32);text-align:left}
+.brand-kicker{margin:0 0 12px;color:#77e3ff;font-size:.78rem;font-weight:800;letter-spacing:.16em}
+.brand-hero h2{max-width:790px;margin:0;color:#fff;font-size:clamp(2rem,5vw,4.15rem);line-height:1.02;letter-spacing:-.045em}
+.brand-lead{margin:20px 0 8px;color:#e8eef7;font-size:clamp(1.05rem,2vw,1.35rem);font-weight:650}
+.brand-copy{max-width:760px;margin:0 0 24px;color:#aebdce;font-size:1rem;line-height:1.65}
+.brand-cta{display:inline-flex;text-decoration:none}
+@media (max-width:640px){.brand-hero{margin-top:16px;padding:26px 22px 24px;border-radius:18px}.brand-copy{font-size:.94rem}}
