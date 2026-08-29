@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="WONDRA — Apprendre le code en jouant. Plateforme de codage Python pour les enfants : 8 mondes, héros pixel-art, exercices progressifs.">
+<meta name="og:title" content="WONDRA — Apprendre le code en jouant">
+<meta name="og:description" content="Codage Python pour les enfants : héros, gemmes, boucles et boss. Essaie le monde 1 gratuitement.">
+<meta name="og:url" content="https://wondra.kids/">
+<meta name="theme-color" content="#101418">
+<title>WONDRA — Apprendre le code en jouant</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- écran 1 : choix du monde -->
+<div id="screen-map" class="screen visible">
+  <header class="topbar">
+    <div class="logo-mark" aria-hidden="true">W</div>
+    <div>
+      <h1>WONDRA</h1>
+      <p>L'informatique par le jeu — Python</p>
+    </div>
+    <div id="hud" class="hud">
+      <span class="hud-badge">Niv. <b id="hud-level">1</b></span>
+      <span class="hud-badge">XP <b id="hud-xp">0</b></span>
+      <span class="hud-badge">★ <b id="hud-stars">0</b>/3</span>
+    </div>
+  </header>
+
+  <div id="world-map" class="world-map"><!-- nœuds injectés --></div>
+
+  <div class="path" id="path-svg-holder">
+    <svg viewBox="0 0 1000 260" preserveAspectRatio="none">
+      <path id="trail" d="" />
+    </svg>
+  </div>
+
+  <footer class="char-bar">
+    <span class="char-label">Ton personnage :</span>
+    <div id="char-picker" class="char-picker"><!-- injecté --></div>
+  </footer>
+</div>
+
+<!-- écran 2 : le jeu -->
+<div id="screen-game" class="screen">
+  <header class="gamebar">
+    <button class="btn ghost" id="btn-back">← Carte</button>
+    <h2 id="level-title">Niveau</h2>
+    <div class="gamebar-actions">
+      <button class="btn ghost" id="btn-goal">🎯 Objectif</button>
+      <button class="btn ghost" id="btn-hint">💡 Indice</button>
+      <button class="btn primary" id="btn-run">▶ Exécuter</button>
+      <button class="btn" id="btn-reset">↺ Recommencer</button>
+    </div>
+  </header>
+
+  <div class="game-layout">
+    <section class="pane-instructions">
+      <h3>Mission</h3>
+      <div id="level-brief"></div>
+      <div id="hint-box" class="hint-box hidden"></div>
+      <div id="goal-box" class="goal-box hidden"></div>
+    </section>
+
+    <section class="pane-editor">
+      <div class="editor-tabs">
+        <span class="tab active">hero.py</span>
+        <span class="lang-tag">Python</span>
+      </div>
+      <div id="editor"></div>
+      <div class="editor-foot">
+        <button class="btn primary big" id="btn-run2">▶ Exécuter</button>
+        <span class="run-state" id="run-state"></span>
+      </div>
+    </section>
+
+    <section class="pane-view">
+      <canvas id="world" width="640" height="480"></canvas>
+      <div id="toast" class="toast hidden"></div>
+      <div id="win-modal" class="modal hidden">
+        <div class="modal-card">
+          <h3 id="win-title">Niveau réussi !</h3>
+          <p id="win-stars">★★★</p>
+          <p id="win-msg"></p>
+          <div id="win-code-review" class="code-review hidden">
+            <h4>Analyse de ton code</h4>
+            <ul id="win-review-list"></ul>
+          </div>
+          <button class="btn primary big" id="btn-next">Niveau suivant →</button>
+          <button class="btn ghost" id="btn-replay">Rejouer</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script src="aether-loader.js"></script>
+<script src="characters.js"></script>
+<script src="curriculum.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
