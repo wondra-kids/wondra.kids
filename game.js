@@ -89,6 +89,7 @@ function openLevel(idx) {
 
   resetSim();
   showScreen(screenGame);
+  assembled = (save.assembled && save.assembled[LV.id]) || [];
   setTimeout(() => ed.resize(), 50);
   if (!save.modality) showModalityIfNeeded(applyModalityUI); else applyModalityUI();
   updateLevelTabs();
@@ -122,6 +123,7 @@ window.addEventListener("hashchange", applyRoute);
 
 /* ================= Étape 5 — E1.5 modalité + assemblage + mur (WDR-041) ================= */
 save.modality = save.modality || null;   // 'code' | 'assemble' | null (choix de l'enfant)
+save.assembled = save.assembled || {};   // { L1: [ "hero.moveRight()", ... ], ... } — code assemblé par niveau
 const ASSEMBLE_LEVELS = ["L1", "L2", "L3", "L4"];
 const TILE_DEFS = {
   moveRight: ["hero.moveRight()", "➡️ droite"],
@@ -148,54 +150,157 @@ function buildCode() {
   return assembled.join("\n");
 }
 
+/* ---------- Assembler : manipulation des blocs (ajout/suppression/duplication/reordonnancement) ---------- */
+function commitAssemble() { save.assembled = save.assembled || {}; save.assembled[LV.id] = assembled; persist(); }
+function addBlock(code, idx) {
+  idx = (idx === undefined || idx < 0) ? assembled.length : Math.min(idx, assembled.length);
+  assembled.splice(idx, 0, code); commitAssemble(); renderAssembleEditor();
+}
+function removeBlock(idx) { assembled.splice(idx, 1); commitAssemble(); renderAssembleEditor(); }
+function duplicateBlock(idx) { assembled.splice(idx + 1, 0, assembled[idx]); commitAssemble(); renderAssembleEditor(); }
+function moveBlock(from, to) {
+  if (from === to || from < 0 || from >= assembled.length) return;
+  const [x] = assembled.splice(from, 1);
+  assembled.splice(to, 0, x); commitAssemble(); renderAssembleEditor();
+}
+function duplicateAll() { if (!assembled.length) return; assembled = assembled.concat(assembled.slice()); commitAssemble(); renderAssembleEditor(); }
+function clearAll() { assembled = []; commitAssemble(); renderAssembleEditor(); }
+
 function renderAssembleEditor() {
   const codeEl = $("assemble-code"), pal = $("assemble-palette");
+  const isLoop = LV.id === "L3" || LV.id === "L4";
   codeEl.innerHTML = "";
-  if (LV.id === "L3" || LV.id === "L4") {
-    const pre = document.createElement("pre");
+  if (isLoop) {
+    const pre = document.createElement("div");
+    pre.className = "al-loop-header";
     pre.textContent = "for i in range(3):";
     codeEl.appendChild(pre);
-    if (assembled.length) {
-      const body = document.createElement("pre");
-      body.textContent = assembled.map(l => "    " + l).join("\n");
-      codeEl.appendChild(body);
-    } else {
-      const gap = document.createElement("pre");
-      gap.className = "gap";
-      gap.textContent = "    [touche une instruction]";
-      codeEl.appendChild(gap);
-    }
-  } else {
-    assembled.forEach((l, i) => {
-      const row = document.createElement("button");
-      row.className = "al-row";
-      row.textContent = l;
-      row.onclick = () => { assembled.splice(i, 1); persist(); renderAssembleEditor(); };
-      codeEl.appendChild(row);
-    });
-    if (!assembled.length) {
-      const gap = document.createElement("pre");
-      gap.className = "gap";
-      gap.textContent = "Touche une instruction pour commencer.";
-      codeEl.appendChild(gap);
-    }
   }
+  const list = document.createElement("div");
+  list.className = "al-list";
+  if (!assembled.length) {
+    const gap = document.createElement("div");
+    gap.className = "al-gap";
+    gap.textContent = isLoop ? "Glisse une instruction ici pour remplir la boucle." : "Glisse une instruction ici pour commencer.";
+    list.appendChild(gap);
+  } else {
+    assembled.forEach((line, i) => {
+      const blk = document.createElement("div");
+      blk.className = "al-block";
+      blk.dataset.idx = i;
+      const grip = document.createElement("span");
+      grip.className = "al-grip";
+      grip.textContent = "⋮⋮";
+      grip.title = "Glisser pour déplacer";
+      const code = document.createElement("code");
+      code.className = "al-code";
+      code.textContent = line;
+      const dup = document.createElement("button");
+      dup.type = "button"; dup.className = "al-dup"; dup.title = "Dupliquer"; dup.setAttribute("aria-label", "Dupliquer");
+      dup.textContent = "⧉";
+      dup.onclick = (e) => { e.stopPropagation(); duplicateBlock(i); };
+      const del = document.createElement("button");
+      del.type = "button"; del.className = "al-del"; del.title = "Supprimer"; del.setAttribute("aria-label", "Supprimer");
+      del.textContent = "✕";
+      del.onclick = (e) => { e.stopPropagation(); removeBlock(i); };
+      blk.appendChild(grip); blk.appendChild(code); blk.appendChild(dup); blk.appendChild(del);
+      list.appendChild(blk);
+    });
+  }
+  codeEl.appendChild(list);
+
+  const tb = document.createElement("div");
+  tb.className = "assemble-toolbar";
+  const da = document.createElement("button");
+  da.type = "button"; da.className = "btn ghost"; da.textContent = "⧉ Tout dupliquer"; da.onclick = duplicateAll;
+  const cl = document.createElement("button");
+  cl.type = "button"; cl.className = "btn ghost"; cl.textContent = "🗑 Vider"; cl.onclick = clearAll;
+  tb.appendChild(da); tb.appendChild(cl);
+  codeEl.appendChild(tb);
+
   pal.innerHTML = "";
   (TILES_BY_LEVEL[LV.id] || []).forEach(k => {
     const b = document.createElement("button");
-    b.className = "tile";
+    b.type = "button"; b.className = "tile";
+    b.dataset.code = TILE_DEFS[k][0];
     b.innerHTML = `<b>${TILE_DEFS[k][0]}</b><span>${TILE_DEFS[k][1]}</span>`;
-    b.onclick = () => { assembled.push(TILE_DEFS[k][0]); persist(); renderAssembleEditor(); };
     pal.appendChild(b);
   });
 }
+
+/* ---------- drag & drop (pointer events : souris + tactile) ---------- */
+let drag = null, ghost = null;
+function positionGhost(x, y) { if (ghost) { ghost.style.left = (x - 18) + "px"; ghost.style.top = (y - 32) + "px"; } }
+function cleanupGhost() {
+  if (ghost) { ghost.remove(); ghost = null; }
+  document.querySelectorAll(".al-block.dragging, .al-block.drop-before, .tile.dragging")
+    .forEach(el => el.classList.remove("dragging", "drop-before"));
+}
+function dropIndex(y) {
+  const blocks = [...document.querySelectorAll(".al-list .al-block")];
+  let idx = blocks.length;
+  for (let i = 0; i < blocks.length; i++) {
+    const r = blocks[i].getBoundingClientRect();
+    if (y < r.top + r.height / 2) { idx = i; break; }
+  }
+  return idx;
+}
+document.addEventListener("pointerdown", (e) => {
+  const grip = e.target.closest(".al-grip");
+  const tile = e.target.closest(".tile");
+  if (grip) {
+    const blk = grip.closest(".al-block");
+    e.preventDefault();
+    drag = { type: "move", idx: +blk.dataset.idx, sx: e.clientX, sy: e.clientY, moved: false };
+    ghost = document.createElement("div");
+    ghost.className = "al-ghost";
+    ghost.textContent = blk.querySelector(".al-code").textContent;
+    document.body.appendChild(ghost);
+    blk.classList.add("dragging");
+    positionGhost(e.clientX, e.clientY);
+  } else if (tile) {
+    e.preventDefault();
+    drag = { type: "add", code: tile.dataset.code, sx: e.clientX, sy: e.clientY, moved: false };
+    ghost = document.createElement("div");
+    ghost.className = "al-ghost";
+    ghost.textContent = tile.dataset.code;
+    document.body.appendChild(ghost);
+    tile.classList.add("dragging");
+    positionGhost(e.clientX, e.clientY);
+  }
+});
+document.addEventListener("pointermove", (e) => {
+  if (!drag) return;
+  if (Math.abs(e.clientX - drag.sx) + Math.abs(e.clientY - drag.sy) > 6) drag.moved = true;
+  if (drag.moved) {
+    positionGhost(e.clientX, e.clientY);
+    document.querySelectorAll(".al-list .al-block").forEach(b => b.classList.remove("drop-before"));
+    if (drag.type === "move") {
+      const idx = dropIndex(e.clientY);
+      const blocks = [...document.querySelectorAll(".al-list .al-block")];
+      if (blocks[idx] && blocks[idx] !== document.querySelector(".al-block.dragging")) blocks[idx].classList.add("drop-before");
+    }
+  }
+});
+document.addEventListener("pointerup", (e) => {
+  if (!drag) return;
+  const d = drag;
+  cleanupGhost();
+  if (d.type === "move") {
+    if (d.moved) { const to = dropIndex(e.clientY); moveBlock(d.idx, to > d.idx ? to - 1 : to); }
+  } else if (d.type === "add") {
+    addBlock(d.code, d.moved ? dropIndex(e.clientY) : assembled.length);
+  }
+  drag = null;
+});
+document.addEventListener("pointercancel", () => { if (drag) { cleanupGhost(); drag = null; } });
 
 function applyModalityUI() {
   const inAssemble = isAssembleLevel();
   $("editor").classList.toggle("hidden", inAssemble);
   $("editor-assemble").classList.toggle("hidden", !inAssemble);
   $("btn-actions").style.display = inAssemble ? "none" : "";
-  if (inAssemble) { assembled = []; renderAssembleEditor(); }
+  if (inAssemble) { renderAssembleEditor(); }
 }
 
 function showModalityIfNeeded(cb) {
