@@ -239,7 +239,8 @@ body {
 body:not([data-route="home"]) .brand-hero, body:not([data-route="home"]) .brand-capture,
 body:not([data-route="home"]) .brand-faq, body:not([data-route="home"]) .brand-footer { display: none; }
 body[data-route="home"] .world-map{flex:1 0 auto;min-height:55vh;overflow:visible}
-body[data-route="home"] .topbar{display:none}
+/* topbar visible aussi sur l'accueil (demande Yassine 30/08) — seul le HUD de jeu est masqué sur la landing */
+body[data-route="home"] #hud{display:none}
 .hud-home{text-decoration:none;font-size:20px;margin-right:10px;opacity:.85}
 body[data-route="jeu"] .world-map{animation:wondraFade .3s ease}
 @keyframes wondraFade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
@@ -283,6 +284,7 @@ body[data-route="jeu"] .world-map{animation:wondraFade .3s ease}
 .menu-wrap{position:relative}
 .menu-btn{font-size:20px;line-height:1}
 .menu-drop{position:absolute;right:0;top:calc(100% + 8px);background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);display:flex;flex-direction:column;min-width:170px;z-index:30;box-shadow:0 14px 40px rgba(0,0,0,.4)}
+.menu-drop[hidden]{display:none}
 .menu-drop a{padding:11px 16px;color:var(--ink);text-decoration:none;font-size:14px;white-space:nowrap}
 .menu-drop a:hover{background:var(--panel-2)}
 /* ---------- audit mobile 30/08 : le jeu doit DEFILER, tout doit être joignable ---------- */
