@@ -1,9 +1,13 @@
 -- WONDRA — Capture d'email dans Supabase (WDR-041, point 5 ; fondation 2.7)
 -- Migration versionnée : toute modification de la base passe par un fichier comme celui-ci,
 -- jamais par des clics dans l'interface Supabase.
--- Table + RLS : les visiteurs peuvent S'INSCRIRE (insert) et se DÉSINSCRIRE
--- (update par token via RPC), mais jamais LIRE la liste. Lecture = service_role seul.
 -- STATUT : EXÉCUTÉE le 2026-08-30 sur le projet wondra (via management API) — rejouable (idempotente).
+--
+-- Principe de sécurité : anon n'a AUCUN droit sur la table (ni lecture ni écriture).
+-- Tout passe par deux fonctions RPC security definer :
+--   subscribe(email)   — inscription, idempotente (ON CONFLICT DO NOTHING)
+--   unsubscribe(token) — désinscription par token reçu par email
+-- Lecture/export : service_role uniquement.
 
 create extension if not exists pgcrypto;
 create extension if not exists citext;
@@ -18,16 +22,24 @@ create table if not exists public.capture_emails (
 
 alter table public.capture_emails enable row level security;
 
--- inscription : n'importe qui peut ajouter son email (aucune donnée enfant)
-create policy capture_insert on public.capture_emails
-  for insert to anon, authenticated
-  with check (true);
+-- droits : anon = usage du schéma + execute sur les fonctions UNIQUEMENT
+grant usage on schema public to anon, authenticated;
+grant select, insert, update, delete on public.capture_emails to service_role;
 
--- doublons : la contrainte unique + on conflict (géré côté client avec
--- Prefer: resolution=ignore-duplicates) — une adresse n'apparaît qu'une fois.
+-- plus aucune policy de table (l'insert direct anon est interdit — 403/42501)
+drop policy if exists capture_insert on public.capture_emails;
 
--- désinscription : fonction RPC sécurisée — un token (reçu par email) désinscrit
--- exactement la ligne qui le porte. Pas de UPDATE direct anon sur la table.
+-- inscription : idempotente, sans aucun droit de lecture pour anon
+create or replace function public.subscribe(p_email citext)
+returns boolean
+language sql security definer set search_path = public as $$
+  insert into public.capture_emails (email) values (p_email)
+  on conflict (email) do nothing
+  returning true;
+$$;
+grant execute on function public.subscribe(citext) to anon, authenticated;
+
+-- désinscription : le token (reçu par email) désinscrit exactement la ligne qui le porte
 create or replace function public.unsubscribe(t uuid)
 returns boolean
 language sql security definer set search_path = public as $$

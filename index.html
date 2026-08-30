@@ -56,6 +56,7 @@
       <button class="btn primary" type="submit" style="padding:10px 18px;">Prévenez-moi</button>
     </form>
     <p id="capture-ok" class="hidden" style="margin:12px 0 0;color:#3fb950;font-weight:600;">Merci — vous serez prévenu en premier. Un message par mois au plus, promis.</p>
+    <p id="capture-err" class="hidden" style="margin:12px 0 0;color:#f85149;font-weight:600;">Une erreur est survenue. Réessayez, ou écrivez-nous à contact@wondra.kids.</p>
   </section>
 
   <section class="brand-faq" style="max-width:640px;margin:0 auto 28px;padding:4px 20px;">
@@ -170,14 +171,14 @@ window.WONDRA_SUPABASE = {url:"https://mhjcblxihkmficcleauw.supabase.co", anonKe
     var email=f.querySelector('input[type=email]').value.trim();
     if(!email)return;
     if(cfg.url&&cfg.anonKey){
-      fetch(cfg.url+'/rest/v1/capture_emails',{
+      fetch(cfg.url+'/rest/v1/rpc/subscribe',{
         method:'POST',
-        headers:{'apikey':cfg.anonKey,'Authorization':'Bearer '+cfg.anonKey,'Content-Type':'application/json','Prefer':'resolution=ignore-duplicates'},
-        body:JSON.stringify({email:email})
-      }).then(function(r){return r.json();}).then(function(){ok();}).catch(function(){f.submit();});
+        headers:{'apikey':cfg.anonKey,'Authorization':'Bearer '+cfg.anonKey,'Content-Type':'application/json'},
+        body:JSON.stringify({p_email:email})
+      }).then(function(r){return r.ok?true:Promise.reject(r);}).then(function(){ok();}).catch(function(){var e=document.getElementById('capture-err');if(e)e.classList.remove('hidden');});
     }else{
       var d=new FormData(f);
-      fetch('https://formsubmit.co/ajax/contact@wondra.kids',{method:'POST',body:d}).then(function(r){return r.json();}).then(function(){ok();}).catch(function(){f.submit();});
+      fetch('https://formsubmit.co/ajax/contact@wondra.kids',{method:'POST',body:d}).then(function(r){return r.json();}).then(function(){ok();}).catch(function(){var e=document.getElementById('capture-err');if(e)e.classList.remove('hidden');});
     }
   });
 })();
