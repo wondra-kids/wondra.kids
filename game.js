@@ -228,8 +228,8 @@ function renderAssembleEditor() {
   });
 }
 
-/* ---------- drag & drop (pointer events : souris + tactile) ---------- */
-let drag = null, ghost = null;
+/* ---------- drag & drop (pointer events : souris + tactile) + tap au clic (clavier) ---------- */
+let drag = null, ghost = null, lastDragEnd = 0;
 function positionGhost(x, y) { if (ghost) { ghost.style.left = (x - 18) + "px"; ghost.style.top = (y - 32) + "px"; } }
 function cleanupGhost() {
   if (ghost) { ghost.remove(); ghost = null; }
@@ -245,55 +245,61 @@ function dropIndex(y) {
   }
   return idx;
 }
+function updateDropHint(y) {
+  document.querySelectorAll(".al-list .al-block").forEach(b => b.classList.remove("drop-before"));
+  if (drag && drag.type === "move" && drag.moved) {
+    const idx = dropIndex(y);
+    const blocks = [...document.querySelectorAll(".al-list .al-block")];
+    if (blocks[idx] && blocks[idx] !== document.querySelector(".al-block.dragging")) blocks[idx].classList.add("drop-before");
+  }
+}
 document.addEventListener("pointerdown", (e) => {
   const grip = e.target.closest(".al-grip");
   const tile = e.target.closest(".tile");
   if (grip) {
     const blk = grip.closest(".al-block");
-    e.preventDefault();
     drag = { type: "move", idx: +blk.dataset.idx, sx: e.clientX, sy: e.clientY, moved: false };
-    ghost = document.createElement("div");
-    ghost.className = "al-ghost";
-    ghost.textContent = blk.querySelector(".al-code").textContent;
-    document.body.appendChild(ghost);
-    blk.classList.add("dragging");
-    positionGhost(e.clientX, e.clientY);
   } else if (tile) {
-    e.preventDefault();
     drag = { type: "add", code: tile.dataset.code, sx: e.clientX, sy: e.clientY, moved: false };
-    ghost = document.createElement("div");
-    ghost.className = "al-ghost";
-    ghost.textContent = tile.dataset.code;
-    document.body.appendChild(ghost);
-    tile.classList.add("dragging");
-    positionGhost(e.clientX, e.clientY);
   }
 });
 document.addEventListener("pointermove", (e) => {
   if (!drag) return;
-  if (Math.abs(e.clientX - drag.sx) + Math.abs(e.clientY - drag.sy) > 6) drag.moved = true;
-  if (drag.moved) {
-    positionGhost(e.clientX, e.clientY);
-    document.querySelectorAll(".al-list .al-block").forEach(b => b.classList.remove("drop-before"));
+  if (!drag.moved && (Math.abs(e.clientX - drag.sx) + Math.abs(e.clientY - drag.sy)) > 6) {
+    drag.moved = true;
+    ghost = document.createElement("div");
+    ghost.className = "al-ghost";
     if (drag.type === "move") {
-      const idx = dropIndex(e.clientY);
-      const blocks = [...document.querySelectorAll(".al-list .al-block")];
-      if (blocks[idx] && blocks[idx] !== document.querySelector(".al-block.dragging")) blocks[idx].classList.add("drop-before");
+      const src = document.querySelector(`.al-block[data-idx="${drag.idx}"]`);
+      ghost.textContent = src ? src.querySelector(".al-code").textContent : "";
+      if (src) src.classList.add("dragging");
+    } else {
+      ghost.textContent = drag.code;
     }
+    document.body.appendChild(ghost);
   }
+  if (drag.moved) { positionGhost(e.clientX, e.clientY); updateDropHint(e.clientY); }
 });
 document.addEventListener("pointerup", (e) => {
   if (!drag) return;
   const d = drag;
+  const moved = d.moved;
   cleanupGhost();
   if (d.type === "move") {
-    if (d.moved) { const to = dropIndex(e.clientY); moveBlock(d.idx, to > d.idx ? to - 1 : to); }
+    if (moved) { lastDragEnd = Date.now(); const to = dropIndex(e.clientY); moveBlock(d.idx, to > d.idx ? to - 1 : to); }
   } else if (d.type === "add") {
-    addBlock(d.code, d.moved ? dropIndex(e.clientY) : assembled.length);
+    if (moved) { lastDragEnd = Date.now(); addBlock(d.code, dropIndex(e.clientY)); }
+    // pas de mouvement → on laisse le `click` natif ajouter (tap clavier/souris)
   }
   drag = null;
 });
 document.addEventListener("pointercancel", () => { if (drag) { cleanupGhost(); drag = null; } });
+// tap au clic (souris relâchée sans déplacement, clavier Enter/Espace, lecteur d'écran)
+document.addEventListener("click", (e) => {
+  if (Date.now() - lastDragEnd < 350) return; // ne pas double-ajouter après un drag
+  const tile = e.target.closest(".tile");
+  if (tile) addBlock(tile.dataset.code, assembled.length);
+});
 
 function applyModalityUI() {
   const inAssemble = isAssembleLevel();
