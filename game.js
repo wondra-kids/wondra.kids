@@ -234,7 +234,7 @@ function activateTab(name) {
     save.modality = name; persist(); renderModalityToggle();
   }
   applyModalityUI();
-  setTimeout(() => ed.resize(), 50);
+  setTimeout(() => { try { ace.edit("editor").resize(); } catch (e) {} }, 50);
 }
 
 let wallShownThisSession = false;
