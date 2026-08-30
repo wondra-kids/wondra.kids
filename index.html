@@ -12,7 +12,7 @@
 <meta name="theme-color" content="#101418">
 <title>WONDRA — Apprendre le code en jouant</title>
 <link rel="icon" href="data:,">
-<link rel="stylesheet" href="style.css?v=12">
+<link rel="stylesheet" href="style.css?v=13">
 </head>
 <body>
 
@@ -147,6 +147,12 @@
       <button class="btn" id="btn-reset">↺ Recommencer</button>
     </div>
   </header>
+
+  <nav class="level-tabs" id="level-tabs" aria-label="Sections du niveau">
+    <button type="button" class="ltab active" data-tab="mission">📋 Mission</button>
+    <button type="button" class="ltab" data-tab="code">✍️ Écrire</button>
+    <button type="button" class="ltab" data-tab="assemble" id="tab-assemble" hidden>🧩 Assembler</button>
+  </nav>
 
   <div class="game-layout">
     <section class="pane-instructions">
@@ -283,11 +289,11 @@
   </div>
 </div>
 
-<script>window.WONDRA_BUILD = "v12";</script>
-<script src="aether-loader.js?v=12"></script>
-<script src="characters.js?v=12"></script>
-<script src="curriculum.js?v=12"></script>
-<script src="game.js?v=12"></script>
+<script>window.WONDRA_BUILD = "v13";</script>
+<script src="aether-loader.js?v=13"></script>
+<script src="characters.js?v=13"></script>
+<script src="curriculum.js?v=13"></script>
+<script src="game.js?v=13"></script>
 <script>
 /* WONDRA — capture email (fondation 2.6 : clé publique anon seule, aucun secret dans le dépôt).
    Supabase dès que configuré ; FormSubmit en secours tant que la base n'est pas branchée. */

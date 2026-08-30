@@ -13,9 +13,29 @@
   a{color:#58a6ff;text-decoration:none}
   .muted{color:#8b949e;font-size:.85rem}
   .badge{display:inline-block;background:#1f6feb;color:#fff;border-radius:20px;padding:2px 12px;font-size:.75rem;margin-bottom:16px}
+
+.sitebar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:0 auto 24px;padding-bottom:14px;border-bottom:2px solid #2b3440}
+.sbrand{color:#e3b341;font-weight:800;font-size:1.15rem;text-decoration:none;letter-spacing:.04em;min-height:44px;display:inline-flex;align-items:center}
+.sbrand span{opacity:.55}
+.snav{display:flex;gap:2px;flex-wrap:wrap;margin-left:auto}
+.snav a{color:#9aa7b4;text-decoration:none;font-size:.92rem;padding:10px 11px;border-radius:8px;min-height:44px;display:inline-flex;align-items:center}
+.snav a:hover{color:#e6edf3;background:rgba(255,255,255,.05)}
+@media(max-width:600px){.snav{margin-left:0;width:100%}}
+
 </style>
 </head>
 <body>
+<header class="sitebar">
+  <a class="sbrand" href="https://wondra.kids/">W<span>ONDRA</span></a>
+  <nav class="snav">
+    <a href="https://wondra.kids/">Accueil</a>
+    <a href="https://wondra.kids/#/jeu">Jouer</a>
+    <a href="/approche.html">Notre approche</a>
+    <a href="/confidentialite.html">Confidentialité</a>
+    <a href="/mentions-legales.html">Mentions légales</a>
+    <a href="mailto:contact@wondra.kids">Nous écrire</a>
+  </nav>
+</header>
 <p class="badge">WONDRA — Mentions légales</p>
 <h1>Mentions légales</h1>
 <p class="muted">Dernière mise à jour : 30 août 2026</p>

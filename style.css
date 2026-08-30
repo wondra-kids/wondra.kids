@@ -204,17 +204,31 @@ body { min-height: 100%; display: flex; flex-direction: column; }
 
 /* responsive : tablette + mobile */
 @media (max-width: 1400px) { .game-layout { grid-template-columns: 260px 1fr 1fr; } }
-@media (max-width: 980px) {
-  .game-layout { grid-template-columns: 1fr; grid-template-rows: auto auto auto; overflow: auto; }
-  .pane-instructions { border-right: 0; border-bottom: 2px solid var(--border); max-height: 34vh; }
-  .pane-view { border-top: 2px solid var(--border); order: -1; }
-  #world { width: 100%; height: auto; }
-  /* FIX MOBILE : l'editeur Ace s'ecrasait a 0px (flex:1 + min-height:0
-     dans une grille auto) — hauteur min explicite, sinon invisible */
-  .pane-editor { min-height: 300px; border-right: 0; }
-  #editor { min-height: 210px; }
-  .gamebar { flex-wrap: wrap; gap: 6px; }
-  .gamebar-actions { flex-wrap: wrap; gap: 6px; }
+
+/* ---- onglets du niveau (mobile uniquement ; desktop garde la grille 3 panneaux) ---- */
+.level-tabs{display:none}
+@media (max-width:980px){
+  .level-tabs{display:flex; background:var(--panel); border-bottom:2px solid var(--border)}
+  .ltab{flex:1; appearance:none; border:0; background:none; color:var(--muted); font:inherit; font-size:14px; padding:13px 6px; min-height:48px; cursor:pointer; border-bottom:3px solid transparent; white-space:nowrap}
+  .ltab.active{color:var(--gold); border-bottom-color:var(--gold); font-weight:700; background:rgba(245,184,61,.06)}
+  .game-layout{display:flex; flex-direction:column; overflow:visible}
+  /* le canvas (Jeu) reste toujours visible en haut, compact */
+  .pane-view{display:block; order:-1; flex:0 0 auto; height:42vh; min-height:220px; border-top:0}
+  #world{width:100%; height:100%}
+  /* Mission et Éditeur : un seul visible à la fois (onglets) */
+  .pane-instructions, .pane-editor{display:none; border-right:0}
+  .pane-instructions.active, .pane-editor.active{display:block; max-height:none; min-height:45vh; border-bottom:0}
+  /* FIX : l'editeur Ace s'ecrasait a 0px — hauteur min explicite */
+  .pane-editor{min-height:300px}
+  #editor{min-height:210px}
+  .gamebar{flex-wrap:wrap; gap:6px}
+  .gamebar-actions{flex-wrap:wrap; gap:6px}
+}
+
+/* ---- menu deroulant : feuille pleine largeur sur mobile (plus de panneau flottant a gauche) ---- */
+@media (max-width:720px){
+  .menu-wrap{position:static}
+  .menu-drop{position:absolute; left:0; right:0; top:100%; min-width:0; border-radius:0 0 12px 12px; box-shadow:0 16px 30px rgba(0,0,0,.5)}
 }
 
 /* ---------- barre de choix du personnage ---------- */

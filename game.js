@@ -91,6 +91,8 @@ function openLevel(idx) {
   showScreen(screenGame);
   setTimeout(() => ed.resize(), 50);
   if (!save.modality) showModalityIfNeeded(applyModalityUI); else applyModalityUI();
+  updateLevelTabs();
+  activateTab("mission");
 }
 
 function backToMap() { location.hash = "#/jeu"; }
@@ -214,6 +216,23 @@ function renderModalityToggle() {
     save.modality = null; persist();
     showModalityIfNeeded(() => { renderModalityToggle(); });
   };
+}
+
+/* ---------- onglets du niveau (mobile) : Mission / Écrire / Assembler ---------- */
+function updateLevelTabs() {
+  const tabAssemble = $("tab-assemble");
+  if (tabAssemble) tabAssemble.hidden = !ASSEMBLE_LEVELS.includes(LV.id);
+}
+function activateTab(name) {
+  document.querySelectorAll(".level-tabs .ltab").forEach(b => b.classList.toggle("active", b.dataset.tab === name));
+  const mission = name === "mission";
+  $("pane-instructions").classList.toggle("active", mission);
+  $("pane-editor").classList.toggle("active", !mission);
+  if ((name === "code" || name === "assemble") && save.modality !== name) {
+    save.modality = name; persist(); renderModalityToggle();
+  }
+  applyModalityUI();
+  setTimeout(() => ed.resize(), 50);
 }
 
 let wallShownThisSession = false;
@@ -661,6 +680,7 @@ function showHint() {
   $("btn-actions").onclick = () => { renderActionsList(); $("actions-modal").classList.toggle("hidden"); };
   $("actions-modal").onclick = (e) => { if (e.target === $("actions-modal")) $("actions-modal").classList.add("hidden"); };
   const ac = $("actions-close"); if (ac) ac.onclick = () => $("actions-modal").classList.add("hidden");
+  document.querySelectorAll(".level-tabs .ltab").forEach(b => b.addEventListener("click", () => activateTab(b.dataset.tab)));
   $("btn-hint").onclick = showHint;
   $("btn-reset").onclick = () => { resetSim(); $("run-state").textContent = ""; };
   $("btn-goal").onclick = () => $("goal-box").classList.toggle("hidden");

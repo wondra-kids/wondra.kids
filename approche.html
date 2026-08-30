@@ -18,11 +18,30 @@ p{margin:10px 0;color:#c9d1d9}
 strong{color:var(--ink)}
 .note{margin-top:28px;padding:14px 16px;border:1px solid var(--border);border-radius:12px;background:var(--panel);font-size:.95rem}
 .back{display:inline-block;margin-top:26px;font-size:.9rem}
+
+.sitebar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:0 auto 24px;padding-bottom:14px;border-bottom:2px solid #2b3440}
+.sbrand{color:#e3b341;font-weight:800;font-size:1.15rem;text-decoration:none;letter-spacing:.04em;min-height:44px;display:inline-flex;align-items:center}
+.sbrand span{opacity:.55}
+.snav{display:flex;gap:2px;flex-wrap:wrap;margin-left:auto}
+.snav a{color:#9aa7b4;text-decoration:none;font-size:.92rem;padding:10px 11px;border-radius:8px;min-height:44px;display:inline-flex;align-items:center}
+.snav a:hover{color:#e6edf3;background:rgba(255,255,255,.05)}
+@media(max-width:600px){.snav{margin-left:0;width:100%}}
+
 </style>
 </head>
 <body>
 <main>
-  <p class="brand">WONDRA</p>
+  <header class="sitebar">
+  <a class="sbrand" href="https://wondra.kids/">W<span>ONDRA</span></a>
+  <nav class="snav">
+    <a href="https://wondra.kids/">Accueil</a>
+    <a href="https://wondra.kids/#/jeu">Jouer</a>
+    <a href="/approche.html">Notre approche</a>
+    <a href="/confidentialite.html">Confidentialité</a>
+    <a href="/mentions-legales.html">Mentions légales</a>
+    <a href="mailto:contact@wondra.kids">Nous écrire</a>
+  </nav>
+</header>
   <h1>Notre approche — ou pourquoi votre enfant va y arriver</h1>
   <p>La plupart des sites pour apprendre à coder échouent de deux façons : ils sont beaux et n'apprennent rien, ou ils apprennent et sont abandonnés au bout de trois séances. Nous avons construit WONDRA pour échapper aux deux.</p>
   <h2>1. Le vrai code dès la première minute</h2>
