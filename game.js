@@ -46,7 +46,7 @@ function renderMap() {
   $("hud-xp").textContent = Object.keys(save.stars).length * 10;
   $("hud-stars").textContent = Object.values(save.stars).reduce((a, b) => a + b, 0);
   WORLD.levels.forEach((lv, i) => {
-    const unlocked = i < save.unlocked;
+    const unlocked = save.devMode === true || i < save.unlocked;
     const done = save.stars[lv.id] > 0;
     const el = document.createElement("div");
     el.className = "node " + (done ? "done" : "") +
@@ -264,6 +264,27 @@ function renderActionsList() {
     };
     list.appendChild(row);
   });
+}
+
+/* ---------- mode développeur (test) ---------- */
+save.devMode = save.devMode === true || save.devMode === false ? save.devMode : null;
+
+function showDevChoice() {
+  const m = $("dev-modal");
+  m.classList.remove("hidden");
+  $("dev-user").onclick = () => { save.devMode = false; persist(); m.classList.add("hidden"); renderDevUI(); };
+  $("dev-dev").onclick = () => { save.devMode = true; persist(); m.classList.add("hidden"); renderDevUI(); };
+}
+
+function renderDevUI() {
+  const badge = $("dev-badge"), purge = $("btn-purge");
+  if (badge) badge.classList.toggle("hidden", save.devMode !== true);
+  if (purge) purge.classList.toggle("hidden", save.devMode !== true);
+}
+
+function purgeAndReload() {
+  localStorage.removeItem(SAVE_KEY);
+  location.reload();
 }
 
 /* ---------- simulation sur grille ---------- */
@@ -547,6 +568,10 @@ function showHint() {
   applyRoute();
   renderCharPicker();
   renderModalityToggle();
+  renderDevUI();
+  $("dev-link").onclick = (e) => { e.preventDefault(); showDevChoice(); };
+  $("btn-purge").onclick = purgeAndReload;
+  if (save.devMode === null) showDevChoice();
   $("btn-back").onclick = backToMap;
   const menuBtn = $("btn-menu"), menuDrop = $("menu-drop");
   if (menuBtn && menuDrop) {

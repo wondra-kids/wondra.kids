@@ -12,7 +12,7 @@
 <meta name="theme-color" content="#101418">
 <title>WONDRA — Apprendre le code en jouant</title>
 <link rel="icon" href="data:,">
-<link rel="stylesheet" href="style.css?v=4">
+<link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
 <!-- écran 1 : choix du monde -->
@@ -25,6 +25,8 @@
     </div>
     <a class="hud-home" href="#/" title="Accueil" aria-label="Accueil">🏠</a>
     <button id="modality-toggle" class="modality-toggle hidden" aria-label="Changer de mode de jeu"></button>
+    <span id="dev-badge" class="dev-badge hidden">DEV</span>
+    <button id="btn-purge" class="btn ghost dev-btn hidden" title="Purger la progression et recharger">🧹 Purger</button>
     <div id="hud" class="hud">
       <span class="hud-badge">Niv. <b id="hud-level">1</b></span>
       <span class="hud-badge">XP <b id="hud-xp">0</b></span>
@@ -85,7 +87,7 @@
   </section>
 
   <footer class="brand-footer" style="text-align:center;padding:14px 20px 30px;color:#8b949e;font-size:.85rem;">
-    © 2026 WONDRA · <a href="/approche.html" style="color:#58a6ff;">Notre approche</a> · <a href="/confidentialite.html" style="color:#58a6ff;">Confidentialité</a> · <a href="/mentions-legales.html" style="color:#58a6ff;">Mentions légales</a> · <a href="/desinscription.html" style="color:#58a6ff;">Se désinscrire</a> · <a href="mailto:contact@wondra.kids" style="color:#58a6ff;">contact@wondra.kids</a>
+    © 2026 WONDRA · <a href="/approche.html" style="color:#58a6ff;">Notre approche</a> · <a href="/confidentialite.html" style="color:#58a6ff;">Confidentialité</a> · <a href="/mentions-legales.html" style="color:#58a6ff;">Mentions légales</a> · <a href="/desinscription.html" style="color:#58a6ff;">Se désinscrire</a> · <a href="mailto:contact@wondra.kids" style="color:#58a6ff;">contact@wondra.kids</a> · <a href="#" id="dev-link" style="color:#4d5560;">Développeur ?</a>
   </footer>
 
   <div id="world-map" class="world-map"><!-- nœuds injectés --></div>
@@ -192,14 +194,24 @@
           <div class="actions-list" id="actions-list"></div>
         </div>
       </div>
+      <div id="dev-modal" class="modal hidden" role="dialog" aria-modal="true">
+        <div class="modal-card">
+          <h3>Bienvenue ! Choisis ton mode</h3>
+          <p class="modality-sub">Le mode développeur débloque tous les niveaux et ajoute des outils de test.</p>
+          <div class="modal-actions">
+            <button id="dev-user" class="btn primary big">🎮 Mode utilisateur</button>
+            <button id="dev-dev" class="btn ghost">🧪 Mode développeur</button>
+          </div>
+        </div>
+      </div>
     </section>
   </div>
 </div>
 
-<script src="aether-loader.js?v=4"></script>
-<script src="characters.js?v=4"></script>
-<script src="curriculum.js?v=4"></script>
-<script src="game.js?v=4"></script>
+<script src="aether-loader.js?v=5"></script>
+<script src="characters.js?v=5"></script>
+<script src="curriculum.js?v=5"></script>
+<script src="game.js?v=5"></script>
 <script>
 /* WONDRA — capture email (fondation 2.6 : clé publique anon seule, aucun secret dans le dépôt).
    Supabase dès que configuré ; FormSubmit en secours tant que la base n'est pas branchée. */
