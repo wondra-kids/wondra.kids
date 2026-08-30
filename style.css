@@ -460,3 +460,66 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .menu-wrap{position:static}
   .menu-drop{position:absolute; left:0; right:0; top:100%; min-width:0; border-radius:0 0 12px 12px; box-shadow:0 16px 30px rgba(0,0,0,.5)}
 }
+
+/* ================= v20 — cadrage du parcours (B1-B7) + indexation ================= */
+
+/* B1 — en-tête de carte : nom, progression, échelle */
+.map-header{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:14px 0 4px;padding:14px 18px;background:var(--panel);border:1px solid var(--border);border-radius:var(--radius)}
+.map-title{color:var(--ink);font-size:1.25rem;letter-spacing:.02em}
+.map-title::before{content:"🗺️ ";opacity:.8}
+.map-stats{display:flex;gap:10px;font-size:.85rem}
+.map-progress{color:var(--gold);font-weight:700}
+.map-scale{color:var(--muted)}
+.map-nodes{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;padding:16px 8px}
+
+/* B3 — tuile IA : badge distinct + couleur différente */
+.node{position:relative}
+.node.node-ia{border-color:#7a5cff;background:linear-gradient(160deg,rgba(122,92,255,.22),rgba(31,24,64,.55))}
+.node.node-ia:hover{border-color:#9d86ff}
+.node.node-ia .portal{color:#9d86ff}
+.ia-badge{position:absolute;top:-9px;right:-7px;background:linear-gradient(135deg,#7a5cff,#5a3fd6);color:#fff;font-size:.66rem;font-weight:800;letter-spacing:.08em;padding:3px 8px;border-radius:999px;box-shadow:0 2px 8px rgba(90,63,214,.55)}
+
+/* B2 — bande des 8 mondes */
+.worlds-band{margin:22px auto 10px;padding:18px 18px 16px;background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);max-width:960px}
+.band-title{color:var(--ink);font-size:1.05rem;margin-bottom:4px}
+.band-note{margin:6px 0 12px;color:var(--muted);font-size:.86rem}
+.band-list{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;padding:0}
+.band-item{display:flex;align-items:center;gap:9px;padding:9px 11px;border:1px solid var(--border);border-radius:9px;background:rgba(255,255,255,.02);opacity:.55;filter:grayscale(.5)}
+.band-item.active{opacity:1;filter:none;border-color:var(--gold);background:rgba(245,184,61,.07)}
+.band-item.done{border-color:var(--green);opacity:1;filter:none}
+.band-item.next{border-color:var(--blue);opacity:1;filter:none;box-shadow:0 0 0 1px rgba(74,163,223,.4)}
+.band-num{width:22px;height:22px;flex:0 0 22px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:var(--panel-2);border:1px solid var(--border);font-size:.72rem;font-weight:800;color:var(--gold)}
+.band-txt{display:flex;flex-direction:column;min-width:0}
+.band-txt b{font-size:.88rem;color:var(--ink)}
+.band-txt small{font-size:.74rem;color:var(--muted)}
+.band-now,.band-soon,.band-next{font-style:normal;font-size:.66rem;font-weight:700;letter-spacing:.06em;padding:2px 7px;border-radius:999px;margin-left:auto;white-space:nowrap}
+.band-now{background:rgba(245,184,61,.15);color:var(--gold)}
+.band-soon{background:rgba(154,165,177,.12);color:var(--muted)}
+.band-next{background:rgba(74,163,223,.16);color:var(--blue)}
+
+/* B7 — bloc accueil : 8 mondes, code + IA */
+.brand-worlds{width:min(980px,calc(100% - 32px));margin:14px auto 8px;padding:28px 34px 30px;border:1px solid rgba(255,255,255,.11);border-radius:22px;background:linear-gradient(160deg,rgba(19,30,45,.94),rgba(11,17,28,.97));text-align:left}
+.worlds-title{color:#fff;font-size:1.5rem;margin-bottom:8px}
+.worlds-title::after{content:" 🤖"}
+.worlds-lead{color:#aebdce;font-size:.98rem;line-height:1.6;max-width:780px;margin-bottom:16px}
+.home-worlds{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:8px;padding:0}
+.home-worlds li{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 13px;border:1px solid rgba(255,255,255,.11);border-radius:10px;color:#dfe6ee;font-size:.9rem;background:rgba(255,255,255,.02)}
+.home-worlds li small{font-size:.7rem;color:#7f8b99;letter-spacing:.04em}
+.home-worlds li.on{border-color:var(--gold);color:var(--gold)}
+.home-worlds li.on small{color:var(--gold-2)}
+
+/* B5 — mur : montrer les 4 niveaux prouvés avant de demander */
+.wall-proofs{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 6px}
+.wall-proof{display:inline-flex;align-items:center;gap:6px;padding:7px 11px;border:1px solid var(--border);border-radius:9px;background:rgba(255,255,255,.03);font-size:.82rem;color:var(--muted)}
+.wall-proof.done{border-color:var(--green);color:var(--green)}
+.wall-proof b{color:var(--ink)}
+.wall-stats{color:var(--gold);font-size:.85rem;font-weight:700;margin:2px 0 10px}
+
+/* B6 — fin de Monde 1 : artefact → bande → capture */
+.endworld-card{max-width:640px;max-height:86vh;overflow-y:auto}
+.endworld-artefact h4,.endworld-band-wrap h4,.endworld-capture h4{color:var(--gold);font-size:.92rem;margin:14px 0 8px}
+.endworld-code{background:#0d1013;border:1px solid var(--border);border-radius:9px;padding:12px;font:12.5px/1.55 ui-monospace,Consolas,monospace;color:#7ee787;white-space:pre-wrap;max-height:160px;overflow:auto}
+.endworld-band{grid-template-columns:1fr;max-width:100%}
+.endworld-capture .capture-form{display:flex;gap:8px;margin-top:6px}
+.endworld-capture .capture-form input{flex:1;min-width:0}
+.endworld-capture .capture-ok,.endworld-capture .capture-err{font-size:.86rem;margin-top:8px}

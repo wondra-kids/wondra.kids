@@ -48,23 +48,58 @@ function renderMap() {
   $("hud-level").textContent = Math.min(save.unlocked, WORLD.levels.length);
   $("hud-xp").textContent = Object.keys(save.stars).length * 10;
   $("hud-stars").textContent = Object.values(save.stars).reduce((a, b) => a + b, 0);
+  const doneCount = Object.values(save.stars).filter(v => v > 0).length;
+
+  /* B1 — en-tête de carte : nom du monde, progression, échelle */
+  const header = document.createElement("div");
+  header.className = "map-header";
+  header.innerHTML = `
+    <h2 class="map-title">Monde 1 · ${WORLD.title}</h2>
+    <div class="map-stats">
+      <span class="map-progress">${doneCount} sur ${WORLD.levels.length}</span>
+      <span class="map-scale">Monde 1 sur ${WORLDS.length}</span>
+    </div>`;
+  holder.appendChild(header);
+
+  /* grille des niveaux */
+  const grid = document.createElement("div");
+  grid.className = "map-nodes";
   WORLD.levels.forEach((lv, i) => {
     const unlocked = save.devMode === true || i < save.unlocked;
     const done = save.stars[lv.id] > 0;
     const el = document.createElement("div");
     el.className = "node " + (done ? "done" : "") +
                    (i === save.unlocked - 1 && !done ? " current" : "") +
-                   (unlocked ? "" : " locked");
+                   (unlocked ? "" : " locked") +
+                   (lv.kind === "ia" ? " node-ia" : "");
     el.innerHTML = `
       <div class="portal">${unlocked ? (done ? "✓" : "⚔") : "🔒"}</div>
+      ${lv.kind === "ia" ? '<span class="ia-badge">IA</span>' : ""}
       <h3>${lv.title}</h3>
       <div class="meta">${lv.concept}</div>
       <div class="stars">${done ? starStr(save.stars[lv.id]) : "☆ ☆ ☆"}</div>
       ${i === save.unlocked - 1 && !done ? '<span class="state-tag">à toi</span>' : ""}
       ${!unlocked ? '<span class="state-tag">verrouillé</span>' : ""}`;
     if (unlocked) el.onclick = () => { location.hash = "#/jeu/" + lv.id; };
-    holder.appendChild(el);
+    grid.appendChild(el);
   });
+  holder.appendChild(grid);
+
+  /* B2 + B3 — bande des huit mondes sous la carte, l'IA annoncée plus loin */
+  const band = document.createElement("div");
+  band.className = "worlds-band";
+  band.innerHTML = `
+    <h3 class="band-title">Les 8 mondes du parcours</h3>
+    <p class="band-note">🤖 Le code et l'IA se croisent : l'IA revient plus loin — tu entraîneras ton propre robot.</p>
+    <ol class="band-list">
+      ${WORLDS.map((w, i) => `
+        <li class="band-item${w.active ? " active" : ""}">
+          <span class="band-num">${i + 1}</span>
+          <span class="band-txt"><b>${w.title}</b><small>${w.what}</small></span>
+          ${w.active ? '<em class="band-now">en cours</em>' : '<em class="band-soon">bientôt</em>'}
+        </li>`).join("")}
+    </ol>`;
+  holder.appendChild(band);
 }
 
 /* ---------- ouverture d'un niveau ---------- */
@@ -310,22 +345,23 @@ function applyModalityUI() {
 }
 
 function showModalityIfNeeded(cb) {
-  if (save.modality) { cb(); return; }
-  const m = $("modality-modal");
-  m.classList.remove("hidden");
-  $("modality-code").onclick = () => { save.modality = "code"; persist(); m.classList.add("hidden"); renderModalityToggle(); cb(); };
-  $("modality-assemble").onclick = () => { save.modality = "assemble"; persist(); m.classList.add("hidden"); renderModalityToggle(); cb(); };
+  /* B4 — plus d'écran de choix : le mode Écrire est le défaut, l'onglet
+     Assembler reste disponible dans le niveau (les deux façons manipulables). */
+  if (!save.modality) { save.modality = "code"; persist(); renderModalityToggle(); }
+  cb();
 }
 
 function renderModalityToggle() {
   const t = $("modality-toggle");
   if (!t) return;
-  if (!save.modality) { t.classList.add("hidden"); return; }
   t.classList.remove("hidden");
   t.innerHTML = save.modality === "assemble" ? "🧩 Assembler · <u>changer</u>" : "✍️ Écrire · <u>changer</u>";
   t.onclick = () => {
-    save.modality = null; persist();
-    showModalityIfNeeded(() => { renderModalityToggle(); });
+    const next = save.modality === "assemble" ? "code" : "assemble";
+    save.modality = next; persist();
+    const tab = document.querySelector(`.ltab[data-tab="${next}"]`);
+    if (tab && !tab.hidden) activateTab(next);
+    renderModalityToggle();
   };
 }
 
@@ -353,13 +389,33 @@ function maybeShowWall() {
   if (wallShownThisSession || LV.id !== "L4") return;
   if (!save.stars["L4"]) return;
   wallShownThisSession = true;
-  $("wall-won").textContent = `Tu as déjà gagné : ${Object.keys(save.stars).length} niveaux, ${Object.values(save.stars).reduce((a, b) => a + b, 0)} étoiles, et ton héros.`;
+  /* B5 — montrer d'abord les 4 niveaux prouvés, puis demander */
+  const proven = WORLD.levels.slice(0, 4).map(l => {
+    const s = save.stars[l.id] || 0;
+    return `<span class="wall-proof${s > 0 ? " done" : ""}"><b>${l.title}</b>${s > 0 ? " ★".repeat(s) : ""}</span>`;
+  }).join("");
+  $("wall-proofs").innerHTML = proven;
+  $("wall-stats").textContent =
+    `${Object.keys(save.stars).length} niveaux gagnés · ${Object.values(save.stars).reduce((a, b) => a + b, 0)} étoiles`;
   $("wall-modal").classList.remove("hidden");
   $("wall-later").onclick = () => $("wall-modal").classList.add("hidden");
   $("wall-adult").onclick = () => {
     $("wall-modal").classList.add("hidden");
     toast("La création du compte parent arrive bientôt — en attendant, tout reste sur cet appareil.", "");
   };
+}
+
+/* B6 — fin du Monde 1 : artefact → bande des 8 mondes (Monde 2 en avant) → capture email */
+function openEndWorld() {
+  const code = isAssembleLevel() ? (buildCode() || "") : ace.edit("editor").getValue();
+  $("endworld-code").textContent = (code && code.trim()) ? code.trim() : LV.starterCode.trim();
+  $("endworld-band").innerHTML = WORLDS.map((w, i) => `
+    <li class="band-item${w.active ? " done" : ""}${i === 1 ? " next" : ""}">
+      <span class="band-num">${i + 1}</span>
+      <span class="band-txt"><b>${w.title}</b><small>${w.what}</small></span>
+      ${i === 0 ? '<em class="band-now">terminé</em>' : (i === 1 ? '<em class="band-next">à suivre</em>' : '<em class="band-soon">bientôt</em>')}
+    </li>`).join("");
+  $("endworld-modal").classList.remove("hidden");
 }
 
 /* ---------- 🎒 référence des actions : la syntaxe est un outil, la logique est la leçon (R11) ---------- */
@@ -374,9 +430,9 @@ const ACTIONS_REF = [
 const LEVEL_SYNTAX = {
   L3: [{ code: "for i in range(3):", fr: "Répète 3 fois la ligne suivante" }],
   L4: [{ code: "for i in range(3):", fr: "Répète 3 fois les lignes suivantes" }],
-  L5: [{ code: "if hero.seeWall():", fr: "Si un mur est devant" }, { code: "else:", fr: "Sinon" }],
-  L6: [{ code: "gems = gems + 1",    fr: "Ajoute 1 au compteur de gemmes" }],
-  L7: [{ code: "def step():",        fr: "Déclare une nouvelle action « step »" }]
+  L6: [{ code: "if hero.seeWall():", fr: "Si un mur est devant" }, { code: "else:", fr: "Sinon" }],
+  L7: [{ code: "gems = gems + 1",    fr: "Ajoute 1 au compteur de gemmes" }],
+  L8: [{ code: "def step():",        fr: "Déclare une nouvelle action « step »" }]
 };
 
 function renderActionsList() {
@@ -640,6 +696,7 @@ function win() {
   const idx = WORLD.levels.findIndex(l => l.id === LV.id);
   if (save.unlocked < idx + 2) save.unlocked = Math.min(idx + 2, WORLD.levels.length);
   persist();
+  $("btn-next").textContent = idx === WORLD.levels.length - 1 ? "Découvrir la suite →" : "Niveau suivant →";
 
   $("win-stars").innerHTML = starStr(base);
   $("win-msg").textContent =
@@ -788,6 +845,14 @@ function showHint() {
     closeDevPanel();
     if (location.hash === "#/jeu/" + id) applyRoute(); else location.hash = "#/jeu/" + id;
   };
+  /* B4 — « Jouer » : niveau 1 immédiat au premier passage, carte ensuite */
+  const hasPlayed = () => Object.keys(save.stars).length > 0 || save.unlocked > 1;
+  document.querySelectorAll(".play-cta").forEach(a => {
+    a.onclick = (e) => { e.preventDefault(); location.hash = hasPlayed() ? "#/jeu" : "#/jeu/L1"; };
+  });
+  /* B6 — fin de Monde 1 : « Plus tard » ferme la modale, rien n'est bloqué */
+  const ewClose = $("endworld-later");
+  if (ewClose) ewClose.onclick = () => $("endworld-modal").classList.add("hidden");
   $("btn-run").onclick = runCode;
   $("btn-run2").onclick = runCode;
   $("btn-actions").onclick = () => { renderActionsList(); $("actions-modal").classList.toggle("hidden"); };
@@ -801,6 +866,7 @@ function showHint() {
   $("btn-next").onclick = () => {
     $("win-modal").classList.add("hidden");
     const idx = WORLD.levels.findIndex(l => l.id === LV.id);
+    if (idx === WORLD.levels.length - 1) { openEndWorld(); return; }
     const next = WORLD.levels[idx + 1];
     if (next && (save.devMode === true || idx + 1 < save.unlocked)) location.hash = "#/jeu/" + next.id;
     else backToMap();

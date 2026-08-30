@@ -78,6 +78,26 @@ Attention : la ligne repetee doit etre <b>indente</b> (4 espaces).`,
 
   {
     id: "L5",
+    title: "Le petit cerveau",
+    concept: "Une règle — l'IA",
+    kind: "ia",
+    brief: `Un robot qui suit une règle, c'est déjà de l'intelligence artificielle !<br>
+Donne TA règle au héros :<br>
+<code>if hero.seeWall():</code> → il monte d'une case<br>
+<code>else:</code> → il avance à droite<br>
+Dans la suite du parcours, tu entraîneras ton propre robot.`,
+    start: { hero: [1, 1], gem: [4, 0], walls: [[2, 1]], sensorWall: true },
+    starterCode: "# Donne ta règle au héros :\nfor i in range(4):\n    if hero.seeWall():\n        hero.moveUp()\n    else:\n        hero.moveRight()\n",
+    hints: [
+      "Le mur est juste devant ta case de départ : que doit faire le héros ?",
+      "if hero.seeWall(): → monte. else: → avance à droite",
+      "4 répétitions suffisent : range(4)"
+    ],
+    goalText: "Ramasser la gemme avec ta règle"
+  },
+
+  {
+    id: "L6",
     title: "La fourche",
     concept: "Condition if/else",
     brief: `Le chemin change selon ce que voit le heros :<br>
@@ -95,7 +115,7 @@ Attention : la ligne repetee doit etre <b>indente</b> (4 espaces).`,
   },
 
   {
-    id: "L6",
+    id: "L7",
     title: "La garde",
     concept: "Variables",
     brief: `Compte tes gemmes dans une <b>variable</b> :<br>
@@ -112,7 +132,7 @@ Ramasse-en 3 puis atteins la porte. Elle exige <code>gems == 3</code>.`,
   },
 
   {
-    id: "L7",
+    id: "L8",
     title: "Le labyrinthe",
     concept: "Fonctions",
     brief: `Definis une fois, reutilise partout :<br>
@@ -130,7 +150,7 @@ puis appelle <code>step()</code> quand tu veux.`,
   },
 
   {
-    id: "L8",
+    id: "L9",
     title: "Le boss : le Gardien",
     concept: "Tout ensemble",
     brief: `Le Gardien pose 3 enigmes dans le niveau.<br>
@@ -147,3 +167,15 @@ Lis les messages du jeu, ils indiquent quoi faire.`,
     goalText: "Vaincre le Gardien"
   }
 ]};
+
+/* ---------- les 8 mondes du parcours (bande de la carte + bloc accueil) ---------- */
+const WORLDS = [
+  { title: "Les Collines de Boucle", what: "Donner un ordre, enchaîner, répéter", active: true },
+  { title: "Les Dunes", what: "Nommer, ranger, garder" },
+  { title: "La Forêt", what: "Décider, les chemins qui bifurquent" },
+  { title: "Les Cascades", what: "Répéter en grand" },
+  { title: "Les Pics", what: "Fabriquer ses propres outils" },
+  { title: "La Cité", what: "Organiser, structurer" },
+  { title: "Les Glaces", what: "Réagir à ce qui arrive" },
+  { title: "Le Volcan", what: "Créer son propre jeu" }
+];

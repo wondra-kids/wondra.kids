@@ -3,16 +3,31 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="WONDRA — Apprendre le code en jouant. Plateforme de codage Python pour les enfants : le Monde 1 complet et gratuit, héros pixel-art, exercices progressifs.">
-<meta name="og:title" content="WONDRA — Apprendre le code en jouant">
-<meta name="og:description" content="Codage Python pour les enfants : héros, gemmes, boucles et boss. Essaie le Monde 1, gratuit et complet.">
-<meta name="og:url" content="https://wondra.kids/">
+<meta name="description" content="Apprendre à coder en ligne, en jouant : vrai Python dès le premier niveau, 8 mondes à parcourir, sans publicité. Le Monde 1 est gratuit — et l'intelligence artificielle revient plus loin dans le parcours.">
+<link rel="canonical" href="https://wondra.kids/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="WONDRA — Apprendre à coder en Python pour enfants (7-14 ans)">
+<meta property="og:description" content="Du vrai Python dès le premier niveau, 8 mondes à parcourir, sans publicité. Le Monde 1 est gratuit — et l'intelligence artificielle vient plus loin dans le parcours.">
+<meta property="og:url" content="https://wondra.kids/">
 <meta property="og:image" content="https://wondra.kids/assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#101418">
-<title>WONDRA — Apprendre le code en jouant</title>
+<title>WONDRA — Apprendre à coder en Python pour enfants, 7-14 ans</title>
 <link rel="icon" href="data:,">
-<link rel="stylesheet" href="style.css?v=19">
+<link rel="stylesheet" href="style.css?v=20">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "WONDRA — Apprendre à coder en Python (7-14 ans)",
+  "description": "Plateforme de codage en ligne pour enfants : vrai Python dès le premier niveau, un parcours de 8 mondes, sans publicité. Le Monde 1 est gratuit et complet.",
+  "inLanguage": "fr",
+  "courseMode": "online",
+  "isAccessibleForFree": true,
+  "provider": { "@type": "EducationalOrganization", "name": "WONDRA", "url": "https://wondra.kids" },
+  "audience": { "@type": "EducationalAudience", "educationalRole": "student", "typicalAgeRange": "7-14" }
+}
+</script>
 </head>
 <body>
 
@@ -43,13 +58,13 @@
     </div>
   </div>
 
-  <a class="btn primary appbar-cta" href="#/jeu">Jouer</a>
+  <a class="btn primary appbar-cta play-cta" href="#/jeu">Jouer</a>
 
   <div class="menu-wrap">
     <button class="btn ghost menu-btn" id="btn-menu" aria-label="Menu" aria-expanded="false" aria-controls="menu-drop">☰</button>
     <div class="menu-drop" id="menu-drop" role="menu" hidden>
       <a href="#/" role="menuitem">🏠 Accueil</a>
-      <a href="#/jeu" role="menuitem">🎮 Jouer</a>
+      <a href="#/jeu" class="play-cta" role="menuitem">🎮 Jouer</a>
       <a href="/approche.html" role="menuitem">📘 Notre approche</a>
       <a href="mailto:contact@wondra.kids" role="menuitem">✉️ Nous écrire</a>
       <button type="button" id="menu-dev" class="menu-item" role="menuitem">🧪 Outils développeur</button>
@@ -63,11 +78,26 @@
     <section class="brand-hero" aria-labelledby="brand-hero-title">
       <p class="brand-kicker">APPRENDRE À CODER EN JOUANT</p>
       <h1 id="brand-hero-title">Apprendre à coder en jouant —<br>avec du vrai Python, dès la première minute.</h1>
-      <p class="brand-lead">Votre enfant écrit ses premières lignes et son héros bouge. En quelques semaines : des boucles, des choix, ses premières décisions — et son propre mini-jeu, construit à la fin du Monde 1, à montrer à la famille.</p>
+      <p class="brand-lead">Votre enfant écrit ses premières lignes et son héros bouge. En quelques semaines : des boucles, des choix, ses premières décisions — et son propre mini-jeu, construit à la fin du Monde 1, à montrer à la famille. Le tout en ligne, dans le navigateur, sans rien installer.</p>
       <p class="brand-meta">7-14 ans · 20 minutes par séance · deux séances par semaine suffisent</p>
-      <p class="brand-sec"><span>🚫 Sans publicité</span><span>💬 Sans chat ouvert</span><span>👨‍👩‍👧 Le compte vous appartient</span></p>
-      <a class="btn primary big brand-cta" href="#/jeu">Jouer — c'est gratuit</a>
+      <p class="brand-sec"><span>🚫 Sans publicité</span><span>💬 Sans chat ouvert</span><span>🌐 En ligne, sans installation</span><span>👨‍👩‍👧 Le compte vous appartient</span></p>
+      <a class="btn primary big brand-cta play-cta" href="#/jeu">Jouer — c'est gratuit</a>
       <p class="brand-price">Le Monde 1 est gratuit et complet. La suite arrive bientôt — laissez-nous votre email, on vous écrit.</p>
+    </section>
+
+    <section class="brand-worlds" aria-labelledby="worlds-title">
+      <h2 id="worlds-title" class="worlds-title">Un parcours de 8 mondes, du code et de l'IA</h2>
+      <p class="worlds-lead">Votre enfant commence avec du vrai Python, dès le premier niveau. Plus loin dans le parcours, l'intelligence artificielle revient : il donnera des règles à son héros, puis entraînera son propre robot.</p>
+      <ol class="home-worlds">
+        <li class="on">Les Collines de Boucle <small>en cours</small></li>
+        <li>Les Dunes <small>bientôt</small></li>
+        <li>La Forêt <small>bientôt</small></li>
+        <li>Les Cascades <small>bientôt</small></li>
+        <li>Les Pics <small>bientôt</small></li>
+        <li>La Cité <small>bientôt</small></li>
+        <li>Les Glaces <small>bientôt</small></li>
+        <li>Le Volcan <small>bientôt</small></li>
+      </ol>
     </section>
 
     <section class="brand-capture" aria-labelledby="capture-title">
@@ -202,32 +232,45 @@
   </div>
 </div>
 
-<div id="modality-modal" class="modal hidden" role="dialog" aria-modal="true">
-  <div class="modal-card">
-    <h3>Tu préfères écrire ton code, ou l'assembler ?</h3>
-    <p class="modality-sub">Les deux façons écrivent du vrai Python.</p>
-    <div class="modality-cards">
-      <button id="modality-code" class="modality-card">
-        <span class="mc-title">✍️ J'écris mon code</span>
-        <code class="mc-sample">hero.moveRight()<br>hero.moveRight()<br>hero.moveRight()</code>
-      </button>
-      <button id="modality-assemble" class="modality-card">
-        <span class="mc-title">🧩 J'assemble</span>
-        <span class="mc-sample tiles-sample"><b>moveRight</b><b>moveRight</b><b>moveRight</b></span>
-      </button>
-    </div>
-    <p class="modality-sub small">Tu pourras changer à tout moment depuis la barre du haut.</p>
-  </div>
-</div>
+<!-- B4 : plus d'écran de choix écrire/assembler — le niveau s'ouvre directement,
+     les deux façons sont manipulables via les onglets Écrire / Assembler -->
 
 <div id="wall-modal" class="modal hidden" role="dialog" aria-modal="true">
   <div class="modal-card">
-    <h3>Bravo ! 🎉</h3>
-    <p id="wall-won" class="wall-won"></p>
-    <p class="wall-gate">Pour garder ta progression et débloquer la suite, demande à un adulte.</p>
+    <h3>Quatre niveaux prouvés ! 🎉</h3>
+    <div id="wall-proofs" class="wall-proofs"></div>
+    <p id="wall-stats" class="wall-stats"></p>
+    <p class="wall-gate">Ta progression est gardée sur cet appareil seulement. Pour la garder partout, demande à un adulte.</p>
     <div class="modal-actions">
       <button id="wall-later" class="btn ghost">Plus tard</button>
       <button id="wall-adult" class="btn primary">Demander à un adulte</button>
+    </div>
+  </div>
+</div>
+
+<div id="endworld-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="endworld-title">
+  <div class="modal-card endworld-card">
+    <h3 id="endworld-title">Tu as fini le Monde 1 ! 🏆</h3>
+    <div class="endworld-artefact">
+      <h4>Ton chef-d'œuvre</h4>
+      <pre id="endworld-code" class="endworld-code"></pre>
+    </div>
+    <div class="endworld-band-wrap">
+      <h4>La suite du parcours</h4>
+      <ol id="endworld-band" class="band-list endworld-band"></ol>
+    </div>
+    <p class="band-note">🤖 L'IA revient plus loin : tu entraîneras ton propre robot.</p>
+    <div class="endworld-capture">
+      <h4>Préviens-moi quand la suite arrive</h4>
+      <form id="endworld-capture" class="capture-form">
+        <input type="email" name="email" placeholder="votre@email.fr" required aria-label="Votre email">
+        <button class="btn primary" type="submit">Prévenez-moi</button>
+      </form>
+      <p id="endworld-capture-ok" class="capture-ok hidden">Merci — vous serez prévenu en premier. Un message par mois au plus, promis.</p>
+      <p id="endworld-capture-err" class="capture-err hidden">Une erreur est survenue. Réessayez, ou écrivez-nous à contact@wondra.kids.</p>
+    </div>
+    <div class="modal-actions">
+      <button id="endworld-later" class="btn ghost">Plus tard</button>
     </div>
   </div>
 </div>
@@ -289,34 +332,39 @@
   </div>
 </div>
 
-<script>window.WONDRA_BUILD = "v19";</script>
-<script src="aether-loader.js?v=19"></script>
-<script src="characters.js?v=19"></script>
-<script src="curriculum.js?v=19"></script>
-<script src="game.js?v=19"></script>
+<script>window.WONDRA_BUILD = "v20";</script>
+<script src="aether-loader.js?v=20"></script>
+<script src="characters.js?v=20"></script>
+<script src="curriculum.js?v=20"></script>
+<script src="game.js?v=20"></script>
 <script>
 /* WONDRA — capture email (fondation 2.6 : clé publique anon seule, aucun secret dans le dépôt).
    Supabase dès que configuré ; FormSubmit en secours tant que la base n'est pas branchée. */
 window.WONDRA_SUPABASE = {url:"https://mhjcblxihkmficcleauw.supabase.co", anonKey:"eyJhbG...RA8I"};
 (function(){
-  var f=document.getElementById('email-capture');if(!f)return;
-  var ok=function(){f.classList.add('hidden');document.getElementById('capture-ok').classList.remove('hidden');};
   var cfg=window.WONDRA_SUPABASE||{};
-  f.addEventListener('submit',function(e){
-    e.preventDefault();
-    var email=f.querySelector('input[type=email]').value.trim();
-    if(!email)return;
-    if(cfg.url&&cfg.anonKey){
-      fetch(cfg.url+'/rest/v1/rpc/subscribe',{
-        method:'POST',
-        headers:{'apikey':cfg.anonKey,'Authorization':'Bearer '+cfg.anonKey,'Content-Type':'application/json'},
-        body:JSON.stringify({p_email:email})
-      }).then(function(r){return r.ok?true:Promise.reject(r);}).then(function(){ok();}).catch(function(){var e=document.getElementById('capture-err');if(e)e.classList.remove('hidden');});
-    }else{
-      var d=new FormData(f);
-      fetch('https://formsubmit.co/ajax/contact@wondra.kids',{method:'POST',body:d}).then(function(r){return r.json();}).then(function(){ok();}).catch(function(){var e=document.getElementById('capture-err');if(e)e.classList.remove('hidden');});
-    }
-  });
+  function bind(formId, okId, errId){
+    var f=document.getElementById(formId); if(!f) return;
+    f.addEventListener('submit',function(e){
+      e.preventDefault();
+      var email=f.querySelector('input[type=email]').value.trim();
+      if(!email)return;
+      var ok=function(){f.classList.add('hidden');var o=document.getElementById(okId);if(o)o.classList.remove('hidden');};
+      var err=function(){var x=document.getElementById(errId);if(x)x.classList.remove('hidden');};
+      if(cfg.url&&cfg.anonKey){
+        fetch(cfg.url+'/rest/v1/rpc/subscribe',{
+          method:'POST',
+          headers:{'apikey':cfg.anonKey,'Authorization':'Bearer '+cfg.anonKey,'Content-Type':'application/json'},
+          body:JSON.stringify({p_email:email})
+        }).then(function(r){return r.ok?true:Promise.reject(r);}).then(ok).catch(err);
+      }else{
+        var d=new FormData(f);
+        fetch('https://formsubmit.co/ajax/contact@wondra.kids',{method:'POST',body:d}).then(function(r){return r.json();}).then(ok).catch(err);
+      }
+    });
+  }
+  bind('email-capture','capture-ok','capture-err');
+  bind('endworld-capture','endworld-capture-ok','endworld-capture-err');
 })();
 </script>
 <script>

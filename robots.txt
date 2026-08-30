@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /artefact/
 
 Sitemap: https://wondra.kids/sitemap.xml
