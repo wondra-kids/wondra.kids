@@ -12,89 +12,118 @@
 <meta name="theme-color" content="#101418">
 <title>WONDRA — Apprendre le code en jouant</title>
 <link rel="icon" href="data:,">
-<link rel="stylesheet" href="style.css?v=9">
+<link rel="stylesheet" href="style.css?v=10">
 </head>
 <body>
-<!-- écran 1 : choix du monde -->
-<div id="screen-map" class="screen visible">
-  <header class="topbar">
-    <div class="logo-mark" aria-hidden="true">W</div>
-    <div>
-      <h1>WONDRA</h1>
-      <p>L'informatique par le jeu — Python</p>
-    </div>
-    <a class="hud-home" href="#/" title="Accueil" aria-label="Accueil">🏠</a>
+
+<!-- ============ BARRE UNIQUE (hors des écrans : jamais dupliquée) ============ -->
+<header class="appbar" id="appbar">
+  <a class="brand" href="#/" aria-label="WONDRA — accueil">
+    <span class="logo-mark" aria-hidden="true">W</span>
+    <span class="brand-text">
+      <strong>WONDRA</strong>
+      <small>L'informatique par le jeu — Python</small>
+    </span>
+  </a>
+
+  <!-- visible sur l'accueil seulement -->
+  <nav class="appbar-nav" aria-label="Navigation principale">
+    <a href="/approche.html">Notre approche</a>
+    <a href="#faq">Questions des parents</a>
+  </nav>
+
+  <!-- visible dans le jeu seulement -->
+  <div class="appbar-game">
     <button id="modality-toggle" class="modality-toggle hidden" aria-label="Changer de mode de jeu"></button>
     <span id="dev-badge" class="dev-badge hidden">DEV</span>
-    <button id="btn-purge" class="btn ghost dev-btn hidden" title="Purger la progression et recharger">🧹 Purger</button>
     <div id="hud" class="hud">
       <span class="hud-badge">Niv. <b id="hud-level">1</b></span>
       <span class="hud-badge">XP <b id="hud-xp">0</b></span>
-      <span class="hud-badge">★ <b id="hud-stars">0</b>/3</span>
+      <span class="hud-badge">★ <b id="hud-stars">0</b></span>
     </div>
-    <div class="menu-wrap">
-      <button class="btn ghost menu-btn" id="btn-menu" aria-label="Menu" aria-expanded="false">☰</button>
-      <div class="menu-drop" id="menu-drop" hidden>
-        <a href="#/">Accueil</a>
-        <a href="mailto:contact@wondra.kids">Nous écrire</a>
-        <a href="#" id="menu-mode">🧪 Mode développeur</a>
-      </div>
+  </div>
+
+  <a class="btn primary appbar-cta" href="#/jeu">Jouer</a>
+
+  <div class="menu-wrap">
+    <button class="btn ghost menu-btn" id="btn-menu" aria-label="Menu" aria-expanded="false" aria-controls="menu-drop">☰</button>
+    <div class="menu-drop" id="menu-drop" role="menu" hidden>
+      <a href="#/" role="menuitem">🏠 Accueil</a>
+      <a href="#/jeu" role="menuitem">🎮 Jouer</a>
+      <a href="/approche.html" role="menuitem">📘 Notre approche</a>
+      <a href="mailto:contact@wondra.kids" role="menuitem">✉️ Nous écrire</a>
+      <button type="button" id="menu-dev" class="menu-item" role="menuitem">🧪 Outils développeur</button>
     </div>
-  </header>
+  </div>
+</header>
 
-  <section class="brand-hero" aria-labelledby="brand-hero-title">
-    <p class="brand-kicker">APPRENDRE À CODER EN JOUANT</p>
-    <h2 id="brand-hero-title">Apprendre à coder en jouant —<br>avec du vrai Python, dès la première minute.</h2>
-    <p class="brand-lead">Votre enfant écrit ses premières lignes et son héros bouge. En quelques semaines : des boucles, des choix, ses premières décisions — et son propre mini-jeu, construit à la fin du Monde 1, à montrer à la famille.</p>
-    <p class="brand-meta">7-14 ans · 20 minutes par séance · deux séances par semaine suffisent</p>
-    <p class="brand-sec"><span>🚫 Sans publicité</span><span>💬 Sans chat ouvert</span><span>👨‍👩‍👧 Le compte vous appartient</span></p>
-    <a class="btn primary big brand-cta" href="#/jeu">Jouer — c'est gratuit</a>
-    <p class="brand-price">Le Monde 1 est gratuit et complet. La suite arrive bientôt — laissez-nous votre email, on vous écrit.</p>
-  </section>
+<!-- ============ ÉCRAN 0 : ACCUEIL (parents) ============ -->
+<div id="screen-landing" class="screen visible">
+  <main class="landing">
+    <section class="brand-hero" aria-labelledby="brand-hero-title">
+      <p class="brand-kicker">APPRENDRE À CODER EN JOUANT</p>
+      <h1 id="brand-hero-title">Apprendre à coder en jouant —<br>avec du vrai Python, dès la première minute.</h1>
+      <p class="brand-lead">Votre enfant écrit ses premières lignes et son héros bouge. En quelques semaines : des boucles, des choix, ses premières décisions — et son propre mini-jeu, construit à la fin du Monde 1, à montrer à la famille.</p>
+      <p class="brand-meta">7-14 ans · 20 minutes par séance · deux séances par semaine suffisent</p>
+      <p class="brand-sec"><span>🚫 Sans publicité</span><span>💬 Sans chat ouvert</span><span>👨‍👩‍👧 Le compte vous appartient</span></p>
+      <a class="btn primary big brand-cta" href="#/jeu">Jouer — c'est gratuit</a>
+      <p class="brand-price">Le Monde 1 est gratuit et complet. La suite arrive bientôt — laissez-nous votre email, on vous écrit.</p>
+    </section>
 
-  <section class="brand-capture" style="max-width:640px;margin:0 auto 28px;padding:18px 20px;border:1px solid #2b3440;border-radius:14px;background:#151b23;text-align:center;">
-    <p style="margin:0 0 4px;font-weight:700;">Vous voulez y réfléchir ?</p>
-    <p style="margin:0 0 14px;color:#9aa7b4;font-size:14px;">Laissez-nous votre email — un message par mois au plus, désinscription en un clic.</p>
-    <form id="email-capture" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-      <input type="email" name="email" placeholder="votre@email.fr" required aria-label="Votre email" style="flex:1;min-width:220px;padding:10px 12px;border-radius:8px;border:1px solid #2b3440;background:#0d1117;color:#e6edf3;font-size:15px;">
-      <button class="btn primary" type="submit" style="padding:10px 18px;">Prévenez-moi</button>
-    </form>
-    <p id="capture-ok" class="hidden" style="margin:12px 0 0;color:#3fb950;font-weight:600;">Merci — vous serez prévenu en premier. Un message par mois au plus, promis.</p>
-    <p id="capture-err" class="hidden" style="margin:12px 0 0;color:#f85149;font-weight:600;">Une erreur est survenue. Réessayez, ou écrivez-nous à contact@wondra.kids.</p>
-  </section>
+    <section class="brand-capture" aria-labelledby="capture-title">
+      <h2 id="capture-title" class="capture-title">Vous voulez y réfléchir ?</h2>
+      <p class="capture-sub">Laissez-nous votre email — un message par mois au plus, désinscription en un clic.</p>
+      <form id="email-capture" class="capture-form">
+        <input type="email" name="email" placeholder="votre@email.fr" required aria-label="Votre email">
+        <button class="btn primary" type="submit">Prévenez-moi</button>
+      </form>
+      <p id="capture-ok" class="capture-ok hidden">Merci — vous serez prévenu en premier. Un message par mois au plus, promis.</p>
+      <p id="capture-err" class="capture-err hidden">Une erreur est survenue. Réessayez, ou écrivez-nous à contact@wondra.kids.</p>
+    </section>
 
-  <section class="brand-faq" style="max-width:640px;margin:0 auto 28px;padding:4px 20px;">
-    <h3 style="margin:0 0 10px;font-size:1.05rem;">Les questions des parents</h3>
-    <details style="margin-bottom:8px;border:1px solid #2b3440;border-radius:10px;padding:10px 14px;background:#151b23;">
-      <summary style="cursor:pointer;font-weight:600;">Et si mon enfant n'a jamais codé ?</summary>
-      <p style="margin:8px 0 0;color:#c9d1d9;font-size:.95rem;">C'est exactement le bon point de départ. Il commence au niveau 1, guidé pas à pas ; les consignes sont courtes et simples, et l'aide montre toujours le pas suivant, jamais la réponse.</p>
-    </details>
-    <details style="margin-bottom:8px;border:1px solid #2b3440;border-radius:10px;padding:10px 14px;background:#151b23;">
-      <summary style="cursor:pointer;font-weight:600;">Faut-il un ordinateur ?</summary>
-      <p style="margin:8px 0 0;color:#c9d1d9;font-size:.95rem;">Les 7-9 ans construisent en cliquant : une tablette (ou un téléphone) suffit. À partir de 10 ans, on écrit du code : un ordinateur ou une tablette avec clavier.</p>
-    </details>
-    <details style="margin-bottom:8px;border:1px solid #2b3440;border-radius:10px;padding:10px 14px;background:#151b23;">
-      <summary style="cursor:pointer;font-weight:600;">C'est du vrai Python ?</summary>
-      <p style="margin:8px 0 0;color:#c9d1d9;font-size:.95rem;">Oui — le même langage que les adultes utilisent dans le monde entier, adapté à leur âge. Pas des blocs.</p>
-    </details>
-    <details style="margin-bottom:8px;border:1px solid #2b3440;border-radius:10px;padding:10px 14px;background:#151b23;">
-      <summary style="cursor:pointer;font-weight:600;">Que faites-vous des données ?</summary>
-      <p style="margin:8px 0 0;color:#c9d1d9;font-size:.95rem;">Votre enfant n'a pas de compte et ne voit jamais de publicité. Nous ne gardons que votre email si vous nous le laissez — <a href="/confidentialite.html" style="color:#58a6ff;">la politique complète, en français simple</a>.</p>
-    </details>
-    <details style="margin-bottom:8px;border:1px solid #2b3440;border-radius:10px;padding:10px 14px;background:#151b23;">
-      <summary style="cursor:pointer;font-weight:600;">Puis-je annuler ?</summary>
-      <p style="margin:8px 0 0;color:#c9d1d9;font-size:.95rem;">Le Monde 1 est gratuit et complet. Quand la suite arrivera, elle sera annulable en un clic — c'est écrit partout, et ce n'est pas une blague.</p>
-    </details>
-  </section>
+    <section class="brand-faq" id="faq" aria-labelledby="faq-title">
+      <h2 id="faq-title" class="faq-title">Les questions des parents</h2>
+      <details>
+        <summary>Et si mon enfant n'a jamais codé ?</summary>
+        <p>C'est exactement le bon point de départ. Il commence au niveau 1, guidé pas à pas ; les consignes sont courtes et simples, et l'aide montre toujours le pas suivant, jamais la réponse.</p>
+      </details>
+      <details>
+        <summary>Faut-il un ordinateur ?</summary>
+        <p>Les 7-9 ans construisent en cliquant : une tablette (ou un téléphone) suffit. À partir de 10 ans, on écrit du code : un ordinateur ou une tablette avec clavier.</p>
+      </details>
+      <details>
+        <summary>C'est du vrai Python ?</summary>
+        <p>Oui — le même langage que les adultes utilisent dans le monde entier, adapté à leur âge. Pas des blocs.</p>
+      </details>
+      <details>
+        <summary>Que faites-vous des données ?</summary>
+        <p>Votre enfant n'a pas de compte et ne voit jamais de publicité. Nous ne gardons que votre email si vous nous le laissez — <a href="/confidentialite.html">la politique complète, en français simple</a>.</p>
+      </details>
+      <details>
+        <summary>Puis-je annuler ?</summary>
+        <p>Le Monde 1 est gratuit et complet. Quand la suite arrivera, elle sera annulable en un clic — c'est écrit partout, et ce n'est pas une blague.</p>
+      </details>
+    </section>
+  </main>
 
-  <footer class="brand-footer" style="text-align:center;padding:14px 20px 30px;color:#8b949e;font-size:.85rem;">
-    © 2026 WONDRA · <a href="/approche.html" style="color:#58a6ff;">Notre approche</a> · <a href="/confidentialite.html" style="color:#58a6ff;">Confidentialité</a> · <a href="/mentions-legales.html" style="color:#58a6ff;">Mentions légales</a> · <a href="/desinscription.html" style="color:#58a6ff;">Se désinscrire</a> · <a href="mailto:contact@wondra.kids" style="color:#58a6ff;">contact@wondra.kids</a> · <a href="#" id="dev-link" style="color:#4d5560;">Développeur ?</a>
+  <footer class="brand-footer">
+    <nav class="footer-links" aria-label="Liens de bas de page">
+      <a href="/approche.html">Notre approche</a>
+      <a href="/confidentialite.html">Confidentialité</a>
+      <a href="/mentions-legales.html">Mentions légales</a>
+      <a href="/desinscription.html">Se désinscrire</a>
+      <a href="mailto:contact@wondra.kids">contact@wondra.kids</a>
+    </nav>
+    <p class="footer-legal">© 2026 WONDRA · <button type="button" id="dev-link" class="dev-link">Développeur&nbsp;?</button> · <span class="build-tag" id="build-tag"></span></p>
   </footer>
+</div>
 
+<!-- ============ ÉCRAN 1 : CARTE DU MONDE (enfant) ============ -->
+<div id="screen-map" class="screen">
   <div id="world-map" class="world-map"><!-- nœuds injectés --></div>
 
   <div class="path" id="path-svg-holder">
-    <svg viewBox="0 0 1000 260" preserveAspectRatio="none">
+    <svg viewBox="0 0 1000 260" preserveAspectRatio="none" aria-hidden="true">
       <path id="trail" d="" />
     </svg>
   </div>
@@ -105,7 +134,7 @@
   </footer>
 </div>
 
-<!-- écran 2 : le jeu -->
+<!-- ============ ÉCRAN 2 : LE NIVEAU ============ -->
 <div id="screen-game" class="screen">
   <header class="gamebar">
     <button class="btn ghost" id="btn-back">← Carte</button>
@@ -146,77 +175,123 @@
 
     <section class="pane-view">
       <canvas id="world" width="640" height="480"></canvas>
-      <div id="toast" class="toast hidden"></div>
-      <div id="win-modal" class="modal hidden">
-        <div class="modal-card">
-          <h3 id="win-title">Niveau réussi !</h3>
-          <p id="win-stars">★★★</p>
-          <p id="win-msg"></p>
-          <div id="win-code-review" class="code-review hidden">
-            <h4>Analyse de ton code</h4>
-            <ul id="win-review-list"></ul>
-          </div>
-          <button class="btn primary big" id="btn-next">Niveau suivant →</button>
-          <button class="btn ghost" id="btn-replay">Rejouer</button>
-        </div>
-      </div>
-      <div id="modality-modal" class="modal hidden" role="dialog" aria-modal="true">
-        <div class="modal-card">
-          <h3>Tu préfères écrire ton code, ou l'assembler ?</h3>
-          <p class="modality-sub">Les deux façons écrivent du vrai Python.</p>
-          <div class="modality-cards">
-            <button id="modality-code" class="modality-card">
-              <span class="mc-title">✍️ J'écris mon code</span>
-              <code class="mc-sample">hero.moveRight()<br>hero.moveRight()<br>hero.moveRight()</code>
-            </button>
-            <button id="modality-assemble" class="modality-card">
-              <span class="mc-title">🧩 J'assemble</span>
-              <span class="mc-sample tiles-sample"><b>moveRight</b><b>moveRight</b><b>moveRight</b></span>
-            </button>
-          </div>
-          <p class="modality-sub small">Tu pourras changer à tout moment depuis la carte.</p>
-        </div>
-      </div>
-      <div id="wall-modal" class="modal hidden" role="dialog" aria-modal="true">
-        <div class="modal-card">
-          <h3>Bravo ! 🎉</h3>
-          <p id="wall-won" class="wall-won"></p>
-          <p class="wall-gate">Pour garder ta progression et débloquer la suite, demande à un adulte.</p>
-          <div class="modal-actions">
-            <button id="wall-later" class="btn ghost">Plus tard</button>
-            <button id="wall-adult" class="btn primary">Demander à un adulte</button>
-          </div>
-        </div>
-      </div>
-      <div id="actions-modal" class="modal hidden" role="dialog" aria-modal="true">
-        <div class="modal-card">
-          <h3>🎒 Les actions du héros</h3>
-          <p class="modality-sub small">Touche une action pour l'ajouter à ton code. L'astuce, c'est la logique — pas le nom des fonctions.</p>
-          <div class="actions-list" id="actions-list"></div>
-        </div>
-      </div>
-      <div id="dev-modal" class="modal hidden" role="dialog" aria-modal="true">
-        <div class="modal-card">
-          <h3>Bienvenue ! Choisis ton mode</h3>
-          <p class="modality-sub">Le mode développeur débloque tous les niveaux et ajoute des outils de test.</p>
-          <div class="modal-actions">
-            <button id="dev-user" class="btn primary big">🎮 Mode utilisateur</button>
-            <button id="dev-dev" class="btn ghost">🧪 Mode développeur</button>
-          </div>
-        </div>
-      </div>
     </section>
   </div>
 </div>
 
-<script src="aether-loader.js?v=9"></script>
-<script src="characters.js?v=9"></script>
-<script src="curriculum.js?v=9"></script>
-<script src="game.js?v=9"></script>
+<!-- ============ COUCHE GLOBALE : toast + modales (hors des écrans) ============ -->
+<div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+<div id="win-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="win-title">
+  <div class="modal-card">
+    <h3 id="win-title">Niveau réussi !</h3>
+    <p id="win-stars">★★★</p>
+    <p id="win-msg"></p>
+    <div id="win-code-review" class="code-review hidden">
+      <h4>Analyse de ton code</h4>
+      <ul id="win-review-list"></ul>
+    </div>
+    <button class="btn primary big" id="btn-next">Niveau suivant →</button>
+    <button class="btn ghost" id="btn-replay">Rejouer</button>
+  </div>
+</div>
+
+<div id="modality-modal" class="modal hidden" role="dialog" aria-modal="true">
+  <div class="modal-card">
+    <h3>Tu préfères écrire ton code, ou l'assembler ?</h3>
+    <p class="modality-sub">Les deux façons écrivent du vrai Python.</p>
+    <div class="modality-cards">
+      <button id="modality-code" class="modality-card">
+        <span class="mc-title">✍️ J'écris mon code</span>
+        <code class="mc-sample">hero.moveRight()<br>hero.moveRight()<br>hero.moveRight()</code>
+      </button>
+      <button id="modality-assemble" class="modality-card">
+        <span class="mc-title">🧩 J'assemble</span>
+        <span class="mc-sample tiles-sample"><b>moveRight</b><b>moveRight</b><b>moveRight</b></span>
+      </button>
+    </div>
+    <p class="modality-sub small">Tu pourras changer à tout moment depuis la barre du haut.</p>
+  </div>
+</div>
+
+<div id="wall-modal" class="modal hidden" role="dialog" aria-modal="true">
+  <div class="modal-card">
+    <h3>Bravo ! 🎉</h3>
+    <p id="wall-won" class="wall-won"></p>
+    <p class="wall-gate">Pour garder ta progression et débloquer la suite, demande à un adulte.</p>
+    <div class="modal-actions">
+      <button id="wall-later" class="btn ghost">Plus tard</button>
+      <button id="wall-adult" class="btn primary">Demander à un adulte</button>
+    </div>
+  </div>
+</div>
+
+<div id="actions-modal" class="modal hidden" role="dialog" aria-modal="true">
+  <div class="modal-card">
+    <h3>🎒 Les actions du héros</h3>
+    <p class="modality-sub small">Touche une action pour l'ajouter à ton code. L'astuce, c'est la logique — pas le nom des fonctions.</p>
+    <div class="actions-list" id="actions-list"></div>
+    <button type="button" class="btn ghost" id="actions-close">Fermer</button>
+  </div>
+</div>
+
+<!-- premier passage : choix du mode -->
+<div id="dev-modal" class="modal hidden" role="dialog" aria-modal="true">
+  <div class="modal-card">
+    <h3>Bienvenue ! Choisis ton mode</h3>
+    <p class="modality-sub">Le mode développeur débloque tous les niveaux et ajoute des outils de test.</p>
+    <div class="modal-actions">
+      <button id="dev-user" class="btn primary big">🎮 Mode utilisateur</button>
+      <button id="dev-dev" class="btn ghost">🧪 Mode développeur</button>
+    </div>
+  </div>
+</div>
+
+<!-- vrai panneau développeur -->
+<div id="dev-panel" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="dev-panel-title">
+  <div class="modal-card dev-card">
+    <h3 id="dev-panel-title">🧪 Outils développeur</h3>
+
+    <div class="dev-row">
+      <span class="dev-label">Mode</span>
+      <div class="dev-seg" role="group" aria-label="Mode">
+        <button type="button" id="dev-set-user" class="dev-seg-btn">🎮 Utilisateur</button>
+        <button type="button" id="dev-set-dev" class="dev-seg-btn">🧪 Développeur</button>
+      </div>
+    </div>
+
+    <div class="dev-row">
+      <span class="dev-label">Aller à un niveau</span>
+      <div class="dev-inline">
+        <select id="dev-goto" aria-label="Choisir un niveau"></select>
+        <button type="button" id="dev-go" class="btn">Ouvrir</button>
+      </div>
+    </div>
+
+    <div class="dev-grid">
+      <button type="button" id="dev-unlock" class="btn">🔓 Tout débloquer</button>
+      <button type="button" id="dev-stars" class="btn">★ 3 étoiles partout</button>
+      <button type="button" id="dev-modality" class="btn">✍️ Rechoisir écrire/assembler</button>
+      <button type="button" id="dev-purge" class="btn">🧹 Purger la progression</button>
+      <button type="button" id="dev-cache" class="btn">♻️ Vider le cache + recharger</button>
+      <button type="button" id="dev-copy" class="btn">📋 Copier l'état</button>
+    </div>
+
+    <pre id="dev-state" class="dev-state" aria-label="État de la sauvegarde"></pre>
+
+    <button type="button" class="btn primary" id="dev-close">Fermer</button>
+  </div>
+</div>
+
+<script>window.WONDRA_BUILD = "v10";</script>
+<script src="aether-loader.js?v=10"></script>
+<script src="characters.js?v=10"></script>
+<script src="curriculum.js?v=10"></script>
+<script src="game.js?v=10"></script>
 <script>
 /* WONDRA — capture email (fondation 2.6 : clé publique anon seule, aucun secret dans le dépôt).
    Supabase dès que configuré ; FormSubmit en secours tant que la base n'est pas branchée. */
-window.WONDRA_SUPABASE = {url:"https://mhjcblxihkmficcleauw.supabase.co", anonKey:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1oamNibHhpaGttZmljY2xlYXV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgwODg5NTgsImV4cCI6MjEwMzY2NDk1OH0.PmwDJAali5eHPQkSltu2fzJAjb0tFFIhKBDT2MIRA8I"};
+window.WONDRA_SUPABASE = {url:"https://mhjcblxihkmficcleauw.supabase.co", anonKey:"eyJhbG...RA8I"};
 (function(){
   var f=document.getElementById('email-capture');if(!f)return;
   var ok=function(){f.classList.add('hidden');document.getElementById('capture-ok').classList.remove('hidden');};

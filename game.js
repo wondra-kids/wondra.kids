@@ -13,7 +13,10 @@ const persist = () => localStorage.setItem(SAVE_KEY, JSON.stringify(save));
 
 /* ---------- refs DOM ---------- */
 const $ = id => document.getElementById(id);
-const screenMap = $("screen-map"), screenGame = $("screen-game");
+const screenLanding = $("screen-landing"), screenMap = $("screen-map"), screenGame = $("screen-game");
+function showScreen(el) {
+  [screenLanding, screenMap, screenGame].forEach(s => { if (s) s.classList.toggle("visible", s === el); });
+}
 
 /* ---------- rendu de la carte ---------- */
 function starStr(n) { return "★".repeat(n) + '<span class="off">★</span>'.repeat(3 - n); }
@@ -85,8 +88,7 @@ function openLevel(idx) {
   ed.setValue(save.editor[LV.id] ?? LV.starterCode, -1);
 
   resetSim();
-  screenMap.classList.remove("visible");
-  screenGame.classList.add("visible");
+  showScreen(screenGame);
   setTimeout(() => ed.resize(), 50);
   if (!save.modality) showModalityIfNeeded(applyModalityUI); else applyModalityUI();
 }
@@ -104,14 +106,15 @@ function applyRoute() {
   }
   if (h === "#/jeu") {
     document.body.dataset.route = "jeu";
-    screenGame.classList.remove("visible");
-    screenMap.classList.add("visible");
-    renderMap(); return;
+    showScreen(screenMap);
+    renderMap();
+    window.scrollTo(0, 0);
+    return;
   }
   document.body.dataset.route = "home";
-  screenGame.classList.remove("visible");
-  screenMap.classList.add("visible");
+  showScreen(screenLanding);
   renderMap();
+  if (h === "#faq") { const f = $("faq"); if (f) f.scrollIntoView({ behavior: "smooth", block: "start" }); }
 }
 window.addEventListener("hashchange", applyRoute);
 
@@ -277,11 +280,45 @@ function showDevChoice() {
 }
 
 function renderDevUI() {
-  const badge = $("dev-badge"), purge = $("btn-purge");
+  const badge = $("dev-badge");
   if (badge) badge.classList.toggle("hidden", save.devMode !== true);
-  if (purge) purge.classList.toggle("hidden", save.devMode !== true);
-  const mm = $("menu-mode");
-  if (mm) mm.textContent = save.devMode === true ? "🎮 Mode utilisateur" : "🧪 Mode développeur";
+  const su = $("dev-set-user"), sd = $("dev-set-dev");
+  if (su) su.classList.toggle("on", save.devMode === false);
+  if (sd) sd.classList.toggle("on", save.devMode === true);
+  const mi = $("menu-dev");
+  if (mi) mi.textContent = save.devMode === true ? "🧪 Outils développeur · DEV" : "🧪 Outils développeur";
+  const sel = $("dev-goto");
+  if (sel && !sel.dataset.filled && window.WORLD) {
+    sel.innerHTML = WORLD.levels.map(l => `<option value="${l.id}">${l.id} · ${l.title}</option>`).join("");
+    sel.dataset.filled = "1";
+  }
+  const st = $("dev-state");
+  if (st) st.textContent = JSON.stringify({
+    build: window.WONDRA_BUILD || "?",
+    mode: save.devMode === true ? "développeur" : (save.devMode === false ? "utilisateur" : "non choisi"),
+    route: document.body.dataset.route || "?",
+    unlocked: save.unlocked,
+    modality: save.modality || null,
+    character: save.character || null,
+    stars: save.stars
+  }, null, 1);
+}
+
+function setDevMode(on) {
+  save.devMode = on; persist(); renderDevUI(); renderMap();
+  toast(on ? "Mode développeur activé" : "Mode utilisateur activé", "ok");
+}
+
+function openDevPanel() { renderDevUI(); $("dev-panel").classList.remove("hidden"); }
+function closeDevPanel() { $("dev-panel").classList.add("hidden"); }
+
+async function hardReload() {
+  try {
+    if (window.caches) { const ks = await caches.keys(); await Promise.all(ks.map(k => caches.delete(k))); }
+  } catch (e) { /* pas de cache API : on force quand même */ }
+  const u = new URL(location.href);
+  u.searchParams.set("r", Date.now());
+  location.replace(u.toString());
 }
 
 function purgeAndReload() {
@@ -571,8 +608,8 @@ function showHint() {
   renderCharPicker();
   renderModalityToggle();
   renderDevUI();
-  $("dev-link").onclick = (e) => { e.preventDefault(); showDevChoice(); };
-  $("btn-purge").onclick = purgeAndReload;
+  const bt = $("build-tag"); if (bt) bt.textContent = window.WONDRA_BUILD || "";
+  $("dev-link").onclick = (e) => { e.preventDefault(); openDevPanel(); };
   if (save.devMode === null) showDevChoice();
   $("btn-back").onclick = backToMap;
   const menuBtn = $("btn-menu"), menuDrop = $("menu-drop");
@@ -580,19 +617,58 @@ function showHint() {
     menuBtn.onclick = (e) => { e.stopPropagation(); const open = menuDrop.hidden; menuDrop.hidden = !open; menuBtn.setAttribute("aria-expanded", String(open)); };
     document.addEventListener("click", () => { menuDrop.hidden = true; menuBtn.setAttribute("aria-expanded", "false"); });
     menuDrop.addEventListener("click", (e) => e.stopPropagation());
+    menuDrop.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
+      menuDrop.hidden = true; menuBtn.setAttribute("aria-expanded", "false");
+    }));
   }
-  const menuMode = $("menu-mode");
-  if (menuMode) menuMode.onclick = (e) => { e.preventDefault(); menuDrop.hidden = true; menuBtn.setAttribute("aria-expanded", "false"); showDevChoice(); };
+  /* ---- panneau développeur : vrais outils ---- */
+  const menuDev = $("menu-dev");
+  if (menuDev) menuDev.onclick = () => {
+    if (menuDrop) { menuDrop.hidden = true; menuBtn.setAttribute("aria-expanded", "false"); }
+    openDevPanel();
+  };
+  $("dev-close").onclick = closeDevPanel;
+  $("dev-panel").onclick = (e) => { if (e.target === $("dev-panel")) closeDevPanel(); };
+  $("dev-set-user").onclick = () => setDevMode(false);
+  $("dev-set-dev").onclick = () => setDevMode(true);
+  $("dev-unlock").onclick = () => {
+    save.unlocked = WORLD.levels.length; persist(); renderDevUI(); renderMap();
+    toast("Tous les niveaux débloqués", "ok");
+  };
+  $("dev-stars").onclick = () => {
+    WORLD.levels.forEach(l => { save.stars[l.id] = 3; }); persist(); renderDevUI(); renderMap();
+    toast("3 étoiles partout", "ok");
+  };
+  $("dev-modality").onclick = () => {
+    delete save.modality; persist(); renderDevUI();
+    toast("Choix écrire/assembler réinitialisé", "ok");
+  };
+  $("dev-purge").onclick = purgeAndReload;
+  $("dev-cache").onclick = hardReload;
+  $("dev-copy").onclick = () => {
+    const txt = $("dev-state").textContent;
+    if (navigator.clipboard) navigator.clipboard.writeText(txt).then(() => toast("État copié", "ok")).catch(() => toast("Copie refusée par le navigateur", "err"));
+    else toast("Copie non disponible", "err");
+  };
+  $("dev-go").onclick = () => {
+    const id = $("dev-goto").value;
+    closeDevPanel();
+    location.hash = "#/jeu/" + id;
+  };
   $("btn-run").onclick = runCode;
   $("btn-run2").onclick = runCode;
   $("btn-actions").onclick = () => { renderActionsList(); $("actions-modal").classList.toggle("hidden"); };
   $("actions-modal").onclick = (e) => { if (e.target === $("actions-modal")) $("actions-modal").classList.add("hidden"); };
+  const ac = $("actions-close"); if (ac) ac.onclick = () => $("actions-modal").classList.add("hidden");
   $("btn-hint").onclick = showHint;
   $("btn-reset").onclick = () => { resetSim(); $("run-state").textContent = ""; };
   $("btn-goal").onclick = () => $("goal-box").classList.toggle("hidden");
   $("btn-replay").onclick = () => { $("win-modal").classList.add("hidden"); resetSim(); };
   $("btn-next").onclick = () => {
     $("win-modal").classList.add("hidden");
-    backToMap();
+    const idx = WORLD.levels.findIndex(l => l.id === LV.id);
+    const next = WORLD.levels[idx + 1];
+    if (next && (save.devMode === true || idx + 1 < save.unlocked)) location.hash = "#/jeu/" + next.id;
+    else backToMap();
   };
 })();

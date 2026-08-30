@@ -24,8 +24,13 @@ body {
   font: 15px/1.5 "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
 }
 .hidden { display: none !important; }
-.screen { display: none; height: 100vh; }
-.screen.visible { display: flex; flex-direction: column; }
+/* ---------- architecture : barre unique + 3 écrans (refonte 30/08) ---------- */
+html { height: 100%; }
+body { min-height: 100%; display: flex; flex-direction: column; }
+.screen { display: none; }
+.screen.visible { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; }
+/* le niveau occupe l'écran sans faire défiler la page (grand écran) */
+@media (min-width: 981px) { body[data-route="level"] { height: 100%; overflow: hidden; } }
 
 /* ---------- barre du haut ---------- */
 .topbar, .gamebar {
@@ -170,15 +175,17 @@ body {
 
 /* ---------- toast + modale ---------- */
 .toast {
-  position: absolute; left: 50%; bottom: 26px; transform: translateX(-50%);
+  position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%);
+  z-index: 60;
   background: rgba(20,24,30,.95); border: 1px solid var(--border);
   color: var(--ink); padding: 9px 16px; border-radius: 999px; font-size: 14px;
 }
 .toast.ok { border-color: var(--green); }
 .toast.err { border-color: var(--red); }
 .modal {
-  position: absolute; inset: 0; background: rgba(5,8,12,.72);
-  display: flex; align-items: center; justify-content: center;
+  position: fixed; inset: 0; z-index: 70; background: rgba(5,8,12,.72);
+  display: flex; align-items: center; justify-content: center; padding: 16px;
+  overflow: auto;
 }
 .modal-card {
   width: min(480px, 90vw); background: var(--panel);
@@ -235,14 +242,11 @@ body {
 .brand-copy{max-width:760px;margin:0 0 24px;color:#aebdce;font-size:1rem;line-height:1.65}
 .brand-cta{display:inline-flex;text-decoration:none}
 @media (max-width:640px){.brand-hero{margin-top:16px;padding:26px 22px 24px;border-radius:18px}.brand-copy{font-size:.94rem}}
-/* ---------- routage par hash : accueil vs jeu (WDR-041) ---------- */
-body:not([data-route="home"]) .brand-hero, body:not([data-route="home"]) .brand-capture,
-body:not([data-route="home"]) .brand-faq, body:not([data-route="home"]) .brand-footer { display: none; }
-body[data-route="home"] .world-map{flex:1 0 auto;min-height:55vh;overflow:visible}
-/* topbar visible aussi sur l'accueil (demande Yassine 30/08) — seul le HUD de jeu est masqué sur la landing */
-body[data-route="home"] #hud{display:none}
-.hud-home{text-decoration:none;font-size:20px;margin-right:10px;opacity:.85}
-body[data-route="jeu"] .world-map{animation:wondraFade .3s ease}
+/* ---------- routage : quelles parties de la barre sur quel écran ---------- */
+body[data-route="home"] .appbar-game { display: none; }
+body:not([data-route="home"]) .appbar-nav,
+body:not([data-route="home"]) .appbar-cta { display: none; }
+body[data-route="jeu"] .world-map { animation: wondraFade .3s ease; }
 @keyframes wondraFade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .brand-sec{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;color:#9aa7b4;font-size:.92rem;margin:14px 0 6px}
 .brand-sec span{background:#1b222c;border:1px solid #2b3440;border-radius:20px;padding:4px 12px}
@@ -300,16 +304,127 @@ body[data-route="jeu"] .world-map{animation:wondraFade .3s ease}
   .pane-editor{min-height:280px}
   #editor{min-height:240px}
   .hud-badge{font-size:12px;padding:5px 8px}
-  /* FIX mobile (signalé Yassine 30/08) : la carte était écrasée en mini-fenêtre
-     (flex-basis 0 + overflow:auto) — hauteur naturelle, la page défile, tout est joignable */
+  /* la carte respire : hauteur naturelle, la page défile */
   .world-map{flex:1 0 auto;overflow:visible;min-height:55vh}
-  /* accueil mobile : héros → email → JEU → personnage → FAQ → footer
-     (la FAQ ne doit plus être collée sous le premier message) */
-  body[data-route="home"] .brand-hero{order:1}
-  body[data-route="home"] .brand-capture{order:2}
-  body[data-route="home"] .world-map{order:3}
-  body[data-route="home"] .path{order:4}
-  body[data-route="home"] .char-bar{order:8}
-  body[data-route="home"] .brand-faq{order:6}
-  body[data-route="home"] .brand-footer{order:7}
 }
+
+/* ================= REFONTE 30/08 : barre unique, accueil pro, panneau dev ================= */
+/* ---- barre unique ---- */
+.appbar{
+  position:sticky; top:0; z-index:40; flex:0 0 auto;
+  display:flex; align-items:center; gap:14px; padding:10px 20px;
+  background:linear-gradient(#242c35,#1a2027);
+  border-bottom:2px solid var(--border); box-shadow:0 2px 14px rgba(0,0,0,.5);
+}
+.brand{display:flex; align-items:center; gap:12px; text-decoration:none; color:inherit; min-height:44px}
+.brand-text{display:flex; flex-direction:column; line-height:1.15}
+.brand-text strong{font-size:20px; letter-spacing:.5px; color:var(--gold)}
+.brand-text small{color:var(--muted); font-size:12px}
+.appbar-nav{display:flex; gap:6px; margin-left:18px}
+.appbar-nav a{
+  color:var(--muted); text-decoration:none; font-size:14px;
+  padding:11px 12px; border-radius:8px; min-height:44px; display:inline-flex; align-items:center;
+}
+.appbar-nav a:hover{color:var(--ink); background:rgba(255,255,255,.05)}
+.appbar-game{display:flex; align-items:center; gap:10px; margin-left:auto}
+.appbar-cta{margin-left:auto; text-decoration:none; min-height:44px; display:inline-flex; align-items:center}
+.appbar-nav ~ .appbar-game{margin-left:auto}
+.hud{margin-left:0}
+.menu-wrap{margin-left:10px}
+.menu-btn{min-width:44px; min-height:44px; font-size:20px}
+.menu-item{
+  appearance:none; background:none; border:0; text-align:left; width:100%;
+  padding:12px 16px; color:var(--ink); font:inherit; font-size:14px; cursor:pointer;
+  min-height:44px;
+}
+.menu-item:hover{background:var(--panel-2)}
+.menu-drop a{min-height:44px; display:flex; align-items:center}
+@media (max-width:720px){
+  .appbar{gap:10px; padding:8px 12px; flex-wrap:wrap}
+  .appbar-nav{display:none}
+  .brand-text small{display:none}
+  .appbar-cta{margin-left:auto}
+}
+
+/* ---- accueil : structure propre ---- */
+.landing{flex:1 1 auto; width:100%; max-width:920px; margin:0 auto; padding:0 20px}
+.brand-capture{
+  max-width:640px; margin:0 auto 28px; padding:20px;
+  border:1px solid var(--border); border-radius:14px; background:#151b23; text-align:center;
+}
+.capture-title{font-size:1.05rem; margin:0 0 4px}
+.capture-sub{margin:0 0 14px; color:var(--muted); font-size:14px}
+.capture-form{display:flex; gap:10px; justify-content:center; flex-wrap:wrap}
+.capture-form input{
+  flex:1; min-width:220px; min-height:46px; padding:11px 12px; border-radius:8px;
+  border:1px solid var(--border); background:#0d1117; color:var(--ink); font-size:15px;
+}
+.capture-form .btn{min-height:46px; padding:11px 18px}
+.capture-ok{margin:12px 0 0; color:var(--green); font-weight:600}
+.capture-err{margin:12px 0 0; color:var(--red); font-weight:600}
+
+.brand-faq{max-width:640px; margin:0 auto 28px; padding:0 4px}
+.faq-title{font-size:1.05rem; margin:0 0 10px}
+.brand-faq details{
+  margin-bottom:8px; border:1px solid var(--border); border-radius:10px; background:#151b23; overflow:hidden;
+}
+.brand-faq summary{
+  cursor:pointer; font-weight:600; padding:13px 14px; min-height:44px;
+  display:flex; align-items:center; list-style:none;
+}
+.brand-faq summary::-webkit-details-marker{display:none}
+.brand-faq summary::after{content:"＋"; margin-left:auto; color:var(--muted)}
+.brand-faq details[open] summary::after{content:"−"}
+.brand-faq details p{margin:0; padding:0 14px 14px; color:#c9d1d9; font-size:.95rem}
+.brand-faq details p a{color:var(--blue)}
+
+.brand-footer{
+  flex:0 0 auto; text-align:center; padding:18px 20px 30px;
+  color:var(--muted); font-size:.85rem; border-top:1px solid var(--border); margin-top:10px;
+}
+.footer-links{display:flex; flex-wrap:wrap; gap:2px 6px; justify-content:center; margin-bottom:6px}
+.footer-links a{
+  color:var(--blue); text-decoration:none; padding:11px 10px; min-height:44px;
+  display:inline-flex; align-items:center; border-radius:8px;
+}
+.footer-links a:hover{background:rgba(255,255,255,.05); text-decoration:underline}
+.footer-legal{color:#8b949e}
+.dev-link{
+  appearance:none; background:none; border:0; color:#5c6570; font:inherit; cursor:pointer;
+  padding:6px 4px; text-decoration:underline dotted;
+}
+.dev-link:hover{color:var(--muted)}
+.build-tag{color:#4d5560; font-variant-numeric:tabular-nums}
+
+/* ---- panneau développeur ---- */
+.dev-card{width:min(540px,94vw); text-align:left}
+.dev-card h3{text-align:center}
+.dev-row{display:flex; align-items:center; gap:12px; margin:12px 0; flex-wrap:wrap}
+.dev-label{color:var(--muted); font-size:13px; min-width:120px}
+.dev-seg{display:flex; gap:6px; flex-wrap:wrap}
+.dev-seg-btn{
+  background:var(--panel-2); border:1px solid var(--border); color:var(--ink);
+  border-radius:999px; padding:9px 14px; font:inherit; font-size:13px; cursor:pointer; min-height:40px;
+}
+.dev-seg-btn.on{background:linear-gradient(var(--gold),var(--gold-2)); border-color:#a8761d; color:#241a05; font-weight:700}
+.dev-inline{display:flex; gap:8px; align-items:center; flex-wrap:wrap}
+.dev-inline select{
+  background:#0d1117; color:var(--ink); border:1px solid var(--border);
+  border-radius:8px; padding:9px 10px; font:inherit; min-height:40px;
+}
+.dev-grid{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:14px 0}
+.dev-grid .btn{min-height:44px; font-size:13px}
+.dev-state{
+  background:#0d1117; border:1px solid var(--border); border-radius:8px;
+  padding:10px 12px; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:12px;
+  color:#9fb3c8; max-height:130px; overflow:auto; white-space:pre-wrap; word-break:break-all;
+}
+#dev-close{display:block; margin:14px auto 0; min-height:44px}
+@media (max-width:520px){ .dev-grid{grid-template-columns:1fr} .dev-label{min-width:0} }
+
+/* ---- focus visible partout (accessibilité) ---- */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible{
+  outline:3px solid var(--gold); outline-offset:2px;
+}
+/* dans un niveau sur petit écran : une seule barre (la gamebar) pour laisser la place au jeu */
+@media (max-width:980px){ body[data-route="level"] .appbar{display:none} }
