@@ -235,3 +235,9 @@ body {
 .brand-copy{max-width:760px;margin:0 0 24px;color:#aebdce;font-size:1rem;line-height:1.65}
 .brand-cta{display:inline-flex;text-decoration:none}
 @media (max-width:640px){.brand-hero{margin-top:16px;padding:26px 22px 24px;border-radius:18px}.brand-copy{font-size:.94rem}}
+/* ---------- routage par hash : accueil vs jeu (WDR-041) ---------- */
+body:not([data-route="home"]) .brand-hero, body:not([data-route="home"]) .brand-capture{display:none}
+body[data-route="home"] .topbar{display:none}
+.hud-home{text-decoration:none;font-size:20px;margin-right:10px;opacity:.85}
+body[data-route="jeu"] .world-map{animation:wondraFade .3s ease}
+@keyframes wondraFade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}

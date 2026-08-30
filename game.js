@@ -59,7 +59,7 @@ function renderMap() {
       <div class="stars">${done ? starStr(save.stars[lv.id]) : "☆ ☆ ☆"}</div>
       ${i === save.unlocked - 1 && !done ? '<span class="state-tag">à toi</span>' : ""}
       ${!unlocked ? '<span class="state-tag">verrouillé</span>' : ""}`;
-    if (unlocked) el.onclick = () => openLevel(i);
+    if (unlocked) el.onclick = () => { location.hash = "#/jeu/" + lv.id; };
     holder.appendChild(el);
   });
 }
@@ -90,11 +90,29 @@ function openLevel(idx) {
   setTimeout(() => ed.resize(), 50);
 }
 
-function backToMap() {
+function backToMap() { location.hash = "#/jeu"; }
+
+/* ---------- routage par hash : une adresse par écran (WDR-041) ---------- */
+function applyRoute() {
+  const h = location.hash || "#/";
+  if (h.startsWith("#/jeu/")) {
+    const id = decodeURIComponent(h.slice(6));
+    const idx = WORLD.levels.findIndex(l => l.id === id);
+    if (idx >= 0) { document.body.dataset.route = "level"; openLevel(idx); return; }
+    location.hash = "#/jeu"; return;
+  }
+  if (h === "#/jeu") {
+    document.body.dataset.route = "jeu";
+    screenGame.classList.remove("visible");
+    screenMap.classList.add("visible");
+    renderMap(); return;
+  }
+  document.body.dataset.route = "home";
   screenGame.classList.remove("visible");
   screenMap.classList.add("visible");
   renderMap();
 }
+window.addEventListener("hashchange", applyRoute);
 
 /* ---------- simulation sur grille ---------- */
 const CELL = 64;
@@ -372,7 +390,7 @@ function showHint() {
 (async function () {
   // attendre Aether/Esper charges par aether-loader.js
   await (window.kodawariEngineReady || Promise.resolve());
-  renderMap();
+  applyRoute();
   renderCharPicker();
   $("btn-back").onclick = backToMap;
   $("btn-run").onclick = runCode;
