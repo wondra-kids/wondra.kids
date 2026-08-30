@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="WONDRA — Apprendre le code en jouant. Plateforme de codage Python pour les enfants : 8 mondes, héros pixel-art, exercices progressifs.">
+<meta name="description" content="WONDRA — Apprendre le code en jouant. Plateforme de codage Python pour les enfants : le Monde 1 complet et gratuit, héros pixel-art, exercices progressifs.">
 <meta name="og:title" content="WONDRA — Apprendre le code en jouant">
-<meta name="og:description" content="Codage Python pour les enfants : héros, gemmes, boucles et boss. Essaie le monde 1 gratuitement.">
+<meta name="og:description" content="Codage Python pour les enfants : héros, gemmes, boucles et boss. Essaie le Monde 1, gratuit et complet.">
 <meta name="og:url" content="https://wondra.kids/">
 <meta name="theme-color" content="#101418">
 <title>WONDRA — Apprendre le code en jouant</title>
@@ -29,11 +29,24 @@
   </header>
 
   <section class="brand-hero" aria-labelledby="brand-hero-title">
-    <p class="brand-kicker">CODING &amp; AI FOR KIDS</p>
-    <h2 id="brand-hero-title">The future is written in code.<br>Will your child read it — or write it?</h2>
-    <p class="brand-lead">Coding and AI for kids, taught through building real things.</p>
-    <p class="brand-copy">Ten years from now, your child will apply for jobs that do not exist yet. WONDRA helps children build with code and AI, not just consume it — guided step by step, at their own pace, with something real to show at the end of every project.</p>
-    <a class="btn primary big brand-cta" href="#world-map">Start building — free</a>
+    <p class="brand-kicker">APPRENDRE À CODER EN JOUANT</p>
+    <h2 id="brand-hero-title">Apprendre à coder en jouant —<br>avec du vrai Python, dès la première minute.</h2>
+    <p class="brand-lead">Votre enfant écrit ses premières lignes et son héros bouge. En quelques semaines : des boucles, des choix, ses premières décisions — et son propre mini-jeu, construit à la fin du Monde 1, à montrer à la famille.</p>
+    <p class="brand-meta">7-14 ans · 20 minutes par séance · deux séances par semaine suffisent</p>
+    <a class="btn primary big brand-cta" href="#world-map">Jouer — c'est gratuit</a>
+  </section>
+
+  <section class="brand-capture" style="max-width:640px;margin:0 auto 28px;padding:18px 20px;border:1px solid #2b3440;border-radius:14px;background:#151b23;text-align:center;">
+    <p style="margin:0 0 4px;font-weight:700;">Vous voulez y réfléchir ?</p>
+    <p style="margin:0 0 14px;color:#9aa7b4;font-size:14px;">Laissez-nous votre email — un message par mois au plus, désinscription en un clic.</p>
+    <form id="email-capture" action="https://formsubmit.co/contact@wondra.kids" method="POST" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+      <input type="email" name="email" placeholder="votre@email.fr" required aria-label="Votre email" style="flex:1;min-width:220px;padding:10px 12px;border-radius:8px;border:1px solid #2b3440;background:#0d1117;color:#e6edf3;font-size:15px;">
+      <input type="hidden" name="_subject" value="Nouvelle inscription — WONDRA">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <button class="btn primary" type="submit" style="padding:10px 18px;">Prévenez-moi</button>
+    </form>
+    <p id="capture-ok" class="hidden" style="margin:12px 0 0;color:#3fb950;font-weight:600;">Merci — vous serez prévenu en premier. Un message par mois au plus, promis.</p>
   </section>
 
   <div id="world-map" class="world-map"><!-- nœuds injectés --></div>
@@ -107,5 +120,8 @@
 <script src="characters.js"></script>
 <script src="curriculum.js"></script>
 <script src="game.js"></script>
+<script>
+(function(){var f=document.getElementById('email-capture');if(!f)return;f.addEventListener('submit',function(e){e.preventDefault();var d=new FormData(f);fetch('https://formsubmit.co/ajax/contact@wondra.kids',{method:'POST',body:d}).then(function(r){return r.json();}).then(function(){f.classList.add('hidden');document.getElementById('capture-ok').classList.remove('hidden');}).catch(function(){f.submit();});});})();
+</script>
 </body>
 </html>
