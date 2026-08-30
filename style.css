@@ -241,6 +241,9 @@ body[data-route="home"] .topbar{display:none}
 .hud-home{text-decoration:none;font-size:20px;margin-right:10px;opacity:.85}
 body[data-route="jeu"] .world-map{animation:wondraFade .3s ease}
 @keyframes wondraFade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.brand-sec{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;color:#9aa7b4;font-size:.92rem;margin:14px 0 6px}
+.brand-sec span{background:#1b222c;border:1px solid #2b3440;border-radius:20px;padding:4px 12px}
+.brand-price{color:#8b949e;font-size:.88rem;margin:10px 0 0}
 /* ---------- menu ---------- */
 .menu-wrap{position:relative}
 .menu-btn{font-size:20px;line-height:1}
