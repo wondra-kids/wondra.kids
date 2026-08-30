@@ -244,7 +244,33 @@ body[data-route="jeu"] .world-map{animation:wondraFade .3s ease}
 .brand-sec{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;color:#9aa7b4;font-size:.92rem;margin:14px 0 6px}
 .brand-sec span{background:#1b222c;border:1px solid #2b3440;border-radius:20px;padding:4px 12px}
 .brand-price{color:#8b949e;font-size:.88rem;margin:10px 0 0}
-/* ---------- menu ---------- */
+/* ---------- étape 5 : E1.5 modalité + assemblage + mur ---------- */
+.modality-sub{color:#9aa7b4;font-size:.95rem;margin:6px 0 14px}
+.modality-sub.small{font-size:.85rem}
+.modality-cards{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.modality-card{flex:1;min-width:200px;max-width:280px;background:#151b23;border:1px solid #2b3440;border-radius:14px;padding:14px;cursor:pointer;color:#e6edf3;text-align:left;display:flex;flex-direction:column;gap:8px}
+.modality-card:hover{border-color:#e3b341}
+.mc-title{font-weight:700}
+.mc-sample{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:#7ee787;background:#0d1117;border-radius:8px;padding:8px;line-height:1.5}
+.tiles-sample{display:flex;gap:6px;flex-wrap:wrap}
+.tiles-sample b{background:#1b222c;border:1px solid #2b3440;border-radius:8px;padding:4px 8px;font-weight:600;color:#e3b341}
+.assemble{display:flex;flex-direction:column;gap:10px;padding:10px}
+.assemble-code{background:#0d1117;border:1px solid #2b3440;border-radius:10px;padding:10px;min-height:130px;max-height:240px;overflow-y:auto;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;line-height:1.55}
+.assemble-code pre{margin:0;color:#7ee787;white-space:pre-wrap}
+.assemble-code .gap{color:#8b949e;font-style:italic}
+.assemble-code .al-row{display:block;width:100%;text-align:left;background:none;border:none;color:#7ee787;font:inherit;padding:3px 4px;border-radius:6px;cursor:pointer}
+.assemble-code .al-row:hover{background:#1b222c;color:#f85149;text-decoration:line-through}
+.assemble-palette{display:flex;gap:8px;flex-wrap:wrap}
+.tile{background:#1b222c;border:1px solid #2b3440;border-radius:10px;padding:8px 10px;display:flex;flex-direction:column;align-items:flex-start;gap:2px;cursor:pointer;color:#e6edf3}
+.tile b{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:#7ee787}
+.tile span{font-size:12px;color:#9aa7b4}
+.tile:hover{border-color:#e3b341}
+.assemble-tip{color:#9aa7b4;font-size:.8rem;margin:0}
+.wall-won{color:#c9d1d9;font-size:.95rem}
+.wall-gate{margin:12px 0;font-size:1rem;font-weight:600}
+.modal-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.modality-toggle{background:#1b222c;border:1px solid #2b3440;border-radius:20px;color:#e6edf3;font-size:13px;padding:4px 10px;margin-right:8px;cursor:pointer}
+.modality-toggle u{color:#e3b341}
 .menu-wrap{position:relative}
 .menu-btn{font-size:20px;line-height:1}
 .menu-drop{position:absolute;right:0;top:calc(100% + 8px);background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);display:flex;flex-direction:column;min-width:170px;z-index:30;box-shadow:0 14px 40px rgba(0,0,0,.4)}

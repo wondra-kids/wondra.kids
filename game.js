@@ -88,6 +88,7 @@ function openLevel(idx) {
   screenMap.classList.remove("visible");
   screenGame.classList.add("visible");
   setTimeout(() => ed.resize(), 50);
+  if (!save.modality) showModalityIfNeeded(applyModalityUI); else applyModalityUI();
 }
 
 function backToMap() { location.hash = "#/jeu"; }
@@ -113,6 +114,117 @@ function applyRoute() {
   renderMap();
 }
 window.addEventListener("hashchange", applyRoute);
+
+/* ================= Étape 5 — E1.5 modalité + assemblage + mur (WDR-041) ================= */
+save.modality = save.modality || null;   // 'code' | 'assemble' | null (choix de l'enfant)
+const ASSEMBLE_LEVELS = ["L1", "L2", "L3", "L4"];
+const TILE_DEFS = {
+  moveRight: ["hero.moveRight()", "➡️ droite"],
+  moveDown:  ["hero.moveDown()",  "⬇️ bas"],
+  moveUp:    ["hero.moveUp()",    "⬆️ haut"],
+  moveLeft:  ["hero.moveLeft()",  "⬅️ gauche"],
+  pickup:    ["hero.pickup()",    "💎 ramasser"]
+};
+const TILES_BY_LEVEL = {
+  L1: ["moveRight", "moveDown", "moveUp", "moveLeft"],
+  L2: ["moveRight", "moveDown", "moveUp", "moveLeft"],
+  L3: ["moveRight"],
+  L4: ["moveRight", "moveDown", "pickup"]
+};
+let assembled = [];
+
+function isAssembleLevel() { return save.modality === "assemble" && ASSEMBLE_LEVELS.includes(LV.id); }
+
+function buildCode() {
+  if (LV.id === "L3" || LV.id === "L4") {
+    const body = assembled.map(l => "    " + l).join("\n");
+    return "for i in range(3):\n" + (body || "    pass");
+  }
+  return assembled.join("\n");
+}
+
+function renderAssembleEditor() {
+  const codeEl = $("assemble-code"), pal = $("assemble-palette");
+  codeEl.innerHTML = "";
+  if (LV.id === "L3" || LV.id === "L4") {
+    const pre = document.createElement("pre");
+    pre.textContent = "for i in range(3):";
+    codeEl.appendChild(pre);
+    if (assembled.length) {
+      const body = document.createElement("pre");
+      body.textContent = assembled.map(l => "    " + l).join("\n");
+      codeEl.appendChild(body);
+    } else {
+      const gap = document.createElement("pre");
+      gap.className = "gap";
+      gap.textContent = "    [touche une instruction]";
+      codeEl.appendChild(gap);
+    }
+  } else {
+    assembled.forEach((l, i) => {
+      const row = document.createElement("button");
+      row.className = "al-row";
+      row.textContent = l;
+      row.onclick = () => { assembled.splice(i, 1); persist(); renderAssembleEditor(); };
+      codeEl.appendChild(row);
+    });
+    if (!assembled.length) {
+      const gap = document.createElement("pre");
+      gap.className = "gap";
+      gap.textContent = "Touche une instruction pour commencer.";
+      codeEl.appendChild(gap);
+    }
+  }
+  pal.innerHTML = "";
+  (TILES_BY_LEVEL[LV.id] || []).forEach(k => {
+    const b = document.createElement("button");
+    b.className = "tile";
+    b.innerHTML = `<b>${TILE_DEFS[k][0]}</b><span>${TILE_DEFS[k][1]}</span>`;
+    b.onclick = () => { assembled.push(TILE_DEFS[k][0]); persist(); renderAssembleEditor(); };
+    pal.appendChild(b);
+  });
+}
+
+function applyModalityUI() {
+  const inAssemble = isAssembleLevel();
+  $("editor").classList.toggle("hidden", inAssemble);
+  $("editor-assemble").classList.toggle("hidden", !inAssemble);
+  if (inAssemble) { assembled = []; renderAssembleEditor(); }
+}
+
+function showModalityIfNeeded(cb) {
+  if (save.modality) { cb(); return; }
+  const m = $("modality-modal");
+  m.classList.remove("hidden");
+  $("modality-code").onclick = () => { save.modality = "code"; persist(); m.classList.add("hidden"); renderModalityToggle(); cb(); };
+  $("modality-assemble").onclick = () => { save.modality = "assemble"; persist(); m.classList.add("hidden"); renderModalityToggle(); cb(); };
+}
+
+function renderModalityToggle() {
+  const t = $("modality-toggle");
+  if (!t) return;
+  if (!save.modality) { t.classList.add("hidden"); return; }
+  t.classList.remove("hidden");
+  t.innerHTML = save.modality === "assemble" ? "🧩 Assembler · <u>changer</u>" : "✍️ Écrire · <u>changer</u>";
+  t.onclick = () => {
+    save.modality = null; persist();
+    showModalityIfNeeded(() => { renderModalityToggle(); });
+  };
+}
+
+let wallShownThisSession = false;
+function maybeShowWall() {
+  if (wallShownThisSession || LV.id !== "L4") return;
+  if (!save.stars["L4"]) return;
+  wallShownThisSession = true;
+  $("wall-won").textContent = `Tu as déjà gagné : ${Object.keys(save.stars).length} niveaux, ${Object.values(save.stars).reduce((a, b) => a + b, 0)} étoiles, et ton héros.`;
+  $("wall-modal").classList.remove("hidden");
+  $("wall-later").onclick = () => $("wall-modal").classList.add("hidden");
+  $("wall-adult").onclick = () => {
+    $("wall-modal").classList.add("hidden");
+    toast("La création du compte parent arrive bientôt — en attendant, tout reste sur cet appareil.", "");
+  };
+}
 
 /* ---------- simulation sur grille ---------- */
 const CELL = 64;
@@ -301,7 +413,7 @@ function win() {
   $("win-msg").textContent =
     `${sim.steps} actions · ${sim.errors} erreur(s) · ${sim.hintsUsed} indice(s)`;
   const review = [];
-  const code = ace.edit("editor").getValue();
+  const code = isAssembleLevel() ? (buildCode() || "") : ace.edit("editor").getValue();
   if (/for\s+\w+\s+in\s+range/.test(code)) review.push("✔ Tu as utilisé une boucle for");
   if (/if\s+/.test(code) && /else/.test(code)) review.push("✔ Tu as utilisé if/else");
   if (/def\s+\w+\s*\(/.test(code)) review.push("✔ Tu as défini une fonction");
@@ -310,14 +422,16 @@ function win() {
   $("win-review-list").innerHTML = review.map(r => `<li>${r}</li>`).join("");
   $("win-code-review").classList.remove("hidden");
   $("win-modal").classList.remove("hidden");
+  setTimeout(maybeShowWall, 900);
 }
 
 /* ---------- execution du code enfant via Aether ---------- */
 async function runCode() {
   if (sim.won) return;
   const ed = ace.edit("editor");
-  const code = ed.getValue();
-  save.editor[LV.id] = code; persist();
+  const code = isAssembleLevel() ? (buildCode() || "") : ed.getValue();
+  if (!isAssembleLevel()) save.editor[LV.id] = code;
+  persist();
 
   resetSim();
   $("run-state").textContent = "exécution…";
@@ -392,6 +506,7 @@ function showHint() {
   await (window.kodawariEngineReady || Promise.resolve());
   applyRoute();
   renderCharPicker();
+  renderModalityToggle();
   $("btn-back").onclick = backToMap;
   const menuBtn = $("btn-menu"), menuDrop = $("menu-drop");
   if (menuBtn && menuDrop) {
