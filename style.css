@@ -236,7 +236,8 @@ body {
 .brand-cta{display:inline-flex;text-decoration:none}
 @media (max-width:640px){.brand-hero{margin-top:16px;padding:26px 22px 24px;border-radius:18px}.brand-copy{font-size:.94rem}}
 /* ---------- routage par hash : accueil vs jeu (WDR-041) ---------- */
-body:not([data-route="home"]) .brand-hero, body:not([data-route="home"]) .brand-capture{display:none}
+body:not([data-route="home"]) .brand-hero, body:not([data-route="home"]) .brand-capture,
+body:not([data-route="home"]) .brand-faq, body:not([data-route="home"]) .brand-footer { display: none; }
 body[data-route="home"] .topbar{display:none}
 .hud-home{text-decoration:none;font-size:20px;margin-right:10px;opacity:.85}
 body[data-route="jeu"] .world-map{animation:wondraFade .3s ease}
@@ -296,4 +297,16 @@ body[data-route="jeu"] .world-map{animation:wondraFade .3s ease}
   .pane-editor{min-height:280px}
   #editor{min-height:240px}
   .hud-badge{font-size:12px;padding:5px 8px}
+  /* FIX mobile (signalé Yassine 30/08) : la carte était écrasée en mini-fenêtre
+     (flex-basis 0 + overflow:auto) — hauteur naturelle, la page défile, tout est joignable */
+  .world-map{flex:1 0 auto;overflow:visible;min-height:55vh}
+  /* accueil mobile : héros → email → JEU → personnage → FAQ → footer
+     (la FAQ ne doit plus être collée sous le premier message) */
+  body[data-route="home"] .brand-hero{order:1}
+  body[data-route="home"] .brand-capture{order:2}
+  body[data-route="home"] .world-map{order:3}
+  body[data-route="home"] .path{order:4}
+  body[data-route="home"] .char-bar{order:8}
+  body[data-route="home"] .brand-faq{order:6}
+  body[data-route="home"] .brand-footer{order:7}
 }
