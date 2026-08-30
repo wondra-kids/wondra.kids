@@ -38,16 +38,17 @@
 </header>
 <p class="badge">WONDRA — Politique de confidentialité</p>
 <h1>Vos données, en français simple</h1>
-<p class="muted">Dernière mise à jour : 30 août 2026</p>
+<p class="muted">Dernière mise à jour : 31 août 2026</p>
 
 <p>WONDRA est un site pour apprendre à coder en jouant. Cette page explique, sans jargon, ce que nous faisons des informations que vous nous donnez.</p>
 
 <h2>Ce que nous collectons</h2>
-<p><strong>Une seule chose : votre adresse email.</strong> Uniquement si vous la laissez volontairement dans le formulaire « prévenez-moi » du site. Rien d'autre.</p>
+<p><strong>Votre adresse email</strong> — uniquement si vous la laissez volontairement dans le formulaire « prévenez-moi » du site — <strong>et des statistiques de visite anonymes</strong>.</p>
 <ul>
   <li>Pas de compte pour votre enfant.</li>
   <li>Aucune donnée d'enfant collectée aujourd'hui.</li>
-  <li>Aucune donnée de navigation, aucun traceur publicitaire, aucun suivi de votre appareil.</li>
+  <li>Statistiques anonymes : page consultée, provenance (ex. Instagram, lien direct) et un numéro aléatoire temporaire qui sert uniquement à compter les visiteurs uniques du jour.</li>
+  <li>Pas d'adresse IP, pas de traceur publicitaire, pas de cookie, pas d'identification de votre appareil.</li>
 </ul>
 
 <h2>Pourquoi nous la collectons</h2>
@@ -69,6 +70,7 @@
   <li>Pas de revente ni de partage de vos adresses.</li>
   <li>Pas de chat ouvert ni de réseau social intégré.</li>
   <li>Pas de profilage de votre enfant.</li>
+  <li>Pas de suivi personnel : vos visites restent anonymes et ne sont jamais reliées à votre identité.</li>
 </ul>
 
 <h2>Où sont stockées vos données</h2>
@@ -78,5 +80,48 @@
 <p>Écrivez-nous : <a href="mailto:contact@wondra.kids">contact@wondra.kids</a>. Nous répondons, en français simple aussi.</p>
 
 <p class="muted" style="margin-top:40px">← <a href="/">Retour à WONDRA</a></p>
+<script>
+window.WONDRA_SUPABASE = window.WONDRA_SUPABASE || {url:"https://mhjcblxihkmficcleauw.supabase.co", anonKey:"eyJhbG...RA8I"};
+/* WONDRA — analytics first-party, sans cookies ni données personnelles (fondation 2.7).
+   Envoie : route de la page, domaine de provenance, uuid aléatoire quotidien (comptage
+   unique). Pas d'IP, pas de user-agent, pas de fingerprint. */
+(function(){
+  var cfg=window.WONDRA_SUPABASE||{};
+  if(!cfg.url||!cfg.anonKey)return;
+  function route(){
+    try{var r=document.body&&document.body.getAttribute('data-route');return (r&&r!=='')?r:(location.pathname||'/');}catch(e){return location.pathname||'/';}
+  }
+  function refDomain(r){
+    try{var a=document.createElement('a');a.href=r||'';return a.hostname||'';}catch(e){return '';}
+  }
+  function vid(){
+    var K='wondra_pv',D='wondra_pv_day',today=new Date().toISOString().slice(0,10);
+    try{
+      if(localStorage.getItem(D)!==today){localStorage.removeItem(K);localStorage.setItem(D,today);}
+      var id=localStorage.getItem(K);
+      if(!id){id='xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0,v=c==='x'?r:(r&0x3|0x8);return v.toString(16);});localStorage.setItem(K,id);}
+      return id;
+    }catch(e){return null;}
+  }
+  function send(){
+    try{
+      fetch(cfg.url+'/rest/v1/rpc/log_page_view',{
+        method:'POST',
+        headers:{'apikey':cfg.anonKey,'Authorization':'Bearer '+cfg.anonKey,'Content-Type':'application/json'},
+        body:JSON.stringify({p_path:route(),p_referrer:document.referrer||'',p_visitor:vid()}),
+        keepalive:true
+      }).catch(function(){});
+    }catch(e){}
+  }
+  send();
+  try{
+    if(document.body){
+      var last=route();
+      var mo=new MutationObserver(function(){var r=route();if(r&&r!==last){last=r;send();}});
+      mo.observe(document.body,{attributes:true,attributeFilter:['data-route']});
+    }
+  }catch(e){}
+})();
+</script>
 </body>
 </html>
