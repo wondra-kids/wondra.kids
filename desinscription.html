@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Désinscription — WONDRA</title>
+<style>
+body{margin:0;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:#0d1117;color:#e6edf3;display:flex;min-height:100vh;align-items:center;justify-content:center;text-align:center}
+.card{max-width:480px;padding:32px 28px;border:1px solid #2b3440;border-radius:16px;background:#151b23}
+h1{margin:0 0 12px;font-size:1.3rem}
+p{color:#c9d1d9;line-height:1.5;font-size:.98rem}
+a{color:#58a6ff;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Désinscription WONDRA</h1>
+  <p id="status">Désinscription en cours…</p>
+  <p style="margin-top:18px;font-size:.9rem;color:#8b949e"><a href="https://wondra.kids">← Retour à WONDRA</a></p>
+</div>
+<script>
+(function(){
+  var el=document.getElementById('status');
+  var t=new URLSearchParams(location.search).get('token');
+  if(!t){ el.textContent='Lien invalide : le code de désinscription manque.'; return; }
+  var S='https://mhjcblxihkmficcleauw.supabase.co';
+  var K='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1oamNibHhpaGttZmljY2xlYXV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgwODg5NTgsImV4cCI6MjEwMzY2NDk1OH0.PmwDJAali5eHPQkSltu2fzJAjb0tFFIhKBDT2MIRA8I';
+  fetch(S+'/rest/v1/rpc/unsubscribe',{method:'POST',headers:{'apikey':K,'Authorization':'Bearer '+K,'Content-Type':'application/json'},body:JSON.stringify({t:t})})
+    .then(function(r){return r.json();})
+    .then(function(v){ var ok=!!v && v!=='false' && JSON.stringify(v)!=='[]'; el.textContent=ok ? 'Vous êtes bien désinscrit. Aucun email ne vous sera plus envoyé. À bientôt !' : 'Ce lien est invalide ou a déjà été utilisé.'; })
+    .catch(function(){ el.textContent='Une erreur est survenue. Vous pouvez aussi écrire à contact@wondra.kids.'; });
+})();
+</script>
+</body>
+</html>

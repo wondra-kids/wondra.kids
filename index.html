@@ -51,11 +51,8 @@
   <section class="brand-capture" style="max-width:640px;margin:0 auto 28px;padding:18px 20px;border:1px solid #2b3440;border-radius:14px;background:#151b23;text-align:center;">
     <p style="margin:0 0 4px;font-weight:700;">Vous voulez y réfléchir ?</p>
     <p style="margin:0 0 14px;color:#9aa7b4;font-size:14px;">Laissez-nous votre email — un message par mois au plus, désinscription en un clic.</p>
-    <form id="email-capture" action="https://formsubmit.co/contact@wondra.kids" method="POST" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+    <form id="email-capture" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
       <input type="email" name="email" placeholder="votre@email.fr" required aria-label="Votre email" style="flex:1;min-width:220px;padding:10px 12px;border-radius:8px;border:1px solid #2b3440;background:#0d1117;color:#e6edf3;font-size:15px;">
-      <input type="hidden" name="_subject" value="Nouvelle inscription — WONDRA">
-      <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_captcha" value="false">
       <button class="btn primary" type="submit" style="padding:10px 18px;">Prévenez-moi</button>
     </form>
     <p id="capture-ok" class="hidden" style="margin:12px 0 0;color:#3fb950;font-weight:600;">Merci — vous serez prévenu en premier. Un message par mois au plus, promis.</p>
@@ -86,7 +83,7 @@
   </section>
 
   <footer class="brand-footer" style="text-align:center;padding:14px 20px 30px;color:#8b949e;font-size:.85rem;">
-    © 2026 WONDRA · <a href="/confidentialite.html" style="color:#58a6ff;">Confidentialité</a> · <a href="/mentions-legales.html" style="color:#58a6ff;">Mentions légales</a> · <a href="mailto:contact@wondra.kids" style="color:#58a6ff;">contact@wondra.kids</a>
+    © 2026 WONDRA · <a href="/confidentialite.html" style="color:#58a6ff;">Confidentialité</a> · <a href="/mentions-legales.html" style="color:#58a6ff;">Mentions légales</a> · <a href="/desinscription.html" style="color:#58a6ff;">Se désinscrire</a> · <a href="mailto:contact@wondra.kids" style="color:#58a6ff;">contact@wondra.kids</a>
   </footer>
 
   <div id="world-map" class="world-map"><!-- nœuds injectés --></div>
@@ -161,7 +158,29 @@
 <script src="curriculum.js?v=3"></script>
 <script src="game.js?v=3"></script>
 <script>
-(function(){var f=document.getElementById('email-capture');if(!f)return;f.addEventListener('submit',function(e){e.preventDefault();var d=new FormData(f);fetch('https://formsubmit.co/ajax/contact@wondra.kids',{method:'POST',body:d}).then(function(r){return r.json();}).then(function(){f.classList.add('hidden');document.getElementById('capture-ok').classList.remove('hidden');}).catch(function(){f.submit();});});})();
+/* WONDRA — capture email (fondation 2.6 : clé publique anon seule, aucun secret dans le dépôt).
+   Supabase dès que configuré ; FormSubmit en secours tant que la base n'est pas branchée. */
+window.WONDRA_SUPABASE = {url:"https://mhjcblxihkmficcleauw.supabase.co", anonKey:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1oamNibHhpaGttZmljY2xlYXV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgwODg5NTgsImV4cCI6MjEwMzY2NDk1OH0.PmwDJAali5eHPQkSltu2fzJAjb0tFFIhKBDT2MIRA8I"};
+(function(){
+  var f=document.getElementById('email-capture');if(!f)return;
+  var ok=function(){f.classList.add('hidden');document.getElementById('capture-ok').classList.remove('hidden');};
+  var cfg=window.WONDRA_SUPABASE||{};
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var email=f.querySelector('input[type=email]').value.trim();
+    if(!email)return;
+    if(cfg.url&&cfg.anonKey){
+      fetch(cfg.url+'/rest/v1/capture_emails',{
+        method:'POST',
+        headers:{'apikey':cfg.anonKey,'Authorization':'Bearer '+cfg.anonKey,'Content-Type':'application/json','Prefer':'resolution=ignore-duplicates'},
+        body:JSON.stringify({email:email})
+      }).then(function(r){return r.json();}).then(function(){ok();}).catch(function(){f.submit();});
+    }else{
+      var d=new FormData(f);
+      fetch('https://formsubmit.co/ajax/contact@wondra.kids',{method:'POST',body:d}).then(function(r){return r.json();}).then(function(){ok();}).catch(function(){f.submit();});
+    }
+  });
+})();
 </script>
 </body>
 </html>
