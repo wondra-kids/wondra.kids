@@ -393,6 +393,12 @@ function showHint() {
   applyRoute();
   renderCharPicker();
   $("btn-back").onclick = backToMap;
+  const menuBtn = $("btn-menu"), menuDrop = $("menu-drop");
+  if (menuBtn && menuDrop) {
+    menuBtn.onclick = (e) => { e.stopPropagation(); const open = menuDrop.hidden; menuDrop.hidden = !open; menuBtn.setAttribute("aria-expanded", String(open)); };
+    document.addEventListener("click", () => { menuDrop.hidden = true; menuBtn.setAttribute("aria-expanded", "false"); });
+    menuDrop.addEventListener("click", (e) => e.stopPropagation());
+  }
   $("btn-run").onclick = runCode;
   $("btn-run2").onclick = runCode;
   $("btn-hint").onclick = showHint;

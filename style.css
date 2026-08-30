@@ -241,3 +241,23 @@ body[data-route="home"] .topbar{display:none}
 .hud-home{text-decoration:none;font-size:20px;margin-right:10px;opacity:.85}
 body[data-route="jeu"] .world-map{animation:wondraFade .3s ease}
 @keyframes wondraFade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+/* ---------- menu ---------- */
+.menu-wrap{position:relative}
+.menu-btn{font-size:20px;line-height:1}
+.menu-drop{position:absolute;right:0;top:calc(100% + 8px);background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);display:flex;flex-direction:column;min-width:170px;z-index:30;box-shadow:0 14px 40px rgba(0,0,0,.4)}
+.menu-drop a{padding:11px 16px;color:var(--ink);text-decoration:none;font-size:14px;white-space:nowrap}
+.menu-drop a:hover{background:var(--panel-2)}
+/* ---------- audit mobile 30/08 : le jeu doit DEFILER, tout doit être joignable ---------- */
+@media (max-width:980px){
+  .screen,.screen.visible{height:auto;min-height:100vh}
+  #screen-game{overflow:visible}
+  .game-layout{overflow:visible}
+  .gamebar{position:sticky;top:0;z-index:5;background:var(--panel);padding:6px 10px}
+  .gamebar h2{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:15px}
+  .gamebar-actions{flex:1 1 100%;justify-content:flex-end}
+  .gamebar-actions .btn{min-height:44px}
+  .pane-instructions{max-height:none}
+  .pane-editor{min-height:280px}
+  #editor{min-height:240px}
+  .hud-badge{font-size:12px;padding:5px 8px}
+}
