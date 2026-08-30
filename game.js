@@ -226,8 +226,10 @@ function updateLevelTabs() {
 function activateTab(name) {
   document.querySelectorAll(".level-tabs .ltab").forEach(b => b.classList.toggle("active", b.dataset.tab === name));
   const mission = name === "mission";
-  $("pane-instructions").classList.toggle("active", mission);
-  $("pane-editor").classList.toggle("active", !mission);
+  const pi = document.querySelector(".pane-instructions");
+  const pe = document.querySelector(".pane-editor");
+  if (pi) pi.classList.toggle("active", mission);
+  if (pe) pe.classList.toggle("active", !mission);
   if ((name === "code" || name === "assemble") && save.modality !== name) {
     save.modality = name; persist(); renderModalityToggle();
   }
