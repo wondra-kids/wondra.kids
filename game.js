@@ -288,7 +288,7 @@ function renderDevUI() {
   const mi = $("menu-dev");
   if (mi) mi.textContent = save.devMode === true ? "🧪 Outils développeur · DEV" : "🧪 Outils développeur";
   const sel = $("dev-goto");
-  if (sel && !sel.dataset.filled && window.WORLD) {
+  if (sel && !sel.dataset.filled && typeof WORLD !== "undefined" && WORLD.levels) {
     sel.innerHTML = WORLD.levels.map(l => `<option value="${l.id}">${l.id} · ${l.title}</option>`).join("");
     sel.dataset.filled = "1";
   }
@@ -651,9 +651,10 @@ function showHint() {
     else toast("Copie non disponible", "err");
   };
   $("dev-go").onclick = () => {
-    const id = $("dev-goto").value;
+    const id = $("dev-goto").value || (WORLD.levels[0] && WORLD.levels[0].id);
+    if (!id) { toast("Aucun niveau disponible", "err"); return; }
     closeDevPanel();
-    location.hash = "#/jeu/" + id;
+    if (location.hash === "#/jeu/" + id) applyRoute(); else location.hash = "#/jeu/" + id;
   };
   $("btn-run").onclick = runCode;
   $("btn-run2").onclick = runCode;
