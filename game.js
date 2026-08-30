@@ -272,14 +272,16 @@ save.devMode = save.devMode === true || save.devMode === false ? save.devMode : 
 function showDevChoice() {
   const m = $("dev-modal");
   m.classList.remove("hidden");
-  $("dev-user").onclick = () => { save.devMode = false; persist(); m.classList.add("hidden"); renderDevUI(); };
-  $("dev-dev").onclick = () => { save.devMode = true; persist(); m.classList.add("hidden"); renderDevUI(); };
+  $("dev-user").onclick = () => { save.devMode = false; persist(); m.classList.add("hidden"); renderDevUI(); renderMap(); };
+  $("dev-dev").onclick = () => { save.devMode = true; persist(); m.classList.add("hidden"); renderDevUI(); renderMap(); };
 }
 
 function renderDevUI() {
   const badge = $("dev-badge"), purge = $("btn-purge");
   if (badge) badge.classList.toggle("hidden", save.devMode !== true);
   if (purge) purge.classList.toggle("hidden", save.devMode !== true);
+  const mm = $("menu-mode");
+  if (mm) mm.textContent = save.devMode === true ? "🎮 Mode utilisateur" : "🧪 Mode développeur";
 }
 
 function purgeAndReload() {
@@ -579,6 +581,8 @@ function showHint() {
     document.addEventListener("click", () => { menuDrop.hidden = true; menuBtn.setAttribute("aria-expanded", "false"); });
     menuDrop.addEventListener("click", (e) => e.stopPropagation());
   }
+  const menuMode = $("menu-mode");
+  if (menuMode) menuMode.onclick = (e) => { e.preventDefault(); menuDrop.hidden = true; menuBtn.setAttribute("aria-expanded", "false"); showDevChoice(); };
   $("btn-run").onclick = runCode;
   $("btn-run2").onclick = runCode;
   $("btn-actions").onclick = () => { renderActionsList(); $("actions-modal").classList.toggle("hidden"); };
