@@ -108,6 +108,7 @@
     <button class="btn ghost" id="btn-back">← Carte</button>
     <h2 id="level-title">Niveau</h2>
     <div class="gamebar-actions">
+      <button class="btn ghost" id="btn-actions">🎒 Actions</button>
       <button class="btn ghost" id="btn-goal">🎯 Objectif</button>
       <button class="btn ghost" id="btn-hint">💡 Indice</button>
       <button class="btn primary" id="btn-run">▶ Exécuter</button>
@@ -182,6 +183,13 @@
             <button id="wall-later" class="btn ghost">Plus tard</button>
             <button id="wall-adult" class="btn primary">Demander à un adulte</button>
           </div>
+        </div>
+      </div>
+      <div id="actions-modal" class="modal hidden" role="dialog" aria-modal="true">
+        <div class="modal-card">
+          <h3>🎒 Les actions du héros</h3>
+          <p class="modality-sub small">Touche une action pour l'ajouter à ton code. L'astuce, c'est la logique — pas le nom des fonctions.</p>
+          <div class="actions-list" id="actions-list"></div>
         </div>
       </div>
     </section>

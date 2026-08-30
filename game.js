@@ -189,6 +189,7 @@ function applyModalityUI() {
   const inAssemble = isAssembleLevel();
   $("editor").classList.toggle("hidden", inAssemble);
   $("editor-assemble").classList.toggle("hidden", !inAssemble);
+  $("btn-actions").style.display = inAssemble ? "none" : "";
   if (inAssemble) { assembled = []; renderAssembleEditor(); }
 }
 
@@ -224,6 +225,45 @@ function maybeShowWall() {
     $("wall-modal").classList.add("hidden");
     toast("La création du compte parent arrive bientôt — en attendant, tout reste sur cet appareil.", "");
   };
+}
+
+/* ---------- 🎒 référence des actions : la syntaxe est un outil, la logique est la leçon (R11) ---------- */
+const ACTIONS_REF = [
+  { code: "hero.moveRight()", fr: "Va d'une case à droite" },
+  { code: "hero.moveLeft()",  fr: "Va d'une case à gauche" },
+  { code: "hero.moveUp()",    fr: "Va d'une case en haut" },
+  { code: "hero.moveDown()",  fr: "Va d'une case en bas" },
+  { code: "hero.pickup()",    fr: "Ramasse la gemme à tes pieds" },
+  { code: "hero.seeWall()",   fr: "Vrai s'il y a un mur devant toi" }
+];
+const LEVEL_SYNTAX = {
+  L3: [{ code: "for i in range(3):", fr: "Répète 3 fois la ligne suivante" }],
+  L4: [{ code: "for i in range(3):", fr: "Répète 3 fois les lignes suivantes" }],
+  L5: [{ code: "if hero.seeWall():", fr: "Si un mur est devant" }, { code: "else:", fr: "Sinon" }],
+  L6: [{ code: "gems = gems + 1",    fr: "Ajoute 1 au compteur de gemmes" }],
+  L7: [{ code: "def step():",        fr: "Déclare une nouvelle action « step »" }]
+};
+
+function renderActionsList() {
+  const list = $("actions-list");
+  list.innerHTML = "";
+  const items = [...ACTIONS_REF, ...(LEVEL_SYNTAX[LV.id] || [])];
+  items.forEach(a => {
+    const row = document.createElement("button");
+    row.className = "action-row";
+    row.innerHTML = `<code>${a.code}</code><span>${a.fr}</span>`;
+    row.onclick = () => {
+      if (isAssembleLevel()) {
+        if (a.code.startsWith("hero.")) { assembled.push(a.code); renderAssembleEditor(); }
+        else toast("Cette écriture se fait à la main — essaie le mode ✍️", "");
+        return;
+      }
+      const ed = ace.edit("editor");
+      ed.insert(a.code + "\n");
+      ed.focus();
+    };
+    list.appendChild(row);
+  });
 }
 
 /* ---------- simulation sur grille ---------- */
@@ -516,6 +556,8 @@ function showHint() {
   }
   $("btn-run").onclick = runCode;
   $("btn-run2").onclick = runCode;
+  $("btn-actions").onclick = () => { renderActionsList(); $("actions-modal").classList.toggle("hidden"); };
+  $("actions-modal").onclick = (e) => { if (e.target === $("actions-modal")) $("actions-modal").classList.add("hidden"); };
   $("btn-hint").onclick = showHint;
   $("btn-reset").onclick = () => { resetSim(); $("run-state").textContent = ""; };
   $("btn-goal").onclick = () => $("goal-box").classList.toggle("hidden");
