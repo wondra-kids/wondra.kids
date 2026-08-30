@@ -176,7 +176,7 @@ body { min-height: 100%; display: flex; flex-direction: column; }
 /* ---------- toast + modale ---------- */
 .toast {
   position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%);
-  z-index: 60;
+  z-index: 90;
   background: rgba(20,24,30,.95); border: 1px solid var(--border);
   color: var(--ink); padding: 9px 16px; border-radius: 999px; font-size: 14px;
 }
@@ -391,7 +391,7 @@ body[data-route="jeu"] .world-map { animation: wondraFade .3s ease; }
 .footer-legal{color:#8b949e}
 .dev-link{
   appearance:none; background:none; border:0; color:#5c6570; font:inherit; cursor:pointer;
-  padding:6px 4px; text-decoration:underline dotted;
+  padding:12px 8px; min-height:44px; text-decoration:underline dotted;
 }
 .dev-link:hover{color:var(--muted)}
 .build-tag{color:#4d5560; font-variant-numeric:tabular-nums}
