@@ -799,7 +799,9 @@ function showHint() {
   renderDevUI();
   const bt = $("build-tag"); if (bt) bt.textContent = window.WONDRA_BUILD || "";
   $("dev-link").onclick = (e) => { e.preventDefault(); openDevPanel(); };
-  if (save.devMode === null) showDevChoice();
+  /* B4 — premier visiteur : mode utilisateur par défaut, aucun écran intermédiaire.
+     Le mode développeur reste accessible via « Développeur ? » (pied de page) et le panneau ☰. */
+  if (save.devMode === null) { save.devMode = false; persist(); renderDevUI(); }
   $("btn-back").onclick = backToMap;
   const menuBtn = $("btn-menu"), menuDrop = $("menu-drop");
   if (menuBtn && menuDrop) {
