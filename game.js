@@ -49,16 +49,26 @@ function renderMap() {
   $("hud-xp").textContent = Object.keys(save.stars).length * 10;
   $("hud-stars").textContent = Object.values(save.stars).reduce((a, b) => a + b, 0);
   const doneCount = Object.values(save.stars).filter(v => v > 0).length;
+  const reveal = mapReveal; mapReveal = false;
 
   /* B1 — en-tête de carte : nom du monde, progression, échelle */
   const header = document.createElement("div");
-  header.className = "map-header";
+  header.className = "map-header" + (reveal ? " reveal" : "");
   header.innerHTML = `
     <h2 class="map-title">Monde 1 · ${WORLD.title}</h2>
     <div class="map-stats">
       <span class="map-progress">${doneCount} sur ${WORLD.levels.length}</span>
       <span class="map-scale">Monde 1 sur ${WORLDS.length}</span>
     </div>`;
+  /* v23 — visites suivantes : « Continuer » clairement au-dessus des autres */
+  if (doneCount > 0 || save.unlocked > 1) {
+    const cur = WORLD.levels[Math.min(save.unlocked, WORLD.levels.length) - 1];
+    const cont = document.createElement("button");
+    cont.className = "btn primary map-continue";
+    cont.textContent = "▶ Continuer · " + cur.title;
+    cont.onclick = () => { location.hash = "#/jeu/" + cur.id; };
+    header.appendChild(cont);
+  }
   holder.appendChild(header);
 
   /* grille des niveaux */
@@ -71,7 +81,8 @@ function renderMap() {
     el.className = "node " + (done ? "done" : "") +
                    (i === save.unlocked - 1 && !done ? " current" : "") +
                    (unlocked ? "" : " locked") +
-                   (lv.kind === "ia" ? " node-ia" : "");
+                   (lv.kind === "ia" ? " node-ia" : "") +
+                   (reveal && lv.id === "L1" && done ? " reveal-first" : "");
     el.innerHTML = `
       <div class="portal">${unlocked ? (done ? "✓" : "⚔") : "🔒"}</div>
       ${lv.kind === "ia" ? '<span class="ia-badge">IA</span>' : ""}
@@ -87,7 +98,7 @@ function renderMap() {
 
   /* B2 + B3 — bande des huit mondes sous la carte, l'IA annoncée plus loin */
   const band = document.createElement("div");
-  band.className = "worlds-band";
+  band.className = "worlds-band" + (reveal ? " reveal" : "");
   band.innerHTML = `
     <h3 class="band-title">Les 8 mondes du parcours</h3>
     <p class="band-note">🤖 Le code et l'IA se croisent : l'IA revient plus loin — tu entraîneras ton propre robot.</p>
@@ -385,6 +396,7 @@ function activateTab(name) {
 }
 
 let wallShownThisSession = false;
+let mapReveal = false;   /* v23 — la carte se révèle après la première victoire (règle carte-récompense) */
 function maybeShowWall() {
   if (wallShownThisSession || LV.id !== "L4") return;
   if (!save.stars["L4"]) return;
@@ -696,7 +708,11 @@ function win() {
   const idx = WORLD.levels.findIndex(l => l.id === LV.id);
   if (save.unlocked < idx + 2) save.unlocked = Math.min(idx + 2, WORLD.levels.length);
   persist();
-  $("btn-next").textContent = idx === WORLD.levels.length - 1 ? "Découvrir la suite →" : "Niveau suivant →";
+  /* v23 — règle carte-récompense : la toute première victoire (sur L1) révèle la carte */
+  const firstEver = prev === 0 && Object.keys(save.stars).length === 1;
+  $("btn-next").textContent = (firstEver && idx === 0)
+    ? "Voir ma carte →"
+    : (idx === WORLD.levels.length - 1 ? "Découvrir la suite →" : "Niveau suivant →");
 
   $("win-stars").innerHTML = starStr(base);
   $("win-msg").textContent =
@@ -869,6 +885,8 @@ function showHint() {
     $("win-modal").classList.add("hidden");
     const idx = WORLD.levels.findIndex(l => l.id === LV.id);
     if (idx === WORLD.levels.length - 1) { openEndWorld(); return; }
+    /* v23 — première victoire (L1) : la carte se révèle au lieu d'enchaîner sur L2 */
+    if (idx === 0 && Object.keys(save.stars).length === 1) { mapReveal = true; backToMap(); return; }
     const next = WORLD.levels[idx + 1];
     if (next && (save.devMode === true || idx + 1 < save.unlocked)) location.hash = "#/jeu/" + next.id;
     else backToMap();
