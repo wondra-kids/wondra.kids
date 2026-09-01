@@ -154,6 +154,13 @@ function applyRoute() {
     location.hash = "#/jeu"; return;
   }
   if (h === "#/jeu") {
+    /* B4 centralisé (v24) — arrivée directe sur la carte, quel que soit le chemin
+       (lien « Jouer » d'une page statique, URL tapée, favori) : un joueur qui n'a
+       jamais joué va au niveau 1 immédiatement, pas sur la carte. */
+    if (!(Object.keys(save.stars).length > 0 || save.unlocked > 1)) {
+      location.hash = "#/jeu/L1";
+      return;
+    }
     document.body.dataset.route = "jeu";
     showScreen(screenMap);
     renderMap();
