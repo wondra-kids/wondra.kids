@@ -66,7 +66,7 @@ window.CREATE_MISSIONS = {
    "catalogue_ref": "curriculum/WONDRA_CATALOGUE_DETAILLE.md — Exercice 74 (Python Intro module 1 pos 0, dungeon index 0) + fiche p. 6826-6878",
    "reuse_mode": "original_authoring",
    "rights_basis": "OWNED",
-   "evidence": "Registre rights_registry.json — statut BASELINE_NO_ITEM_LEVEL_GRANTS_RECORDED (03/09) ; pas de grant item ; fondement pédagogique (commande = action, exécution pas à pas, premier contact syntaxe sans frappe) repris en texte 100 % WONDRA-original. Acte intragroupe BENCC→WONDRA en attente (WDR-052/053). | Décision Yassine 04/09 (WDR-055) : BENCC et WONDRA non constituées en entités juridiques distinctes — fondement BENCC-GROUP-MATERIAL = même ayant droit ; acte intragroupe sans objet à ce jour (réversible si incorporation)."
+   "evidence": "Droits confirmés : registre rights_registry.json — fondement BENCC (groupe Yassine), statut OWNED (décision Yassine 04/09, WDR-055) ; dossier BENCC/CodeCombat réglé par les avocats (WDR-056 04/09, WDR-052 abrogée). reuse_mode original_authoring — texte, consignes et univers 100 % WONDRA ; fondement documenté dans catalogue_ref."
   },
   "maturity": "INTEGRATION_READY"
  },
@@ -132,7 +132,7 @@ window.CREATE_MISSIONS = {
    "catalogue_ref": "curriculum/WONDRA_CATALOGUE_DETAILLE.md — Exercice 2 (Course de la forêt, avancer pas à pas, virage, index 121-210) + Exercice 93 Haunted Kithmaze (ordre des pas, index 8333)",
    "reuse_mode": "original_authoring",
    "rights_basis": "OWNED",
-   "evidence": "Registre rights_registry.json — BASELINE_NO_ITEM_LEVEL_GRANTS_RECORDED (03/09) ; fondement : progression pas-à-pas et virage, commande exacte ; texte, chemin, personnages et consignes 100 % WONDRA-originaux. Acte intragroupe en attente (WDR-052/053). | Décision Yassine 04/09 (WDR-055) : BENCC et WONDRA non constituées en entités juridiques distinctes — fondement BENCC-GROUP-MATERIAL = même ayant droit ; acte intragroupe sans objet à ce jour (réversible si incorporation)."
+   "evidence": "Droits confirmés : registre rights_registry.json — fondement BENCC (groupe Yassine), statut OWNED (décision Yassine 04/09, WDR-055) ; dossier BENCC/CodeCombat réglé par les avocats (WDR-056 04/09, WDR-052 abrogée). reuse_mode original_authoring — texte, consignes et univers 100 % WONDRA ; fondement documenté dans catalogue_ref."
   },
   "maturity": "INTEGRATION_READY"
  },
@@ -198,7 +198,7 @@ window.CREATE_MISSIONS = {
    "catalogue_ref": "curriculum/WONDRA_CATALOGUE_DETAILLE.md — Exercice 84 (Python Intro module 2 pos 4, dungeon index 10) + Exercice 79 Careful Steps (exactitude des pas, index 7218)",
    "reuse_mode": "original_authoring",
    "rights_basis": "OWNED",
-   "evidence": "Registre rights_registry.json — BASELINE_NO_ITEM_LEVEL_GRANTS_RECORDED (03/09) ; fondement : nom exact d'une action, lettre par lettre, erreur silencieuse si mot inconnu ; surface (lutin, carte de commandes, lanterne) entièrement WONDRA. Acte intragroupe en attente (WDR-052/053). | Décision Yassine 04/09 (WDR-055) : BENCC et WONDRA non constituées en entités juridiques distinctes — fondement BENCC-GROUP-MATERIAL = même ayant droit ; acte intragroupe sans objet à ce jour (réversible si incorporation)."
+   "evidence": "Droits confirmés : registre rights_registry.json — fondement BENCC (groupe Yassine), statut OWNED (décision Yassine 04/09, WDR-055) ; dossier BENCC/CodeCombat réglé par les avocats (WDR-056 04/09, WDR-052 abrogée). reuse_mode original_authoring — texte, consignes et univers 100 % WONDRA ; fondement documenté dans catalogue_ref."
   },
   "maturity": "INTEGRATION_READY"
  },
@@ -264,7 +264,7 @@ window.CREATE_MISSIONS = {
    "catalogue_ref": "curriculum/WONDRA_CATALOGUE_DETAILLE.md — Exercice 79 (Python Intro module 2 pos 0, dungeon index 8) + Exercice 110 Kithgard Gates (outil précis, index 9691)",
    "reuse_mode": "original_authoring",
    "rights_basis": "OWNED",
-   "evidence": "Registre rights_registry.json — BASELINE_NO_ITEM_LEVEL_GRANTS_RECORDED (03/09) ; fondement : précision de chaque étape, objectif composé, correction après erreur sans pénalité ; univers festival/lanternes, consignes et progression 100 % WONDRA. Acte intragroupe en attente (WDR-052/053). | Décision Yassine 04/09 (WDR-055) : BENCC et WONDRA non constituées en entités juridiques distinctes — fondement BENCC-GROUP-MATERIAL = même ayant droit ; acte intragroupe sans objet à ce jour (réversible si incorporation)."
+   "evidence": "Droits confirmés : registre rights_registry.json — fondement BENCC (groupe Yassine), statut OWNED (décision Yassine 04/09, WDR-055) ; dossier BENCC/CodeCombat réglé par les avocats (WDR-056 04/09, WDR-052 abrogée). reuse_mode original_authoring — texte, consignes et univers 100 % WONDRA ; fondement documenté dans catalogue_ref."
   },
   "maturity": "INTEGRATION_READY"
  },
@@ -326,11 +326,11 @@ window.CREATE_MISSIONS = {
   },
   "source": {
    "family": "BENCC-GROUP-MATERIAL",
-   "item_id": "the-second-kithmaze",
+   "item_id": "radiant-aura",
    "catalogue_ref": "curriculum/WONDRA_CATALOGUE_DETAILLE.md — Exercice 96 (Python Intro module 3 pos 0, dungeon index 20) : écriture autonome d'une suite de pas vers plusieurs objectifs",
    "reuse_mode": "original_authoring",
    "rights_basis": "OWNED",
-   "evidence": "Registre rights_registry.json — BASELINE_NO_ITEM_LEVEL_GRANTS_RECORDED (03/09) ; fondement : pratique indépendante d'une suite de commandes exactes vers plusieurs cibles ; jardin secret, tortue-lanterne, consignes et bonus 100 % WONDRA. Acte intragroupe en attente (WDR-052/053). | Décision Yassine 04/09 (WDR-055) : BENCC et WONDRA non constituées en entités juridiques distinctes — fondement BENCC-GROUP-MATERIAL = même ayant droit ; acte intragroupe sans objet à ce jour (réversible si incorporation)."
+   "evidence": "Droits confirmés : registre rights_registry.json — fondement BENCC (groupe Yassine), statut OWNED (décision Yassine 04/09, WDR-055) ; dossier BENCC/CodeCombat réglé par les avocats (WDR-056 04/09, WDR-052 abrogée). reuse_mode original_authoring — texte, consignes et univers 100 % WONDRA ; fondement documenté dans catalogue_ref."
   },
   "maturity": "INTEGRATION_READY"
  },
@@ -396,7 +396,7 @@ window.CREATE_MISSIONS = {
    "catalogue_ref": "curriculum/WONDRA_CATALOGUE_DETAILLE.md — Exercice 103 (Python Intro module 4 pos 5, dungeon index 29) : vocabulaire précis relié à un comportement observable + Exercice 92 Fire Dancing (rappel de mots exacts)",
    "reuse_mode": "original_authoring",
    "rights_basis": "OWNED",
-   "evidence": "Registre rights_registry.json — BASELINE_NO_ITEM_LEVEL_GRANTS_RECORDED (03/09) ; fondement : rappel du vocabulaire de commande et de son effet ; situation (charrette, moulin, grue, question de Luciole) 100 % WONDRA-originale. Acte intragroupe en attente (WDR-052/053). | Décision Yassine 04/09 (WDR-055) : BENCC et WONDRA non constituées en entités juridiques distinctes — fondement BENCC-GROUP-MATERIAL = même ayant droit ; acte intragroupe sans objet à ce jour (réversible si incorporation)."
+   "evidence": "Droits confirmés : registre rights_registry.json — fondement BENCC (groupe Yassine), statut OWNED (décision Yassine 04/09, WDR-055) ; dossier BENCC/CodeCombat réglé par les avocats (WDR-056 04/09, WDR-052 abrogée). reuse_mode original_authoring — texte, consignes et univers 100 % WONDRA ; fondement documenté dans catalogue_ref."
   },
   "maturity": "INTEGRATION_READY"
  },
@@ -462,7 +462,7 @@ window.CREATE_MISSIONS = {
    "catalogue_ref": "curriculum/WONDRA_CATALOGUE_DETAILLE.md — Exercice 93 (Python Intro module 3 pos 4, dungeon index 19) : compter les pas et s'arrêter au bon endroit + Exercice 79 Careful Steps",
    "reuse_mode": "original_authoring",
    "rights_basis": "OWNED",
-   "evidence": "Registre rights_registry.json — BASELINE_NO_ITEM_LEVEL_GRANTS_RECORDED (03/09) ; fondement : transfert du comptage de pas et de l'arrêt précis sur une nouvelle surface (canal et barque vs chemin et tortue) ; scénario, consignes, cloche 100 % WONDRA-originaux. Acte intragroupe en attente (WDR-052/053). | Décision Yassine 04/09 (WDR-055) : BENCC et WONDRA non constituées en entités juridiques distinctes — fondement BENCC-GROUP-MATERIAL = même ayant droit ; acte intragroupe sans objet à ce jour (réversible si incorporation)."
+   "evidence": "Droits confirmés : registre rights_registry.json — fondement BENCC (groupe Yassine), statut OWNED (décision Yassine 04/09, WDR-055) ; dossier BENCC/CodeCombat réglé par les avocats (WDR-056 04/09, WDR-052 abrogée). reuse_mode original_authoring — texte, consignes et univers 100 % WONDRA ; fondement documenté dans catalogue_ref."
   },
   "maturity": "INTEGRATION_READY"
  },
@@ -528,7 +528,7 @@ window.CREATE_MISSIONS = {
    "catalogue_ref": "curriculum/WONDRA_CATALOGUE_DETAILLE.md — Exercice 82 (Python Intro module 2 pos 3, dungeon index 9) : cérémonie, objets à ramasser puis action finale précise + jalons W1 gate skills (architecture.json P1_CREATE-W1)",
    "reuse_mode": "original_authoring",
    "rights_basis": "OWNED",
-   "evidence": "Registre rights_registry.json — BASELINE_NO_ITEM_LEVEL_GRANTS_RECORDED (03/09) ; fondement : synthèse des 4 compétences du monde (CT.PRECISE_INSTRUCTIONS, CT.SEQUENCING, PROG.SYNTAX_LITERACY, DIG.PRIVACY_SAFETY — sans exposition, données fictives) sur un parcours cérémoniel original ; texte et univers 100 % WONDRA. Acte intragroupe en attente (WDR-052/053). | Décision Yassine 04/09 (WDR-055) : BENCC et WONDRA non constituées en entités juridiques distinctes — fondement BENCC-GROUP-MATERIAL = même ayant droit ; acte intragroupe sans objet à ce jour (réversible si incorporation)."
+   "evidence": "Droits confirmés : registre rights_registry.json — fondement BENCC (groupe Yassine), statut OWNED (décision Yassine 04/09, WDR-055) ; dossier BENCC/CodeCombat réglé par les avocats (WDR-056 04/09, WDR-052 abrogée). reuse_mode original_authoring — texte, consignes et univers 100 % WONDRA ; fondement documenté dans catalogue_ref."
   },
   "maturity": "INTEGRATION_READY"
  }
