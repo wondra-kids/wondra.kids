@@ -81,6 +81,7 @@ const STAGES = {
     walls: [],
     crystals: [],
     lanterns: [[3, 2], [5, 3]],
+    landmarks: [{ type: "hut", at: [0, 1] }],
     commands: ["A", "T", "L"],
     role: "guided_practice",
     solution: ["A", "A", "A", "L", "A", "A", "T", "A", "L"]
@@ -127,6 +128,7 @@ const STAGES = {
     walls: [[1, 0], [3, 0], [5, 0], [7, 0], [8, 0], [2, 4], [4, 4], [6, 4]],
     crystals: [[2, 1], [3, 3]],
     lanterns: [[7, 2]],
+    landmarks: [{ type: "mast", at: [3, 1] }],
     commands: ["A", "T", "R", "L"],
     role: "checkpoint",
     solution: ["A", "A", "R", "A", "T", "A", "A", "R", "T", "T", "A", "T", "A", "A", "A", "A", "L"]
@@ -529,7 +531,12 @@ function buildPalette(st, lang) {
       b.classList.add("broken");
       b.title = lang === "fr" ? "Commande cassée — répare le mot d'abord." : "Broken command — fix the word first.";
     } else {
-      b.addEventListener("click", () => { if (!running) { current.seq.push(c); renderCommandList(lang); } });
+      b.addEventListener("click", () => {
+        if (!running) {
+          current.seq.push(c);
+          renderCommandList(lang);
+        }
+      });
     }
     pal.appendChild(b);
   });
@@ -569,6 +576,25 @@ function renderCommandList(lang) {
   const count = el("cmd-count");
   if (count) count.textContent = current.seq.length + (lang === "fr" ? " commande(s)" : " command(s)");
   persistAttempt();
+  previewFirstMission(lang);
+}
+
+/* P1 : chaque clic montre immédiatement le pas ajouté, sans valider la victoire.
+   Le bouton Exécuter reste le moment où la liste complète est évaluée. */
+function previewFirstMission(lang) {
+  if (!current || current.stageId !== "w1p1" || running) return;
+  const canvas = el("world"), ctx = canvas ? canvas.getContext("2d") : null;
+  if (!canvas || !ctx) return;
+  const preview = freshState(current.stage);
+  for (const cmd of current.seq) {
+    const result = applyOne(current.stage, preview, cmd);
+    if (!result.ok || result.won) break;
+  }
+  simState = preview;
+  draw(ctx, simState);
+  if (current.seq.length) {
+    setRunState(lang === "fr" ? "Aperçu immédiat — exécute ta liste pour la valider." : "Instant preview — run your list to validate it.", "ok");
+  }
 }
 
 /* Comptage étoiles de la tentative en cours. */
@@ -629,6 +655,11 @@ function renderSpecialZone(st, lang) {
   if (kind === "spell_grid") { buildRepairPanel(st, lang); }
 }
 
+const BROKEN_WORDS = {
+  A: { fr: "AVVANCE", en: "FORRWARD" },
+  T: { fr: "TOUNE", en: "TRN" }
+};
+
 function buildRepairPanel(st, lang) {
   const sp = el("panel-special");
   sp.textContent = "";
@@ -642,7 +673,8 @@ function buildRepairPanel(st, lang) {
     const word = CMD_META[cmd][lang].replace(/ /g, "");      // AVANCE / FORWARD…
     const row = mkl("div", "repair-row");
     row.setAttribute("data-cmd", cmd);
-    const info = mkl("div", "repair-label", (lang === "fr" ? "Commande cassée : " : "Broken command: ") + CMD_META[cmd][lang]);
+    const brokenWord = (BROKEN_WORDS[cmd] && BROKEN_WORDS[cmd][lang]) || "?";
+    const info = mkl("div", "repair-label", (lang === "fr" ? "Commande cassée : " : "Broken command: ") + brokenWord);
     const tiles = mkl("div", "repair-tiles");
     row.appendChild(info);
     row.appendChild(tiles);
@@ -678,7 +710,7 @@ function buildRepairPanel(st, lang) {
           current.errorsThis++;
           t.classList.add("wrong");
           setTimeout(() => t.classList.remove("wrong"), 400);
-          toast(lang === "fr" ? "Pas la bonne lettre — regarde le mot affiché." : "Wrong letter — look at the word shown.", "err");
+          toast(lang === "fr" ? "Pas la bonne lettre — compare avec la carte des commandes." : "Wrong letter — compare with the command card.", "err");
         }
       });
       tiles.appendChild(t);
@@ -734,7 +766,7 @@ function showQuizQuestion(lang) {
   const sp = el("panel-special");
   const q = mkl("div", "quiz-question");
   q.appendChild(mkl("p", "quiz-q", "🦋 " + QUIZ_DATA.question[lang]));
-  QUIZ_DATA.answers.forEach(a => {
+  shuffleArr(QUIZ_DATA.answers).forEach(a => {
     const b = mkl("button", "btn big quiz-ans", a[lang]);
     b.type = "button";
     b.addEventListener("click", () => {
@@ -802,6 +834,8 @@ function draw(ctx, st) {
   });
   // bouées (p7) : obstacles visuels distincts, infranchissables
   (stage.buoys || []).forEach(b => drawBuoy(ctx, b[0], b[1]));
+  // repères cités par les consignes (p4 cabane, p8 mât)
+  (stage.landmarks || []).forEach(mark => drawLandmark(ctx, mark));
 
   // objectif (pastille dorée / cristal p2 / rampe p7) — atteint en marchant dessus
   if (stage.pastille) drawGoal(ctx, stage, st);
@@ -829,6 +863,27 @@ function drawWall(ctx, c, r, heroType) {
   rrect(ctx, x, y, w, w, 8); ctx.fill();
   ctx.fillStyle = "rgba(0,0,0,.25)";
   ctx.beginPath(); ctx.arc(c * CELL + CELL / 2, r * CELL + CELL / 2, 6, 0, Math.PI * 2); ctx.fill();
+}
+
+/* Repères narratifs explicitement utilisés pour planifier le parcours. */
+function drawLandmark(ctx, mark) {
+  const c = mark.at[0], r = mark.at[1];
+  const cx = c * CELL + CELL / 2, cy = r * CELL + CELL / 2;
+  ctx.save();
+  if (mark.type === "hut") {
+    ctx.fillStyle = "#76563b";
+    rrect(ctx, cx - 18, cy - 10, 36, 26, 4); ctx.fill();
+    ctx.fillStyle = "#b96b45";
+    ctx.beginPath(); ctx.moveTo(cx - 22, cy - 10); ctx.lineTo(cx, cy - 27); ctx.lineTo(cx + 22, cy - 10); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = "#f5b83d";
+    rrect(ctx, cx - 5, cy + 1, 10, 15, 2); ctx.fill();
+  } else if (mark.type === "mast") {
+    ctx.strokeStyle = "#d8c39b"; ctx.lineWidth = 5; ctx.lineCap = "round";
+    ctx.beginPath(); ctx.moveTo(cx, cy + 22); ctx.lineTo(cx, cy - 24); ctx.stroke();
+    ctx.fillStyle = "#4fd0e0";
+    ctx.beginPath(); ctx.moveTo(cx + 3, cy - 22); ctx.lineTo(cx + 21, cy - 14); ctx.lineTo(cx + 3, cy - 7); ctx.closePath(); ctx.fill();
+  }
+  ctx.restore();
 }
 
 /* Bouée rouge (p7) : infranchissable, rendue comme obstacle marin distinct. */
@@ -1095,12 +1150,12 @@ function stopRun(victoryShown) {
   if (stopBtn) stopBtn.classList.add("hidden");
 }
 
-/* Étoiles : 3 = zéro erreur ET zéro indice ; 2 = un seul des deux ; sinon 1.
-   Si le stage impose un bonus d'efficacité (p5 : ≤ 8 commandes), au-delà = 2 max. */
+/* Étoiles : les indices aident et ne punissent jamais.
+   3 = zéro erreur d'exécution ; 2 = une erreur ; 1 = deux erreurs ou plus.
+   Si le stage impose un défi d'efficacité (p5 : ≤ 8 commandes), au-delà = 2 max. */
 function computeStars(stepsRun) {
-  const e = current.errorsThis, h = current.hintsThis;
-  const used = (e > 0 ? 1 : 0) + (h > 0 ? 1 : 0);
-  let stars = used === 0 ? 3 : (used === 1 ? 2 : 1);
+  const e = current.errorsThis;
+  let stars = e === 0 ? 3 : (e === 1 ? 2 : 1);
   const st = current.stage;
   if (st && st.efficiency && stepsRun && stepsRun > st.efficiency) {
     stars = Math.min(stars, 2);

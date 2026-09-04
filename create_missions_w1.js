@@ -17,9 +17,9 @@ window.CREATE_MISSIONS = {
    "fr": {
     "name": "Première commande",
     "hook": "Au Quai des signaux, la tortue Galet attend une commande pour s'éveiller. Trouve le bon mot, et elle s'élancera vers la pastille dorée !",
-    "instructions": "Bienvenue au Quai des signaux, futur gardien ou future gardienne ! Galet est une tortue-lanterne toute neuve. Elle ne bouge que si on lui donne une commande précise. Regarde les trois boutons sous l'écran. Chacun cache une action. Clique sur AVANCE et observe : Galet fait un pas vers l'avant. Continue jusqu'à la pastille dorée. Tu réussis quand Galet pose sa patte sur la pastille.",
+    "instructions": "Bienvenue au Quai des signaux, futur gardien ou future gardienne ! Galet est une tortue-lanterne toute neuve. Elle ne bouge que si on lui donne une commande précise. Regarde le bouton sous l'écran : il porte l'action AVANCE. Clique sur AVANCE et observe : Galet montre aussitôt son prochain pas. Continue jusqu'à la pastille dorée, puis exécute ta liste. Tu réussis quand Galet pose sa patte sur la pastille.",
     "hints": [
-     "Lis chaque bouton à voix haute, puis clique pour voir ce que fait Galet.",
+     "Lis le bouton à voix haute, puis clique pour voir ce que fait Galet.",
      "Le gros bouton vert cache un mot qui fait avancer Galet.",
      "Le mot magique est AVANCE : clique-le, puis clique encore jusqu'à la pastille."
     ],
@@ -29,9 +29,9 @@ window.CREATE_MISSIONS = {
    "en": {
     "name": "First Command",
     "hook": "At Signal Quay, the turtle Galet is waiting for a command to wake up. Find the right word, and she will zoom to the golden spot!",
-    "instructions": "Welcome to Signal Quay, young keeper! Galet is a brand-new lantern turtle. She only moves when she gets a precise command. Look at the three buttons under the screen. Each one hides an action. Click FORWARD and watch: Galet takes one step forward. Keep going until the golden spot. You win when Galet's paw touches the spot.",
+    "instructions": "Welcome to Signal Quay, young keeper! Galet is a brand-new lantern turtle. She only moves when she gets a precise command. Look at the button under the screen: it carries the FORWARD action. Click FORWARD and watch: Galet immediately shows her next step. Continue to the golden spot, then run your list. You win when Galet's paw touches the spot.",
     "hints": [
-     "Read each button out loud, then click to see what Galet does.",
+     "Read the button out loud, then click to see what Galet does.",
      "The big green button hides the word that makes Galet go forward.",
      "The magic word is FORWARD: click it, then click again until the spot."
     ],
@@ -83,10 +83,10 @@ window.CREATE_MISSIONS = {
    "fr": {
     "name": "Trois pas vers le cristal",
     "hook": "Un cristal brille au bout du quai. Galet veut le ramasser, mais elle ne sait pas encore quel chemin suivre. À toi d'écrire la suite des pas !",
-    "instructions": "Galet est posée au départ, le nez vers la mer. Elle n'avance que si on le lui dit, et elle ne tourne que si on le lui dit. Ta mission : écrire une liste de commandes qui la mène jusqu'au cristal. Regarde d'abord le chemin : il faut avancer tout droit, puis tourner vers le quai, puis avancer encore. Glisse les commandes AVANCE et TOURNE dans la liste, dans le bon ordre, puis lance. Galet exécute ta liste pas à pas. Quand elle touche le cristal, c'est gagné !",
+    "instructions": "Galet est posée au départ, le nez vers la mer. Elle n'avance que si on le lui dit, et elle ne tourne que si on le lui dit. Ta mission : écrire une liste de commandes qui la mène jusqu'au cristal. Regarde d'abord le chemin : il faut avancer tout droit, puis tourner vers le quai, puis avancer encore. Clique sur AVANCE et TOURNE pour les ajouter à la liste dans le bon ordre, puis lance. Galet exécute ta liste pas à pas. Quand elle touche le cristal, c'est gagné !",
     "hints": [
      "Regarde le bout du chemin : par où Galet doit-elle partir, et où doit-elle arriver ?",
-     "Galet commence le nez vers la mer : pour rejoindre le quai, elle doit d'abord changer de direction.",
+     "Galet commence face au premier morceau du chemin : avance avant de tourner vers le quai.",
      "La bonne liste commence par AVANCE, continue par TOURNE, et se termine par AVANCE."
     ],
     "victory": "Le cristal s'allume dans la coquille de Galet. Ta suite de commandes était dans le bon ordre !",
@@ -95,10 +95,10 @@ window.CREATE_MISSIONS = {
    "en": {
     "name": "Three Steps to the Crystal",
     "hook": "A crystal shines at the end of the quay. Galet wants to pick it up, but she does not know the way yet. You write the steps!",
-    "instructions": "Galet stands at the start, nose facing the sea. She only moves when told, and she only turns when told. Your mission: write a list of commands that leads her to the crystal. First look at the path: go straight, then turn toward the quay, then go straight again. Drag the FORWARD and TURN commands into the list, in the right order, then run. Galet follows your list step by step. When she touches the crystal, you win!",
+    "instructions": "Galet stands at the start, nose facing the sea. She only moves when told, and she only turns when told. Your mission: write a list of commands that leads her to the crystal. First look at the path: go straight, then turn toward the quay, then go straight again. Click FORWARD and TURN to add them to the list in the right order, then run. Galet follows your list step by step. When she touches the crystal, you win!",
     "hints": [
      "Look at the end of the path: where does Galet start, and where must she arrive?",
-     "Galet starts facing the sea: to reach the quay she must first change direction.",
+     "Galet starts facing the first part of the path: move forward before turning toward the quay.",
      "The right list starts with FORWARD, continues with TURN, and ends with FORWARD."
     ],
     "victory": "The crystal lights up inside Galet's shell. Your command list was in the right order!",
@@ -113,7 +113,7 @@ window.CREATE_MISSIONS = {
    ],
    "mechanics": [
     "sequence_planning",
-    "drag_and_drop_blocks",
+    "tap_to_sequence",
     "run_button",
     "step_by_step_observation"
    ],
@@ -149,9 +149,9 @@ window.CREATE_MISSIONS = {
    "fr": {
     "name": "Le mot exact",
     "hook": "Zut ! Un lutin farceur a mélangé les lettres des commandes de Galet. Sans le mot exact, Galet ne comprend rien. Répare ses commandes !",
-    "instructions": "Galet ne comprend que les mots exacts de sa carte de commandes. Si un mot est mal écrit, elle ne bouge pas d'une patte. Sur ton écran, deux commandes sont cassées : elles contiennent des lettres en trop ou en moins. Compare-les avec la carte affichée à gauche, corrige-les en cliquant sur les lettres, puis construis une liste pour ramasser les deux cristaux et allumer la petite lanterne au bout du quai. Chaque fois qu'une commande est correcte, Galet la répète en hochant la tête.",
+    "instructions": "Galet ne comprend que les mots exacts de sa carte de commandes. Si un mot est mal écrit, elle ne bouge pas d'une patte. Sur ton écran, deux commandes sont cassées : elles contiennent des lettres en trop ou en moins. Compare-les avec la carte affichée près du monde, corrige-les en cliquant sur les lettres, puis construis une liste pour ramasser les deux cristaux et allumer la petite lanterne au bout du quai. Chaque fois qu'une commande est correcte, Galet la répète en hochant la tête.",
     "hints": [
-     "La carte de gauche montre les commandes que Galet connaît. Compare lettre par lettre.",
+     "La carte près du monde montre les commandes que Galet connaît. Compare lettre par lettre.",
      "Une commande cassée contient une lettre en trop ; l'autre a une lettre manquante.",
      "Quand les deux mots sont réparés, enchaîne AVANCE, RAMASSE, puis la commande ALLUME au bon moment."
     ],
@@ -161,9 +161,9 @@ window.CREATE_MISSIONS = {
    "en": {
     "name": "The Exact Word",
     "hook": "Oh no! A prankster imp mixed up the letters of Galet's commands. Without the exact word, Galet understands nothing. Repair her commands!",
-    "instructions": "Galet only understands the exact words on her command card. If a word is misspelled, she does not move a paw. On your screen, two commands are broken: they have extra letters or missing letters. Compare them with the card shown on the left, fix them by clicking the letters, then build a list to pick up the two crystals and light the little lantern at the end of the quay. Each time a command is correct, Galet repeats it with a nod.",
+    "instructions": "Galet only understands the exact words on her command card. If a word is misspelled, she does not move a paw. On your screen, two commands are broken: they have extra letters or missing letters. Compare them with the card shown near the world, fix them by clicking the letters, then build a list to pick up the two crystals and light the little lantern at the end of the quay. Each time a command is correct, Galet repeats it with a nod.",
     "hints": [
-     "The card on the left shows the commands Galet knows. Compare letter by letter.",
+     "The card near the world shows the commands Galet knows. Compare letter by letter.",
      "One broken command has an extra letter; the other is missing a letter.",
      "Once both words are fixed, chain FORWARD, PICK UP, then the LIGHT command at the right moment."
     ],
@@ -222,7 +222,7 @@ window.CREATE_MISSIONS = {
      "Utilise la carte des commandes : chaque mot y est écrit exactement. Reproduis-les sans rien changer."
     ],
     "victory": "Les deux lanternes du quai brillent dans la nuit. Le festival peut commencer grâce à ta liste de commandes !",
-    "celebration": "Tout le quai s'illumine : bleu, or et vert. Luciole grave ton nom de gardien sur la carte des commandes, sous la mention « Ordre parfait »."
+    "celebration": "Tout le quai s'illumine : bleu, or et vert. Luciole grave ton symbole de gardien sur la carte des commandes, sous la mention « Ordre parfait »."
    },
    "en": {
     "name": "The Lantern Lighter",
@@ -234,7 +234,7 @@ window.CREATE_MISSIONS = {
      "Use the command card: each word is written there exactly. Copy the words without changing anything."
     ],
     "victory": "Both quay lanterns shine in the night. The festival can begin, thanks to your command list!",
-    "celebration": "The whole quay lights up: blue, gold and green. Luciole carves your keeper name onto the command map, under the words \"Perfect order\"."
+    "celebration": "The whole quay lights up: blue, gold and green. Luciole carves your keeper symbol onto the command map, under the words \"Perfect order\"."
    }
   },
   "engagement": {
@@ -280,27 +280,27 @@ window.CREATE_MISSIONS = {
   "i18n": {
    "fr": {
     "name": "Le jardin des cristaux",
-    "hook": "Le jardin secret du phare est rempli de cristaux, mais le chemin change à chaque visite. Personne ne peut t'aider : seulement toi et ta carte de commandes.",
-    "instructions": "Galet entre dans le jardin secret. Ramasse les trois cristaux qui brillent, sans aide et sans exemple. Tu choisis toi-même les commandes et leur ordre. Un cristal est ramassé quand Galet passe dessus avec la commande RAMASSE. Si Galet reste bloquée contre un buisson, relis ta liste et corrige-la : chaque mot doit être exact et chaque étape doit servir. Quand les trois cristaux sont dans sa coquille, la sortie s'ouvre. Variante bonus : termine en moins de huit commandes pour gagner l'étoile du jardin.",
+    "hook": "Le jardin secret du phare est rempli de cristaux. Ce chemin est nouveau pour Galet : à toi de le lire avec ta carte de commandes.",
+    "instructions": "Galet entre dans le jardin secret. Ramasse les trois cristaux qui brillent, sans exemple imposé. Tu choisis toi-même les commandes et leur ordre. Un cristal est ramassé quand Galet passe dessus avec la commande RAMASSE. Si Galet reste bloquée contre un buisson, relis ta liste et corrige-la : chaque mot doit être exact et chaque étape doit servir. Quand les trois cristaux sont dans sa coquille, la sortie s'ouvre. Défi précision : termine en huit commandes maximum pour conserver les trois étoiles.",
     "hints": [
      "Commence par observer : où Galet doit-elle aller en premier ? Écris seulement ce premier morceau.",
      "Tu peux tester ta liste à tout moment. Une commande inutile n'est pas une faute, mais elle allonge le chemin.",
      "Si un mot ne fonctionne pas, vérifie sa forme sur la carte des commandes : une seule lettre peut tout changer."
     ],
     "victory": "Trois cristaux brillent dans la coquille de Galet et la grille du jardin s'ouvre en grand. Mission accomplie en solo !",
-    "celebration": "Une pluie d'étoiles tombe sur le jardin et l'étoile bonus apparaît dans ton carnet. Luciole te salue depuis la fenêtre du phare : « Le gardien se débrouille seul, maintenant ! »"
+    "celebration": "Une pluie d'étoiles tombe sur le jardin et tes trois étoiles brillent dans ton carnet. Luciole te salue depuis la fenêtre du phare : « Le gardien se débrouille seul, maintenant ! »"
    },
    "en": {
     "name": "The Crystal Garden",
-    "hook": "The lighthouse secret garden is full of crystals, but the path changes on every visit. Nobody can help you: just you and your command card.",
-    "instructions": "Galet steps into the secret garden. Pick up the three shining crystals, with no help and no example. You choose the commands and their order yourself. A crystal is collected when Galet steps on it with the PICK UP command. If Galet gets stuck against a bush, reread your list and fix it: every word must be exact and every step must be useful. When the three crystals are in her shell, the exit opens. Bonus variant: finish in fewer than eight commands to earn the garden star.",
+    "hook": "The lighthouse secret garden is full of crystals. This path is new to Galet: read it with your command card.",
+    "instructions": "Galet steps into the secret garden. Pick up the three shining crystals, with no imposed example. You choose the commands and their order yourself. A crystal is collected when Galet steps on it with the PICK UP command. If Galet gets stuck against a bush, reread your list and fix it: every word must be exact and every step must be useful. When the three crystals are in her shell, the exit opens. Precision challenge: finish in eight commands or fewer to keep all three stars.",
     "hints": [
      "Start by looking: where must Galet go first? Write only that first piece.",
      "You can test your list at any time. A useless command is not a mistake, but it makes the path longer.",
      "If a word does not work, check its shape on the command card: a single letter can change everything."
     ],
     "victory": "Three crystals shine inside Galet's shell and the garden gate swings wide open. Mission complete, all on your own!",
-    "celebration": "A shower of stars falls over the garden and the bonus star appears in your logbook. Luciole waves from the lighthouse window: \"The keeper can manage alone now!\""
+    "celebration": "A shower of stars falls over the garden and all three stars shine in your logbook. Luciole waves from the lighthouse window: \"The keeper can manage alone now!\""
    }
   },
   "engagement": {
@@ -347,7 +347,7 @@ window.CREATE_MISSIONS = {
    "fr": {
     "name": "La carte des commandes",
     "hook": "Trois machines du quai se sont endormies : la charrette, le moulin et la grue. Chacune attend sa commande préférée. Réveille-les dans le bon ordre !",
-    "instructions": "Ce matin, c'est toi la cheffe ou le chef du quai. Trois machines attendent devant toi, chacune avec sa fiche : la charrette veut rouler, le moulin veut tourner, la grue veut soulever. En dessous, trois cartes-commandes sont mélangées : AVANCE, TOURNE, RAMASSE. Glisse chaque carte sur la machine qui lui correspond, puis lance la journée : les machines s'éveillent l'une après l'autre. Ensuite, Luciole te pose une question : quel est le secret pour qu'une commande fonctionne ? Choisis la bonne réponse parmi les trois proposées.",
+    "instructions": "Ce matin, c'est toi la cheffe ou le chef du quai. Trois machines attendent devant toi, chacune avec sa fiche : la charrette veut rouler, le moulin veut tourner, la grue veut soulever. Pour chaque machine, clique sur la commande qui lui correspond : AVANCE, TOURNE ou RAMASSE. La machine s'éveille aussitôt quand le choix est juste. Ensuite, Luciole te pose une question : quel est le secret pour qu'une commande fonctionne ? Choisis la bonne réponse parmi les trois proposées.",
     "hints": [
      "Lis la fiche de chaque machine : elle décrit l'action avec tes mots, pas avec des mots compliqués.",
      "Si une machine ne se réveille pas, c'est que la carte posée dessus n'est pas la bonne. Essaie une autre carte.",
@@ -359,7 +359,7 @@ window.CREATE_MISSIONS = {
    "en": {
     "name": "The Command Map",
     "hook": "Three quay machines have fallen asleep: the cart, the windmill and the crane. Each one waits for its favourite command. Wake them up in the right order!",
-    "instructions": "This morning, you are the boss of the quay. Three machines wait in front of you, each with its card: the cart wants to roll, the windmill wants to turn, the crane wants to lift. Below, three command cards are mixed up: FORWARD, TURN, PICK UP. Drag each card onto the machine it matches, then start the day: the machines wake up one after another. Then Luciole asks you a question: what is the secret for a command to work? Choose the right answer among the three offered.",
+    "instructions": "This morning, you are the boss of the quay. Three machines wait in front of you, each with its card: the cart wants to roll, the windmill wants to turn, the crane wants to lift. For each machine, click the command that matches it: FORWARD, TURN or PICK UP. The machine wakes immediately when the choice is right. Then Luciole asks you a question: what is the secret for a command to work? Choose the right answer among the three offered.",
     "hints": [
      "Read each machine's card: it describes the action in simple words.",
      "If a machine does not wake up, the card on it is wrong. Try another card.",
@@ -413,7 +413,7 @@ window.CREATE_MISSIONS = {
    "fr": {
     "name": "La barque du canal",
     "hook": "La barque de livraison attend au canal, chargée de cristaux pour le phare. Elle ne connaît que deux commandes, et elle n'écoute que toi. Sauras-tu la mener à bon port ?",
-    "instructions": "Fini la tortue : aujourd'hui, tu guides une barque sur le canal. Elle ne sait que deux commandes : AVANCE (elle glisse tout droit sur une case) et TOURNE (elle pivote sur place vers la gauche ou la droite). Ta mission : la faire partir du ponton, longer la bouée rouge sans la toucher, et l'arrêter pile devant la rampe du phare. Si elle dépasse la rampe, elle touche la berge : recommence en comptant mieux tes AVANCE. La cloche sonne quand la barque est amarrée.",
+    "instructions": "Fini la tortue : aujourd'hui, tu guides une barque sur le canal. Elle ne sait que deux commandes : AVANCE (elle glisse tout droit sur une case) et TOURNE (elle pivote sur place d'un quart de tour vers la droite). Ta mission : la faire partir du ponton, longer la bouée rouge sans la toucher, et l'arrêter pile devant la rampe du phare. Si elle dépasse la rampe, elle touche la berge : recommence en comptant mieux tes AVANCE. La cloche sonne quand la barque est amarrée.",
     "hints": [
      "Compte les cases d'eau entre le ponton et la bouée, puis entre la bouée et la rampe : chaque AVANCE fait glisser la barque d'une case.",
      "Pour passer la bouée sans la toucher, la barque doit tourner avant d'arriver à sa hauteur.",
@@ -425,7 +425,7 @@ window.CREATE_MISSIONS = {
    "en": {
     "name": "The Canal Boat",
     "hook": "The delivery boat waits in the canal, loaded with crystals for the lighthouse. It knows only two commands, and it listens only to you. Can you bring it safely home?",
-    "instructions": "No turtle this time: today you guide a boat on the canal. It only knows two commands: FORWARD (it glides straight ahead one square) and TURN (it spins in place, left or right). Your mission: leave the jetty, pass the red buoy without touching it, and stop exactly in front of the lighthouse ramp. If it goes too far, it bumps the bank: try again and count your FORWARD commands better. The bell rings when the boat is moored.",
+    "instructions": "No turtle this time: today you guide a boat on the canal. It only knows two commands: FORWARD (it glides straight ahead one square) and TURN (it rotates a quarter-turn clockwise in place). Your mission: leave the jetty, pass the red buoy without touching it, and stop exactly in front of the lighthouse ramp. If it goes too far, it bumps the bank: try again and count your FORWARD commands better. The bell rings when the boat is moored.",
     "hints": [
      "Count the water squares between the jetty and the buoy, then between the buoy and the ramp: each FORWARD glides the boat one square.",
      "To pass the buoy without touching it, the boat must turn before it reaches it.",
