@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>WONDRA CREATE — Monde 1 · Le Quai des signaux</title>
+<style>
+  /* ===== WONDRA CREATE — styles autonomes (aucun CDN/lib externe) =====
+     Reprend le vocabulaire visuel produit : panneaux sombres, bordures dorées,
+     boutons biseautés, touches >= 44px, pas de signal couleur seul. */
+  :root{
+    --bg:#131619; --panel:#1d232a; --panel2:#232b34; --ink:#e8e6df;
+    --muted:#9aa5b1; --gold:#f5b83d; --gold2:#d99a26; --blue:#4aa3df;
+    --green:#59c86b; --red:#e05d5d; --border:#3a4552; --radius:10px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    background:radial-gradient(1200px 500px at 70% -10%,#223041 0%,transparent 60%),var(--bg);
+    color:var(--ink);
+    font:15px/1.5 "Trebuchet MS","Segoe UI",system-ui,sans-serif;
+    display:flex;flex-direction:column;min-height:100vh;
+  }
+  .hidden{display:none!important}
+
+  /* barre du haut */
+  .appbar{
+    position:sticky;top:0;z-index:40;flex:0 0 auto;
+    display:flex;align-items:center;gap:12px;padding:8px 16px;flex-wrap:wrap;
+    background:linear-gradient(#242c35,#1a2027);
+    border-bottom:2px solid var(--border);box-shadow:0 2px 14px rgba(0,0,0,.5);
+  }
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+  .logo-mark{
+    width:40px;height:40px;flex:0 0 40px;display:grid;place-items:center;
+    border:2px solid var(--gold2);border-radius:11px;background:var(--panel2);
+    font-size:21px;font-weight:800;color:var(--gold);box-shadow:0 0 14px rgba(245,184,61,.18);
+  }
+  .brand-text strong{font-size:18px;letter-spacing:.4px;color:var(--gold)}
+  .brand-text small{color:var(--muted);font-size:12px}
+  .app-actions{margin-left:auto;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .seg{display:flex;border:1px solid var(--border);border-radius:999px;overflow:hidden}
+  .seg button{
+    appearance:none;border:0;background:var(--panel2);color:var(--muted);
+    font:inherit;font-size:13px;font-weight:700;padding:9px 14px;min-height:42px;cursor:pointer;
+  }
+  .seg button.active{background:linear-gradient(var(--gold),var(--gold2));color:#241a05}
+  .btn{
+    background:linear-gradient(#3a4552,#2c3540);color:var(--ink);
+    border:1px solid var(--border);border-radius:var(--radius);
+    padding:9px 14px;font-size:14px;font-family:inherit;cursor:pointer;
+    min-height:42px;transition:transform .05s,filter .15s;
+  }
+  .btn:hover{filter:brightness(1.15)}
+  .btn:active{transform:translateY(1px)}
+  .btn.primary{background:linear-gradient(var(--gold),var(--gold2));border-color:#a8761d;color:#241a05;font-weight:700}
+  .btn.big{padding:11px 22px;font-size:16px;min-height:48px}
+  .btn.ghost{background:transparent}
+  a:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+  /* écrans */
+  .screen{display:none;width:100%;max-width:1120px;margin:0 auto;padding:14px 16px 40px;flex:1 0 auto}
+  .screen.visible{display:block}
+
+  /* ===== carte (map) ===== */
+  .map-head{margin:6px 0 16px}
+  .map-title{color:var(--gold);font-size:1.35rem;letter-spacing:.3px}
+  .map-sub{color:var(--muted);font-size:.95rem;margin-top:4px}
+  .world-banner{
+    margin:0 0 18px;padding:16px 18px;border:1px solid rgba(255,255,255,.11);border-radius:14px;
+    background:linear-gradient(135deg,#14202e,#0e1620);
+  }
+  .world-banner b{color:var(--ink);font-size:1.05rem}
+  .world-banner p{color:var(--muted);font-size:.9rem;margin-top:4px}
+  .missions{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:6px}
+  .mission-card{
+    position:relative;text-align:left;cursor:pointer;border-radius:14px;padding:14px;
+    background:var(--panel);border:2px solid var(--border);color:var(--ink);
+    font-family:inherit;transition:transform .12s,box-shadow .12s,border-color .12s;
+    min-height:128px;
+  }
+  .mission-card:hover:not(.locked){transform:translateY(-3px);border-color:var(--gold)}
+  .mission-card.next{border-color:var(--blue);box-shadow:0 0 0 1px rgba(74,163,223,.35)}
+  .mission-card.done{border-color:var(--green)}
+  .mission-card.locked{opacity:.45;cursor:not-allowed;filter:grayscale(.5)}
+  .mc-num{font-size:.74rem;font-weight:800;letter-spacing:.06em;color:var(--blue);text-transform:uppercase}
+  .mc-role{
+    display:inline-block;margin:4px 0 6px;padding:2px 8px;border-radius:999px;font-size:.68rem;
+    background:var(--panel2);border:1px solid var(--border);color:var(--muted);letter-spacing:.03em;
+  }
+  .mc-name{font-size:1.02rem;font-weight:700;color:var(--ink)}
+  .mc-stars{color:var(--gold);font-size:1.05rem;letter-spacing:2px;margin-top:8px}
+  .mc-stars .off{color:#4a5461}
+  .mc-lock{position:absolute;top:10px;right:12px;font-size:20px}
+
+  /* ===== mission ===== */
+  .mission-wrap{display:grid;grid-template-columns:minmax(300px,1fr) 1.35fr;gap:16px;align-items:start}
+  .panel{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:14px}
+  .mission-name{color:var(--gold);font-size:1.25rem;margin-bottom:2px}
+  .mission-role{color:var(--muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+  .block-title{font-weight:700;color:var(--gold);font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;margin:12px 0 6px}
+  .block-title:first-child{margin-top:0}
+  .hook{font-size:1rem;color:#dfe6ee;margin-bottom:10px}
+  .inst{color:#cdd5dd;font-size:.92rem}
+  .hint-li,.goal-li{margin:4px 0;font-size:.88rem;color:#cdd5dd;padding:6px 8px;border-radius:8px;background:#162028;border-left:3px solid var(--border)}
+  .btn.small{padding:6px 10px;font-size:.82rem;min-height:36px;margin-top:6px}
+  .muted{color:var(--muted);font-size:.85rem}
+
+  /* zone de jeu */
+  .view-pane{display:flex;flex-direction:column;gap:12px}
+  .canvas-wrap{
+    display:flex;justify-content:center;align-items:center;padding:10px;
+    background:#0c0f13;border:2px solid var(--border);border-radius:14px;min-height:120px;
+  }
+  #world{background:#101d15;max-width:100%;height:auto;border-radius:8px}
+  .palette{display:flex;flex-wrap:wrap;gap:8px}
+  .cmd-btn{
+    flex:1 1 110px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14px;
+    border:2px solid var(--border);border-radius:12px;padding:12px 8px;min-height:52px;
+    background:var(--panel2);color:var(--ink);cursor:pointer;
+  }
+  .cmd-btn:hover{border-color:var(--gold);filter:brightness(1.1)}
+  .cmd-A{border-color:#3e8a4e}.cmd-T{border-color:#2f6fb0}.cmd-R{border-color:#4fb2a4}.cmd-L{border-color:#c07f20}
+  /* commandes listées */
+  .list-head{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+  .list-head .block-title{margin:0}
+  #cmd-count{color:var(--muted);font-size:.8rem;margin-left:auto}
+  #cmd-list{display:flex;flex-direction:column;gap:6px;min-height:56px;max-height:230px;overflow:auto}
+  .cmd-item{
+    display:flex;align-items:center;gap:6px;padding:7px 8px;border-radius:9px;
+    background:#10141a;border:1px solid var(--border);
+  }
+  .cmd-item .cmd-code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14px;color:#7ee787;flex:1;overflow-wrap:anywhere}
+  .cmd-item.err{border-color:var(--red);background:#2a1818;box-shadow:0 0 0 1px rgba(224,93,93,.5)}
+  .cmd-item.err .cmd-code{color:var(--red)}
+  .mini{width:34px;height:34px;min-height:34px;flex:0 0 34px;background:var(--panel2);border:1px solid var(--border);color:var(--muted);border-radius:7px;cursor:pointer;font-size:13px}
+  .mini:hover{color:var(--gold);border-color:var(--gold)}
+  .empty-cmd{color:var(--muted);font-size:.85rem;padding:10px;text-align:center;border:1px dashed var(--border);border-radius:9px}
+  .run-row{display:flex;align-items:center;gap:8px;margin-top:6px;flex-wrap:wrap}
+  .run-state{color:var(--muted);font-size:.86rem;flex:1;min-width:160px}
+  .run-state.err{color:var(--red)}
+  .run-state.ok{color:var(--green)}
+
+  /* mots cassés (p3) + machines (p6) */
+  .cmd-btn:disabled.broken{opacity:.45;cursor:not-allowed;filter:grayscale(.7);text-decoration:line-through;border-style:dashed}
+  .cmd-btn:disabled.broken:hover{border-color:var(--border)}
+  .repair-wrap{display:flex;flex-direction:column;gap:14px}
+  .repair-row{border:1px dashed var(--border);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px}
+  .repair-row.fixed{border-color:var(--green);background:rgba(62,138,78,.08)}
+  .repair-label{color:var(--muted);font-size:.88rem}
+  .repair-tiles{display:flex;flex-wrap:wrap;gap:6px}
+  .rtile{width:40px;height:40px;font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:bold;font-size:17px;
+    background:var(--panel2);border:2px solid var(--border);border-radius:9px;color:var(--ink);cursor:pointer}
+  .rtile.used{opacity:.22;pointer-events:none;border-style:dashed}
+  .rtile.wrong{border-color:var(--red);background:#2a1818}
+  .repair-prog{font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--green);letter-spacing:3px;font-size:19px;min-height:22px}
+  .quiz-machines{display:flex;flex-direction:column;gap:10px}
+  .machine-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;border:1px solid var(--border);
+    border-radius:12px;padding:10px 12px;background:var(--panel2)}
+  .machine-row.ok{border-color:var(--green);background:rgba(62,138,78,.10)}
+  .m-icon{font-size:28px}
+  .m-name{font-weight:bold}
+  .m-wants{color:var(--muted);font-size:.85rem;flex:1;min-width:90px}
+  .m-opts{display:flex;gap:6px;flex-wrap:wrap}
+  .m-opt{padding:7px 10px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px}
+  .quiz-question{margin-top:14px;border:2px solid var(--gold);border-radius:12px;padding:14px;background:rgba(245,184,61,.06)}
+  .quiz-q{font-weight:bold;color:var(--gold);margin-bottom:10px}
+  .quiz-ans{width:100%;text-align:left;justify-content:flex-start}
+
+  /* toast + modale */
+  .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:90;max-width:90vw;
+    background:rgba(20,24,30,.96);border:1px solid var(--border);color:var(--ink);
+    padding:10px 16px;border-radius:999px;font-size:14px;text-align:center}
+  .toast.err{border-color:var(--red)}
+  .modal{position:fixed;inset:0;z-index:70;background:rgba(5,8,12,.74);display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto}
+  .modal-card{width:min(520px,94vw);background:var(--panel);border:2px solid var(--gold);border-radius:16px;padding:24px;text-align:center;box-shadow:0 10px 50px rgba(0,0,0,.6);max-height:92vh;overflow:auto}
+  .modal-card h3{color:var(--gold);font-size:1.4rem;margin-bottom:6px}
+  .win-stars{font-size:34px;letter-spacing:6px;margin:8px 0;color:var(--gold)}
+  .win-stars .off{color:#4a5461}
+  .modal-text{color:var(--ink);font-size:1rem;margin:8px 0}
+  .modal-sub{color:var(--muted);font-size:.9rem;margin-bottom:16px}
+  .artefact{font-size:56px;margin:8px 0}
+  .modal-card .btn{margin:4px}
+
+  @media (max-width:880px){
+    .mission-wrap{grid-template-columns:1fr}
+    .brand-text small{display:none}
+  }
+</style>
+</head>
+<body data-route="create">
+
+  <!-- Barre unique -->
+  <header class="appbar">
+    <a class="brand" href="#/w1" aria-label="WONDRA CREATE — carte du Monde 1">
+      <span class="logo-mark" aria-hidden="true">W</span>
+      <span class="brand-text">
+        <strong>WONDRA CREATE</strong>
+        <small>Le Quai des signaux</small>
+      </span>
+    </a>
+    <div class="app-actions">
+      <button id="back-btn" class="btn ghost" type="button" aria-label="Retour à la carte">← Carte</button>
+      <div class="seg" role="group" aria-label="Langue">
+        <button id="lang-fr" type="button" aria-label="Français">FR</button>
+        <button id="lang-en" type="button" aria-label="English">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ ÉCRAN CARTE ============ -->
+  <section id="screen-map" class="screen visible" aria-label="Carte du Monde 1">
+    <div class="world-banner">
+      <b>🌊 Monde 1 — Le Quai des signaux</b>
+      <p>Galet, la tortue-lanterne, n'obéit qu'à des commandes précises. Aide-la à accomplir les 8 missions du quai, une étoile de gardien à la fois.</p>
+    </div>
+    <div class="map-head">
+      <h1 id="map-title" class="map-title">Le Quai des signaux</h1>
+      <div id="map-sub" class="map-sub">0 / 8 missions réussies</div>
+    </div>
+    <div id="missions" class="missions"></div>
+  </section>
+
+  <!-- ============ ÉCRAN MISSION ============ -->
+  <section id="screen-mission" class="screen hidden" aria-label="Mission">
+    <div class="mission-wrap">
+      <div class="panel">
+        <h1 id="mission-name" class="mission-name"></h1>
+        <div id="mission-role" class="mission-role"></div>
+        <div class="block-title">📖 Mission</div>
+        <div id="inst-hook" class="hook"></div>
+        <div id="inst-instructions" class="inst"></div>
+        <div id="inst-goal"></div>
+        <div id="inst-hints"></div>
+      </div>
+
+      <div class="view-pane">
+        <div id="panel-special" class="panel hidden" aria-live="polite"></div>
+        <div id="panel-canvas" class="canvas-wrap">
+          <canvas id="world" width="320" height="128" role="img" aria-label="Grille de jeu : Galet avance case par case vers son objectif."></canvas>
+        </div>
+
+        <div id="panel-palette" class="panel">
+          <div class="block-title">🗂️ Carte des commandes</div>
+          <div id="palette" class="palette"></div>
+        </div>
+
+        <div id="panel-list" class="panel">
+          <div class="list-head">
+            <div class="block-title">📜 Ta liste de commandes</div>
+            <span id="cmd-count" aria-live="polite">0 commande(s)</span>
+          </div>
+          <div id="cmd-list" aria-live="polite"></div>
+          <div class="run-row">
+            <button id="run-btn" class="btn primary big" type="button" aria-label="Exécuter la liste de commandes">⤓ Exécuter</button>
+            <button id="stop-btn" class="btn big hidden" type="button" aria-label="Arrêter l'exécution">⏹ Arrêter</button>
+            <button id="clear-btn" class="btn" type="button" aria-label="Vider la liste de commandes">✖ Vider</button>
+            <span id="run-state" class="run-state" aria-live="polite"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modale (victoire / fin de monde) -->
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="Résultat de la mission">
+    <div id="modal-card" class="modal-card"></div>
+  </div>
+
+  <div id="toast" class="toast hidden" aria-live="polite"></div>
+
+  <script src="create_missions_w1.js"></script>
+  <script src="create.js"></script>
+</body>
+</html>
