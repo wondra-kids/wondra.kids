@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>WONDRA CREATE — Monde 1 · Le Quai des signaux</title>
+<title>WONDRA CREATE — Monde 1 · Le Quai des signaux | Monde 2 · L'Atelier des états</title>
 <style>
   /* ===== WONDRA CREATE — styles autonomes (aucun CDN/lib externe) =====
      Reprend le vocabulaire visuel produit : panneaux sombres, bordures dorées,
@@ -182,28 +182,130 @@
   .artefact{font-size:56px;margin:8px 0}
   .modal-card .btn{margin:4px}
 
+  /* ===== MONDE 2 — L'Atelier des états ===== */
+  .world-entry{margin:22px 0 0;display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+  .world-entry .btn{margin-top:4px;text-decoration:none;display:inline-block}
+
+  /* gabarits de lignes */
+  .w2-tpl{border:1px dashed var(--border);border-radius:12px;padding:10px 12px;margin-bottom:10px;background:#161b21}
+  .w2-tpl-title{color:var(--muted);font-size:.82rem;margin-bottom:8px}
+  .w2-tpl-line{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+  .w2-field{
+    font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14px;min-height:40px;
+    background:#0f1318;color:#7ee787;border:1px solid var(--border);border-radius:8px;padding:6px 8px;width:10em;
+  }
+  .w2-field:focus{outline:2px solid var(--gold);outline-offset:1px}
+  .w2-op{font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--gold);font-size:15px}
+  .w2-prim{display:flex;align-items:center;gap:4px;flex-wrap:wrap;
+    border:1px solid var(--border);border-radius:10px;padding:6px 8px;background:var(--panel2);margin:0 6px 6px 0}
+  .w2-prim-name{font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--blue);font-size:14px;font-weight:700}
+  .w2-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+  .w2-chip{
+    font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;min-height:32px;
+    background:var(--panel2);color:var(--ink);border:1px solid var(--border);border-radius:999px;
+    padding:5px 10px;cursor:pointer;
+  }
+  .w2-chip:hover{border-color:var(--gold);color:var(--gold)}
+
+  /* lignes du programme */
+  .w2-line-num{color:var(--muted);font-size:.78rem;min-width:1.6em;text-align:right;
+    font-family:ui-monospace,Menlo,Consolas,monospace}
+  .cmd-item.current{border-color:var(--gold);box-shadow:0 0 0 1px rgba(245,184,61,.55);background:#1c1a12}
+
+  /* prédiction */
+  .w2-predict-status{font-size:.85rem;color:var(--muted)}
+  .w2-predict-status.ok{color:var(--green)}
+  .w2-predict-status.warn{color:var(--gold)}
+
+  /* panneaux d'atelier */
+  .w2-sub{color:var(--muted);font-size:.82rem;margin-top:4px}
+  .w2-memory{margin-top:10px;border-top:1px solid var(--border);padding-top:8px}
+  .w2-kv{display:flex;gap:10px;align-items:baseline;padding:3px 0}
+  .w2-kv-k{color:var(--muted);font-size:.82rem;min-width:9em;
+    font-family:ui-monospace,Menlo,Consolas,monospace}
+  .w2-kv-v{color:#7ee787;font-size:.9rem;overflow-wrap:anywhere}
+  .w2-kv.mono .w2-kv-v{font-family:ui-monospace,Menlo,Consolas,monospace}
+
+  .w2-dial{display:flex;flex-direction:column;align-items:center;padding:10px;
+    border:2px solid var(--border);border-radius:14px;background:#0c0f13}
+  .w2-dial-face{font-size:44px;font-weight:800;color:var(--gold);
+    font-family:ui-monospace,Menlo,Consolas,monospace;line-height:1.1}
+  .w2-dial.small .w2-dial-face{font-size:28px}
+  .w2-dial-trace{margin-top:6px;color:#9fd3ff;font-size:.85rem;
+    font-family:ui-monospace,Menlo,Consolas,monospace}
+
+  .w2-drawers{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px}
+  .w2-drawer{border:2px solid var(--border);border-radius:12px;padding:10px;background:#0c0f13;text-align:center}
+  .w2-drawer-icon{font-weight:800;color:var(--blue);letter-spacing:1px;font-size:.9rem}
+  .w2-drawer-val{font-size:1.15rem;color:var(--gold);margin-top:6px;overflow-wrap:anywhere}
+  .w2-drawer-type{color:var(--muted);font-size:.78rem;margin-top:2px;
+    font-family:ui-monospace,Menlo,Consolas,monospace}
+
+  .w2-press{border:2px solid var(--border);border-radius:12px;padding:12px;background:#0c0f13;text-align:center}
+  .w2-press-stamp{font-size:32px;font-weight:800;color:var(--gold);letter-spacing:3px}
+
+  .w2-gauge{display:flex;align-items:center;gap:8px;margin:6px 0}
+  .w2-gauge-label{color:var(--muted);font-size:.82rem;min-width:8em}
+  .w2-gauge-bar{flex:1;height:14px;background:#0c0f13;border:1px solid var(--border);border-radius:999px;overflow:hidden}
+  .w2-gauge-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--gold))}
+  .w2-gauge-val{color:var(--gold);font-size:.85rem;min-width:2.5em;text-align:right}
+  .w2-gauge-val.mono{font-family:ui-monospace,Menlo,Consolas,monospace}
+  .w2-wheel{border:2px solid var(--border);border-radius:12px;padding:10px 12px;background:#0c0f13;margin-bottom:10px}
+
+  .w2-sign{border:2px solid var(--gold2);border-radius:12px;padding:14px;background:#0c0f13;text-align:center}
+  .w2-sign-face{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1.5rem;color:var(--gold);
+    white-space:pre-wrap;overflow-wrap:anywhere}
+
+  .w2-card{border:2px solid var(--border);border-radius:12px;padding:12px;background:#0c0f13}
+  .w2-card-title{color:var(--gold);font-weight:700;margin-bottom:6px}
+
+  .w2-grid-wrap{margin-top:10px}
+  .w2-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:6px;max-width:280px}
+  .w2-cell{
+    aspect-ratio:1/1;display:grid;place-items:center;border:1px solid var(--border);border-radius:8px;
+    background:#0c0f13;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:#43505e;
+  }
+  .w2-cell.marked{color:var(--blue);border-color:var(--blue);font-size:22px;background:#101c26}
+  .w2-cell.last{color:var(--gold);border-color:var(--gold);background:#1c1a12}
+
   @media (max-width:880px){
     .mission-wrap{grid-template-columns:1fr}
     .brand-text small{display:none}
+    .w2-field{width:8em}
   }
 </style>
 </head>
 <body data-route="create">
 
-  <!-- Barre unique -->
+  <!-- Barre unique — deux jeux de contrôles : le Monde 1 (create.js) et le
+       Monde 2 (create_w2.js). Un seul est visible à la fois, selon la route. -->
   <header class="appbar">
-    <a class="brand" href="#/w1" aria-label="WONDRA CREATE — carte du Monde 1">
+    <a id="w1-brand" class="brand" href="#/w1" aria-label="WONDRA CREATE — carte du Monde 1">
       <span class="logo-mark" aria-hidden="true">W</span>
       <span class="brand-text">
         <strong>WONDRA CREATE</strong>
         <small>Le Quai des signaux</small>
       </span>
     </a>
-    <div class="app-actions">
+    <a id="w2-brand" class="brand hidden" href="#/w2" aria-label="WONDRA CREATE — carte du Monde 2">
+      <span class="logo-mark" aria-hidden="true">W</span>
+      <span class="brand-text">
+        <strong>WONDRA CREATE</strong>
+        <small>L'Atelier des états</small>
+      </span>
+    </a>
+    <div id="w1-actions" class="app-actions">
       <button id="back-btn" class="btn ghost" type="button" aria-label="Retour à la carte">← Carte</button>
       <div class="seg" role="group" aria-label="Langue">
         <button id="lang-fr" type="button" aria-label="Français">FR</button>
         <button id="lang-en" type="button" aria-label="English">EN</button>
+      </div>
+    </div>
+    <div id="w2-actions" class="app-actions hidden">
+      <button id="w2-back-btn" class="btn ghost" type="button" aria-label="Retour à la carte du Monde 2">← Carte</button>
+      <div class="seg" role="group" aria-label="Langue">
+        <button id="w2-lang-fr" type="button" aria-label="Français">FR</button>
+        <button id="w2-lang-en" type="button" aria-label="English">EN</button>
       </div>
     </div>
   </header>
@@ -219,6 +321,13 @@
       <div id="map-sub" class="map-sub">0 / 8 missions réussies</div>
     </div>
     <div id="missions" class="missions"></div>
+
+    <!-- Accès au Monde 2 : bannière statique, jamais réécrite par create.js -->
+    <div class="world-banner world-entry" id="w2-entry">
+      <b>⚙️ Monde 2 — L'Atelier des états</b>
+      <p>Lumo range chaque valeur dans une mémoire nommée : cadran, tiroirs, presse, noria, enseigne, fiche et table quadrillée. 8 nouvelles missions, avec leurs propres étoiles.</p>
+      <a class="btn primary" href="#/w2" aria-label="Entrer dans le Monde 2, l'Atelier des états">Entrer dans l'Atelier des états →</a>
+    </div>
   </section>
 
   <!-- ============ ÉCRAN MISSION ============ -->
@@ -269,7 +378,73 @@
 
   <div id="toast" class="toast hidden" aria-live="polite"></div>
 
+  <!-- ================================================================= -->
+  <!-- ====== MONDE 2 — « L'Atelier des états » (platform/create_w2.js) = -->
+  <!-- Écrans, modale et toast propres au Monde 2 : create.js ne les      -->
+  <!-- connaît pas, et create_w2.js ne touche jamais aux écrans W1 hors   -->
+  <!-- des routes #/w2.                                                   -->
+  <!-- ================================================================= -->
+
+  <!-- ============ ÉCRAN CARTE — MONDE 2 ============ -->
+  <section id="screen-w2-map" class="screen hidden" aria-label="Carte du Monde 2">
+    <div class="world-banner">
+      <b>⚙️ Monde 2 — L'Atelier des états</b>
+      <p id="w2-banner-text"></p>
+    </div>
+    <div class="map-head">
+      <h1 id="w2-map-title" class="map-title">L'Atelier des états</h1>
+      <div id="w2-map-sub" class="map-sub"></div>
+    </div>
+    <div id="w2-missions" class="missions"></div>
+    <div class="world-banner world-entry">
+      <a id="w2-to-w1" class="btn" href="#/w1" aria-label="Retour au Monde 1, le Quai des signaux">← Retour au Monde 1</a>
+    </div>
+  </section>
+
+  <!-- ============ ÉCRAN MISSION — MONDE 2 ============ -->
+  <section id="screen-w2-mission" class="screen hidden" aria-label="Mission du Monde 2">
+    <div class="mission-wrap">
+      <div class="panel">
+        <h1 id="w2-mission-name" class="mission-name"></h1>
+        <div id="w2-mission-role" class="mission-role"></div>
+        <div class="block-title">📖 Mission</div>
+        <div id="w2-inst-hook" class="hook"></div>
+        <div id="w2-inst-instructions" class="inst"></div>
+        <div id="w2-inst-goal"></div>
+        <div id="w2-inst-hints"></div>
+      </div>
+
+      <div class="view-pane">
+        <div id="w2-panel-state" class="panel" aria-live="polite"></div>
+        <div id="w2-panel-predict" class="panel hidden"></div>
+        <div id="w2-panel-templates" class="panel"></div>
+
+        <div class="panel">
+          <div class="list-head">
+            <div class="block-title">📜 Ton programme</div>
+            <span id="w2-cmd-count" aria-live="polite">0 ligne(s)</span>
+          </div>
+          <div id="w2-cmd-list" aria-live="polite"></div>
+          <div class="run-row">
+            <button id="w2-run-btn" class="btn primary big" type="button" aria-label="Exécuter le programme">⤓ Exécuter</button>
+            <button id="w2-stop-btn" class="btn big hidden" type="button" aria-label="Arrêter l'exécution">⏹ Arrêter</button>
+            <button id="w2-clear-btn" class="btn" type="button" aria-label="Vider le programme">✖ Vider</button>
+            <span id="w2-run-state" class="run-state" aria-live="polite"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="w2-modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="Résultat de la mission du Monde 2">
+    <div id="w2-modal-card" class="modal-card"></div>
+  </div>
+
+  <div id="w2-toast" class="toast hidden" aria-live="polite"></div>
+
   <script src="create_missions_w1.js"></script>
   <script src="create.js"></script>
+  <script src="create_w2_missions.js"></script>
+  <script src="create_w2.js"></script>
 </body>
 </html>
