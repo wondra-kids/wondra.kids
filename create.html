@@ -187,6 +187,7 @@
   .world-entry .btn{margin-top:4px;text-decoration:none;display:inline-block}
 
   /* gabarits de lignes */
+  .badge-wip{display:inline-block;margin-left:8px;padding:2px 10px;border-radius:999px;border:1px solid var(--gold);color:var(--gold);font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;vertical-align:middle}
   .w2-tpl{border:1px dashed var(--border);border-radius:12px;padding:10px 12px;margin-bottom:10px;background:#161b21}
   .w2-tpl-title{color:var(--muted);font-size:.82rem;margin-bottom:8px}
   .w2-tpl-line{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
@@ -324,7 +325,7 @@
 
     <!-- Accès au Monde 2 : bannière statique, jamais réécrite par create.js -->
     <div class="world-banner world-entry" id="w2-entry">
-      <b>⚙️ Monde 2 — L'Atelier des états</b>
+      <b>⚙️ Monde 2 — L'Atelier des états <span class="badge-wip">en construction</span></b>
       <p>Lumo range chaque valeur dans une mémoire nommée : cadran, tiroirs, presse, noria, enseigne, fiche et table quadrillée. 8 nouvelles missions, avec leurs propres étoiles.</p>
       <a class="btn primary" href="#/w2" aria-label="Entrer dans le Monde 2, l'Atelier des états">Entrer dans l'Atelier des états →</a>
     </div>
@@ -388,13 +389,14 @@
   <!-- ============ ÉCRAN CARTE — MONDE 2 ============ -->
   <section id="screen-w2-map" class="screen hidden" aria-label="Carte du Monde 2">
     <div class="world-banner">
-      <b>⚙️ Monde 2 — L'Atelier des états</b>
+      <b>⚙️ Monde 2 — L'Atelier des états <span class="badge-wip">en construction</span></b>
       <p id="w2-banner-text"></p>
     </div>
     <div class="map-head">
       <h1 id="w2-map-title" class="map-title">L'Atelier des états</h1>
       <div id="w2-map-sub" class="map-sub"></div>
     </div>
+    <p class="world-banner" style="margin-top:0;padding-top:.6rem;border-top:1px dashed var(--border)">⚠️ Monde 2 en construction : le premier niveau est en cours de refonte et sera testé avec des enfants avant d'être finalisé. Le Monde 1 reste le parcours complet et jouable.</p>
     <div id="w2-missions" class="missions"></div>
     <div class="world-banner world-entry">
       <a id="w2-to-w1" class="btn" href="#/w1" aria-label="Retour au Monde 1, le Quai des signaux">← Retour au Monde 1</a>
