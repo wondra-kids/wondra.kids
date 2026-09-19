@@ -1,0 +1,7 @@
+{
+  "app": "wondra-platform-v2",
+  "route": "/jouer/",
+  "contenu": "C01 Le pont de Roka (accueil + exercice)",
+  "built_at": "2026-09-19T21:09:07+01:00",
+  "source": "platform-v2/apps/web (build WONDRA_BASE=/jouer/)"
+}

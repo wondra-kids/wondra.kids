@@ -1,0 +1,150 @@
+{
+  "version": 1,
+  "activity": "C01",
+  "locale": "fr",
+  "title": "Le pont de Roka",
+  "instruction": "Aide Roka à rejoindre Ola.",
+  "scenes": [
+    {
+      "id": "pont",
+      "kind": "bridge",
+      "title": "Le canal",
+      "openCommand": "ouvrir_pont",
+      "positions": {
+        "roka": {
+          "x": 218,
+          "y": 215
+        },
+        "goal": {
+          "x": 516,
+          "y": 215
+        },
+        "ola": {
+          "x": 618,
+          "y": 212
+        },
+        "obstacle": {
+          "x": 310,
+          "y": 204,
+          "width": 140
+        },
+        "beacon": {
+          "x": 555,
+          "y": 106
+        },
+        "bell": {
+          "x": 169,
+          "y": 106
+        }
+      },
+      "commands": [
+        {
+          "id": "ouvrir_pont",
+          "label": "Ouvrir le pont",
+          "icon": "bridge",
+          "code": "ouvrir_pont()"
+        },
+        {
+          "id": "sonner",
+          "label": "Sonner",
+          "icon": "🔔",
+          "code": "sonner()"
+        },
+        {
+          "id": "allumer",
+          "label": "Allumer",
+          "icon": "💡",
+          "code": "allumer()"
+        }
+      ],
+      "text": {
+        "closed": "Obstacle : le pont est replié. Roka ne peut pas passer.",
+        "opened": "Le pont se déplie. Le passage est ouvert.",
+        "crossing": "Le pont est ouvert. Roka traverse tout seul.",
+        "success": "La commande a déplié le pont. Roka a traversé tout seul.",
+        "ring": "La cloche a sonné. Ola a répondu. Le pont reste replié.",
+        "light": "La balise est allumée. Le pont reste replié.",
+        "highlight": "Regarde le pont debout : il bloque le passage.",
+        "direct": "Choisis « Ouvrir le pont », puis « Lancer ». Le pont se déplie. Roka traverse tout seul."
+      }
+    },
+    {
+      "id": "porte",
+      "kind": "door",
+      "title": "La porte du jardin",
+      "openCommand": "ouvrir_porte",
+      "positions": {
+        "roka": {
+          "x": 218,
+          "y": 215
+        },
+        "goal": {
+          "x": 516,
+          "y": 215
+        },
+        "ola": {
+          "x": 618,
+          "y": 212
+        },
+        "obstacle": {
+          "x": 364,
+          "y": 204,
+          "width": 40
+        },
+        "beacon": {
+          "x": 555,
+          "y": 106
+        },
+        "bell": {
+          "x": 169,
+          "y": 106
+        }
+      },
+      "commands": [
+        {
+          "id": "allumer",
+          "label": "Allumer",
+          "icon": "💡",
+          "code": "allumer()"
+        },
+        {
+          "id": "ouvrir_porte",
+          "label": "Ouvrir la porte",
+          "icon": "🚪",
+          "code": "ouvrir_porte()"
+        },
+        {
+          "id": "sonner",
+          "label": "Sonner",
+          "icon": "🔔",
+          "code": "sonner()"
+        }
+      ],
+      "prediction": {
+        "question": "Pour que Roka rejoigne Ola, quel résultat faut-il obtenir ?",
+        "options": [
+          {
+            "id": "bell",
+            "label": "Ola vient chercher Roka."
+          },
+          {
+            "id": "beacon",
+            "label": "Roka reste au même endroit."
+          },
+          {
+            "id": "opening",
+            "label": "Un chemin se crée jusqu’à l’autre côté."
+          }
+        ]
+      },
+      "text": {
+        "closed": "Obstacle : la porte est fermée. Roka ne peut pas passer.",
+        "opened": "La porte s’ouvre. Le passage est libre.",
+        "crossing": "La porte est ouverte. Roka traverse tout seul.",
+        "success": "La commande a ouvert la porte. Roka a traversé tout seul.",
+        "ring": "La cloche a sonné. Ola a répondu. La porte reste fermée.",
+        "light": "La balise est allumée. La porte reste fermée."
+      }
+    }
+  ]
+}
