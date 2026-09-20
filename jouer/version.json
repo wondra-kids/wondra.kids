@@ -1,7 +1,7 @@
 {
   "app": "wondra-platform-v2",
   "route": "/jouer/",
-  "contenu": "C01 Le pont de Roka (accueil + exercice)",
-  "built_at": "2026-09-19T21:09:07+01:00",
-  "source": "platform-v2/apps/web (build WONDRA_BASE=/jouer/)"
+  "contenu": "C01 Le pont de Roka + B01 L'affiche de la fete (accueil + 2 exercices)",
+  "built_at": "2026-09-20T01:02:06+00:00",
+  "source": "platform-v2/apps/web (build WONDRA_BASE=/jouer/, artefact testé 132/132 + 94/94)"
 }
