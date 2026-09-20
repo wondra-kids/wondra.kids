@@ -1,13 +1,13 @@
-function l(r,i,e,t){const n=(o,k,s)=>`<circle cx="${o+s*.38}" cy="${k-s*.42}" r="${s*.36}" fill="#fff"/>`;let a=`<g transform="translate(${r},${i}) scale(${e})">`;return a+=`<g class="ex" data-e="idle">
+function l(r,e,n,t){const i=(o,k,s)=>`<circle cx="${o+s*.38}" cy="${k-s*.42}" r="${s*.36}" fill="#fff"/>`;let a=`<g transform="translate(${r},${e}) scale(${n})">`;return a+=`<g class="ex" data-e="idle">
     <g class="eyes" style="transform-origin:0px 0px">
-      <circle cx="${-t}" cy="0" r="6.4" fill="var(--ink)"/>${n(-t,0,6.4)}
-      <circle cx="${t}" cy="0" r="7.2" fill="var(--ink)"/>${n(t,0,7.2)}
+      <circle cx="${-t}" cy="0" r="6.4" fill="var(--ink)"/>${i(-t,0,6.4)}
+      <circle cx="${t}" cy="0" r="7.2" fill="var(--ink)"/>${i(t,0,7.2)}
     </g>
     <path d="M-5 12 q5.5 5 11 0" stroke="var(--ink)" stroke-width="3"
           fill="none" stroke-linecap="round"/>
   </g>`,a+=`<g class="ex" data-e="walk">
-    <ellipse cx="${-t}" cy="0" rx="6.2" ry="5.4" fill="var(--ink)"/>${n(-t,-.6,6.2)}
-    <ellipse cx="${t}" cy="0" rx="6.8" ry="5.8" fill="var(--ink)"/>${n(t,-.6,6.8)}
+    <ellipse cx="${-t}" cy="0" rx="6.2" ry="5.4" fill="var(--ink)"/>${i(-t,-.6,6.2)}
+    <ellipse cx="${t}" cy="0" rx="6.8" ry="5.8" fill="var(--ink)"/>${i(t,-.6,6.8)}
     <path d="M-6 11 q6 7 12 0 z" fill="var(--ink)"/>
   </g>`,a+=`<g class="ex" data-e="think">
     <path d="M${-t-8} -14 q8 -6 15 0" stroke="var(--ink)" stroke-width="3.2"
@@ -53,12 +53,12 @@ function l(r,i,e,t){const n=(o,k,s)=>`<circle cx="${o+s*.38}" cy="${k-s*.42}" r=
           fill="none" stroke-linecap="round"/>
     <path d="M13 11 q8 -1 13 -6" stroke="var(--ink)" stroke-width="2.8" fill="none"
           stroke-linecap="round" opacity=".5" stroke-dasharray="2.5 4"/>
-  </g>`,a+"</g>"}function d(r,i){return`
+  </g>`,a+"</g>"}function f(r,e){return`
   <g transform="translate(7,-15)">
     <g class="hipB j">
-      <rect x="-4.5" y="0" width="9" height="18" rx="4.5" fill="${i}"/>
+      <rect x="-4.5" y="0" width="9" height="18" rx="4.5" fill="${e}"/>
       <g transform="translate(0,18)">
-        <g class="ankB j"><ellipse cx="3" cy="0" rx="8.5" ry="4" fill="${i}"/></g>
+        <g class="ankB j"><ellipse cx="3" cy="0" rx="8.5" ry="4" fill="${e}"/></g>
       </g>
     </g>
   </g>
@@ -69,15 +69,15 @@ function l(r,i,e,t){const n=(o,k,s)=>`<circle cx="${o+s*.38}" cy="${k-s*.42}" r=
         <g class="ankA j"><ellipse cx="3" cy="0" rx="8.5" ry="4" fill="${r}"/></g>
       </g>
     </g>
-  </g>`}function f(r,i,e,t,n){return`
-  <g transform="translate(${r},${i})">
+  </g>`}function u(r,e,n,t,i){return`
+  <g transform="translate(${r},${e})">
     <g class="arm${t} j">
-      <rect x="-4" y="0" width="8" height="17" rx="4" fill="${e}"
-            ${n?'stroke="var(--ink)" stroke-width="2"':""}/>
+      <rect x="-4" y="0" width="8" height="17" rx="4" fill="${n}"
+            ${i?'stroke="var(--ink)" stroke-width="2"':""}/>
     </g>
-  </g>`}function v({guide:r=!1}={}){return`<g class="rig">
-    ${d("#221B4E","#1A1438")}
-    ${f(21,-44,"#E09400","B",!1)}
+  </g>`}function $({guide:r=!1}={}){return`<g class="rig">
+    ${f("#221B4E","#1A1438")}
+    ${u(21,-44,"#E09400","B",!1)}
     ${r?`
       <path d="M-30 -30 q-9 12 -5 24 10 -1 17 -9 z" fill="#C97B2E"
             stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/>
@@ -101,9 +101,9 @@ function l(r,i,e,t){const n=(o,k,s)=>`<circle cx="${o+s*.38}" cy="${k-s*.42}" r=
     <circle cx="-19" cy="-24" r="4.8" fill="var(--blush)" opacity=".45"/>
     <circle cx="20" cy="-24" r="4.8" fill="var(--blush)" opacity=".45"/>
     ${l(0,-36,1,10)}
-    ${f(-21,-44,"#FFB627","A",!0)}
-  </g>`}function $(){return`<g class="rig">
-    ${d("#4A8A60","#3B7050")}
+    ${u(-21,-44,"#FFB627","A",!0)}
+  </g>`}function m(){return`<g class="rig">
+    ${f("#4A8A60","#3B7050")}
     <g transform="translate(16,-26)"><g class="tail">
       <path d="M0 0 q20 2 24 -18 3 -16 -11 -18" stroke="#4A8A60" stroke-width="7"
             fill="none" stroke-linecap="round"/>
@@ -119,8 +119,8 @@ function l(r,i,e,t){const n=(o,k,s)=>`<circle cx="${o+s*.38}" cy="${k-s*.42}" r=
     <circle cx="-17" cy="-36" r="4.6" fill="var(--blush)" opacity=".45"/>
     <circle cx="18" cy="-36" r="4.6" fill="var(--blush)" opacity=".45"/>
     ${l(0,-46,.98,10)}
-  </g>`}function x(){return`<g class="rig">
-    ${d("#CA709F","#AB5484")}
+  </g>`}function A(){return`<g class="rig">
+    ${f("#CA709F","#AB5484")}
     <path d="M-22 -29 Q-43 -30 -34 -15 Q-28 -10 -21 -17 M22 -29 Q43 -30 34 -15 Q28 -10 21 -17"
           fill="#DF89B4" stroke="var(--ink)" stroke-width="3.2" stroke-linejoin="round"/>
     <path d="M-9 -65 Q-22 -85 -10 -86 Q1 -82 0 -65 M2 -65 Q5 -84 16 -79 Q21 -69 11 -62"
@@ -128,16 +128,16 @@ function l(r,i,e,t){const n=(o,k,s)=>`<circle cx="${o+s*.38}" cy="${k-s*.42}" r=
     <path d="M0 -71 C-17 -71 -20 -55 -24 -44 C-29 -31 -37 -17 -25 -10 C-14 -3 14 -3 25 -10 C37 -17 29 -31 24 -44 C20 -55 17 -71 0 -71 Z"
           fill="#F2A6C8" stroke="var(--ink)" stroke-width="3.4" stroke-linejoin="round"/>
     ${l(0,-45,1.08,10)}
-  </g>`}function m(){return`<g class="rig">
-    ${d("#C93A57","#A82C46")}
+  </g>`}function M(){return`<g class="rig">
+    ${f("#C93A57","#A82C46")}
     <circle cx="-24" cy="-56" r="9" fill="#E24E6B" stroke="var(--ink)" stroke-width="3.2"/>
     <circle cx="24" cy="-56" r="9" fill="#E24E6B" stroke="var(--ink)" stroke-width="3.2"/>
-    ${f(-39,-23,"#E24E6B","A",!0)}
-    ${f(39,-23,"#C93A57","B",!0)}
+    ${u(-39,-23,"#E24E6B","A",!0)}
+    ${u(39,-23,"#C93A57","B",!0)}
     <path d="M-31 -10 Q-37 -41 -23 -53 Q0 -65 23 -53 Q37 -41 31 -10 Z" fill="#E24E6B"
           stroke="var(--ink)" stroke-width="3.6" stroke-linejoin="round"/>
     ${l(0,-34,1,11)}
-  </g>`}function A(){return`<g class="rig">
+  </g>`}function E(){return`<g class="rig">
     <g transform="translate(-18,-40)"><g class="wing">
       <path d="M0 0 q-24 -8 -29 13 16 8 29 -3 z" fill="#5B8FD9"
             stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/>
@@ -148,7 +148,7 @@ function l(r,i,e,t){const n=(o,k,s)=>`<circle cx="${o+s*.38}" cy="${k-s*.42}" r=
     <path d="M-4 -60 q1 -16 10 -13 7 3 0 13 z M5 -61 q5 -13 13 -8 4 4 -4 10 z"
           fill="#5B8FD9" stroke="var(--ink)" stroke-width="2.8" stroke-linejoin="round"/>
     ${l(1,-38,.94,10)}
-  </g>`}function M(){return`<g class="rig">
+  </g>`}function q(){return`<g class="rig">
     <g transform="translate(-14,-13)"><g class="hipA j">
       <rect x="-4" y="0" width="8" height="15" rx="4" fill="var(--ink)"/>
       <g transform="translate(0,15)"><g class="ankA j">
@@ -169,8 +169,8 @@ function l(r,i,e,t){const n=(o,k,s)=>`<circle cx="${o+s*.38}" cy="${k-s*.42}" r=
     <path d="M-16 -55 q-3 -14 6 -14 6 1 1 12" stroke="var(--ink)" stroke-width="3"
           fill="none" stroke-linecap="round"/>
     ${l(-16,-36,.8,8)}
-  </g>`}function E(){return`<g class="rig">
-    ${d("#6B4BB8","#553A96")}
+  </g>`}function b(){return`<g class="rig">
+    ${f("#6B4BB8","#553A96")}
     <path d="M-40 -12 q0 -14 10 -19 8 -4 12 3 6 -14 16 -14 t14 14 q5 -6 12 -1 8 6 8 17 z"
           fill="#7A5BC8" stroke="var(--ink)" stroke-width="3.4" stroke-linejoin="round"/>
     <path d="M-30 -14 q2 -16 12 -19 9 -3 12 5" fill="#8B6BD9"
@@ -182,4 +182,4 @@ function l(r,i,e,t){const n=(o,k,s)=>`<circle cx="${o+s*.38}" cy="${k-s*.42}" r=
     <path d="M18 -38 q6 -6 13 -4" stroke="var(--ink)" stroke-width="3"
           fill="none" stroke-linecap="round"/>
     ${l(30,-31,.82,7)}
-  </g>`}const q={wondra:"Wondra",roka:"Roka",ola:"Ola",bram:"Bram",sika:"Sika",tumi:"Tumi",idir:"Idir"},F={wondra:v,roka:$,ola:x,bram:m,sika:A,tumi:M,idir:E},b={wondra:"-44 -104 95 122",roka:"-48 -86 106 104",ola:"-45 -98 90 118",bram:"-53 -76 106 97",sika:"-57 -87 114 103",tumi:"-46 -83 92 103",idir:"-50 -70 106 88"};function I(r="wondra",i="idle",e=120){return`<svg viewBox="${b[r]}" width="${e}" height="${e*142/116}" class="character h-${r} ${i}" role="img" aria-label="${q[r]}">${F[r]()}</svg>`}const Q=Object.freeze({face:l,legs:d,arm:f,wondra:v,roka:$,ola:x,bram:m,sika:A,tumi:M,idir:E,names:q,frames:b,character:I});function g(r,i){if(r.length===0||i.length===0)throw new TypeError("L'activité et l'exercice doivent être renseignés.");if(r.includes(":"))throw new TypeError("L'identifiant d'activité ne peut pas contenir « : ».");return`${r}:${i}`}const u=3,C="loupe-du-createur",B=Object.freeze({xp:Object.freeze({pont:2,porte:1}),rewards:Object.freeze({pont:C})});function L(){return{xp:0,level:1,rewards:[],awarded:[]}}function w(r){if(!Number.isSafeInteger(r)||r<0)throw new TypeError("Le total d’XP doit être un entier positif.");return 1+Math.floor(r/u)}function _(r){const i=w(r),e=r%u,t=r>0&&e===0;return{level:i,filled:t?u:e,target:u,reached:t}}function D(r,i,e){return r.awarded.includes(g(i,e))}function T(r,i,e,t=B){const n=g(i,e),a=t.xp[e];if(a===void 0)throw new RangeError(`Aucun barème d’XP pour l’exercice « ${e} ».`);const o=r.xp;if(r.awarded.includes(n))return{progression:r,previous:o,total:o,delta:0,fresh:!1,reward:null};const k=o+a,s=t.rewards?.[e],h=s!==void 0&&!r.rewards.includes(s)?s:null;return{progression:{xp:k,level:w(k),rewards:h===null?r.rewards:[...r.rewards,h],awarded:[...r.awarded,n]},previous:o,total:k,delta:a,fresh:!0,reward:h}}function W(r,i=B,e="C01"){const t=[...new Set(r.rewards)],n=new Set(r.awarded);for(const[a,o]of Object.entries(i.rewards??{}))t.includes(o)&&n.add(g(e,a));return{xp:r.xp,level:w(r.xp),rewards:t,awarded:[...n]}}const p="wondra-c01-v1",y="wondra-progression-v1",S=["pont","porte"],j=["opening","bell","beacon"],z=["demo","obstacle","direct"];function X(){return{pont:{attempts:[],aids:[],predictions:[]},porte:{attempts:[],aids:[],predictions:[]}}}function c(r){return typeof r=="object"&&r!==null&&!Array.isArray(r)}function N(r,i){return c(r)?Number.isSafeInteger(r.run)&&typeof r.command=="string"&&i.includes(r.command)&&(r.prediction===null||typeof r.prediction=="string"&&j.includes(r.prediction))&&typeof r.success=="boolean":!1}function O(r,i){if(!c(r))return!1;const{attempts:e,aids:t,predictions:n}=r;return Array.isArray(e)&&e.length<=200&&e.every(a=>N(a,i))&&Array.isArray(t)&&t.length<=3&&t.every(a=>typeof a=="string"&&z.includes(a))&&Array.isArray(n)&&n.length<=200&&n.every(a=>c(a)&&Number.isSafeInteger(a.run)&&typeof a.value=="string"&&j.includes(a.value))}function P(r,i){return c(r)?S.every(e=>O(r[e],i[e]??[])):!1}function R(r){if(!c(r))return!1;const i=r.xp,e=r.rewards,t=r.awarded;return Number.isSafeInteger(i)&&i>=0&&i<=Number.MAX_SAFE_INTEGER-3&&Array.isArray(e)&&e.every(n=>typeof n=="string")&&(t===void 0||Array.isArray(t)&&t.every(n=>typeof n=="string"))}function J(r){let i;try{i=localStorage.getItem(p)}catch{return{kind:"unavailable"}}if(i===null)return{kind:"empty"};try{const e=JSON.parse(i);if(!c(e)||e.version!==1||typeof e.sceneId!="string"||!S.includes(e.sceneId)||!P(e.statistics,r))return{kind:"corrupt"};const t=e.runNumber,n=e.lastCompletion;return{kind:"ok",value:{version:1,sceneId:e.sceneId,runNumber:Number.isSafeInteger(t)&&t>=0?t:0,statistics:e.statistics,trainingProof:e.trainingProof??null,lastCompletion:c(n)&&n.sceneId==="porte"?n:null}}}catch{return{kind:"corrupt"}}}function G(){let r;try{r=localStorage.getItem(y)}catch{return{kind:"unavailable"}}if(r===null)return{kind:"empty"};try{const i=JSON.parse(r);if(!R(i))return{kind:"corrupt"};const{xp:e,rewards:t,awarded:n,...a}=i;return{kind:"ok",value:{progression:{xp:e,level:1,rewards:t,awarded:n??[]},extra:Object.fromEntries(Object.entries(a).filter(([o])=>o!=="level"))}}}catch{return{kind:"corrupt"}}}function K(r){try{return localStorage.setItem(p,JSON.stringify(r)),!0}catch{return!1}}function U(r,i){try{return localStorage.setItem(y,JSON.stringify({...i,...r})),!0}catch{return!1}}function V(){let r=!0;for(const i of[p,y])try{localStorage.removeItem(i)}catch{r=!1}return r}export{y as P,Q as W,u as X,L as a,G as b,X as c,T as d,V as e,U as f,D as h,w as l,W as n,_ as p,J as r,K as w};
+  </g>`}const B={wondra:"Wondra",roka:"Roka",ola:"Ola",bram:"Bram",sika:"Sika",tumi:"Tumi",idir:"Idir"},I={wondra:$,roka:m,ola:A,bram:M,sika:E,tumi:q,idir:b},S={wondra:"-44 -104 95 122",roka:"-48 -86 106 104",ola:"-45 -98 90 118",bram:"-53 -76 106 97",sika:"-57 -87 114 103",tumi:"-46 -83 92 103",idir:"-50 -70 106 88"};function z(r="wondra",e="idle",n=120){return`<svg viewBox="${S[r]}" width="${n}" height="${n*142/116}" class="character h-${r} ${e}" role="img" aria-label="${B[r]}">${I[r]()}</svg>`}const L=Object.freeze({face:l,legs:f,arm:u,wondra:$,roka:m,ola:A,bram:M,sika:E,tumi:q,idir:b,names:B,frames:S,character:z});function g(r,e){if(r.length===0||e.length===0)throw new TypeError("L'activité et l'exercice doivent être renseignés.");if(r.includes(":"))throw new TypeError("L'identifiant d'activité ne peut pas contenir « : ».");return`${r}:${e}`}const d=3,N="loupe-du-createur",j=Object.freeze({xp:Object.freeze({pont:2,porte:1}),rewards:Object.freeze({pont:N})});function D(){return{xp:0,level:1,rewards:[],awarded:[]}}function w(r){if(!Number.isSafeInteger(r)||r<0)throw new TypeError("Le total d’XP doit être un entier positif.");return 1+Math.floor(r/d)}function T(r){const e=w(r),n=r%d,t=r>0&&n===0;return{level:e,filled:t?d:n,target:d,reached:t}}function X(r,e,n){return r.awarded.includes(g(e,n))}function W(r,e,n,t=j){const i=g(e,n),a=t.xp[n];if(a===void 0)throw new RangeError(`Aucun barème d’XP pour l’exercice « ${n} ».`);const o=r.xp;if(r.awarded.includes(i))return{progression:r,previous:o,total:o,delta:0,fresh:!1,reward:null};const k=o+a,s=t.rewards?.[n],h=s!==void 0&&!r.rewards.includes(s)?s:null;return{progression:{xp:k,level:w(k),rewards:h===null?r.rewards:[...r.rewards,h],awarded:[...r.awarded,i]},previous:o,total:k,delta:a,fresh:!0,reward:h}}function J(r,e=j,n="C01"){const t=[...new Set(r.rewards)],i=new Set(r.awarded);for(const[a,o]of Object.entries(e.rewards??{}))t.includes(o)&&i.add(g(n,a));return{xp:r.xp,level:w(r.xp),rewards:t,awarded:[...i]}}const v=3e3,x=450;function G(r,e,n){const t=r+Math.max(0,e);if(e<=0||n>=v)return{total:t,avance:t,fini:!0};const i=Math.max(0,Math.min(1,(n-x)/(v-x)));return{total:r+Math.floor(e*i),avance:r+e*i,fini:!1}}function K(r){const e=r%d;return r>0&&e===0?d:e}function U(){return typeof window<"u"&&typeof window.matchMedia=="function"&&window.matchMedia("(prefers-reduced-motion: reduce)").matches}const p="wondra-c01-v1",y="wondra-progression-v1",F=["pont","porte"],C=["opening","bell","beacon"],O=["demo","obstacle","direct"];function V(){return{pont:{attempts:[],aids:[],predictions:[]},porte:{attempts:[],aids:[],predictions:[]}}}function c(r){return typeof r=="object"&&r!==null&&!Array.isArray(r)}function P(r,e){return c(r)?Number.isSafeInteger(r.run)&&typeof r.command=="string"&&e.includes(r.command)&&(r.prediction===null||typeof r.prediction=="string"&&C.includes(r.prediction))&&typeof r.success=="boolean":!1}function R(r,e){if(!c(r))return!1;const{attempts:n,aids:t,predictions:i}=r;return Array.isArray(n)&&n.length<=200&&n.every(a=>P(a,e))&&Array.isArray(t)&&t.length<=3&&t.every(a=>typeof a=="string"&&O.includes(a))&&Array.isArray(i)&&i.length<=200&&i.every(a=>c(a)&&Number.isSafeInteger(a.run)&&typeof a.value=="string"&&C.includes(a.value))}function _(r,e){return c(r)?F.every(n=>R(r[n],e[n]??[])):!1}function Q(r){if(!c(r))return!1;const e=r.xp,n=r.rewards,t=r.awarded;return Number.isSafeInteger(e)&&e>=0&&e<=Number.MAX_SAFE_INTEGER-3&&Array.isArray(n)&&n.every(i=>typeof i=="string")&&(t===void 0||Array.isArray(t)&&t.every(i=>typeof i=="string"))}function Y(r){let e;try{e=localStorage.getItem(p)}catch{return{kind:"unavailable"}}if(e===null)return{kind:"empty"};try{const n=JSON.parse(e);if(!c(n)||n.version!==1||typeof n.sceneId!="string"||!F.includes(n.sceneId)||!_(n.statistics,r))return{kind:"corrupt"};const t=n.runNumber,i=n.lastCompletion;return{kind:"ok",value:{version:1,sceneId:n.sceneId,runNumber:Number.isSafeInteger(t)&&t>=0?t:0,statistics:n.statistics,trainingProof:n.trainingProof??null,lastCompletion:c(i)&&i.sceneId==="porte"?i:null}}}catch{return{kind:"corrupt"}}}function Z(){let r;try{r=localStorage.getItem(y)}catch{return{kind:"unavailable"}}if(r===null)return{kind:"empty"};try{const e=JSON.parse(r);if(!Q(e))return{kind:"corrupt"};const{xp:n,rewards:t,awarded:i,...a}=e;return{kind:"ok",value:{progression:{xp:n,level:1,rewards:t,awarded:i??[]},extra:Object.fromEntries(Object.entries(a).filter(([o])=>o!=="level"))}}}catch{return{kind:"corrupt"}}}function H(r){try{return localStorage.setItem(p,JSON.stringify(r)),!0}catch{return!1}}function rr(r,e){try{return localStorage.setItem(y,JSON.stringify({...e,...r})),!0}catch{return!1}}function tr(){let r=!0;for(const e of[p,y])try{localStorage.removeItem(e)}catch{r=!1}return r}export{y as P,L as W,d as X,D as a,Z as b,V as c,K as d,tr as e,W as f,rr as g,X as h,G as i,w as l,U as m,J as n,T as p,Y as r,H as w};
