@@ -1,6 +1,6 @@
 {
   "app": "wondra-platform-v2",
   "route": "/jouer/",
-  "contenu": "C01 + B01 — V2a (structure standard, L'affiche/Mon programme, menu replié, squelette-code, compteur XP) + vague 1",
-  "built_at": "2026-09-20T13:08:00+00:00"
+  "contenu": "C01 + B01 — V2d (menu aligne avec la consigne, fin des mentions appareil, Infos utiles)",
+  "built_at": "2026-09-20T13:46:53+00:00"
 }
