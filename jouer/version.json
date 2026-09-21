@@ -1,6 +1,6 @@
 {
   "app": "wondra-platform-v2",
   "route": "/jouer/",
-  "contenu": "C01 + B01 — V3 (héros choisi + voyage 3 niveaux + programme lié au résultat + guidance + carte refondue)",
-  "built_at": "2026-09-20T17:41:38.411909+00:00"
+  "contenu": "C01 + B01 — V4 (FR/EN complet, grand héros animé, infos raffinées, correctifs d'audit)",
+  "built_at": "2026-09-21T08:14:52.361869+00:00"
 }
