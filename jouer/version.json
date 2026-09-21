@@ -1,6 +1,7 @@
 {
   "app": "wondra-platform-v2",
   "route": "/jouer/",
-  "contenu": "C01 + B01 — V4.1 (audit V4 : rejeu sans téléport, héros effacé remis à zéro, halo réarmé, durées A/B distinctes)",
-  "built_at": "2026-09-21T08:41:58.199365+00:00"
+  "contenu": "C01 + B01 + A01 — V5 (nouvel exercice « L'observatoire des graines » : 2 plateaux, critère de forme, preuve textures inversées ; accueil 3 cartes ; carte du voyage 3 étapes)",
+  "version": "5.0",
+  "pose_le": "2026-09-21T12:42:49Z"
 }
