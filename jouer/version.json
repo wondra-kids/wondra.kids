@@ -1,7 +1,7 @@
 {
   "app": "wondra-platform-v2",
   "route": "/jouer/",
-  "contenu": "C01 + B01 + A01 — V5.1 (retours fondateur : médaillon de victoire neutre — tous les héros lisibles ; glisser tactile sans sélection de texte)",
-  "version": "5.1",
-  "pose_le": "2026-09-21T13:32:47Z"
+  "contenu": "C01 + B01 + A01 — V5.2 (correctifs d'audit A01 : plus aucune émission réseau pendant le jeu, anglais complet, médaillon ajusté pour les 7 héros)",
+  "version": "5.2",
+  "pose_le": "2026-09-21T16:46:39+00:00"
 }
