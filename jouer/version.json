@@ -1,7 +1,7 @@
 {
   "app": "wondra-platform-v2",
   "route": "/jouer/",
-  "contenu": "C01 + B01 + A01 — V5 (nouvel exercice « L'observatoire des graines » : 2 plateaux, critère de forme, preuve textures inversées ; accueil 3 cartes ; carte du voyage 3 étapes)",
-  "version": "5.0",
-  "pose_le": "2026-09-21T12:42:49Z"
+  "contenu": "C01 + B01 + A01 — V5.1 (retours fondateur : médaillon de victoire neutre — tous les héros lisibles ; glisser tactile sans sélection de texte)",
+  "version": "5.1",
+  "pose_le": "2026-09-21T13:32:47Z"
 }
