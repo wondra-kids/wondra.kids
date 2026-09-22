@@ -1,7 +1,7 @@
 {
   "app": "wondra-platform-v2",
   "route": "/jouer/",
-  "version": "5.3.1",
-  "contenu": "C01 + B01 + A01 — V5.3.1 (rafraîchissement automatique après mise à jour — plus de page en cache)",
-  "date": "2026-09-22T06:20:52.369904+00:00"
+  "version": "5.3.2",
+  "contenu": "C01 + B01 + A01 — V5.3.2 (rafraîchissement auto limité à la production ; batteries vertes)",
+  "date": "2026-09-22T06:34:21.202341+00:00"
 }
