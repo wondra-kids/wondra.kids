@@ -1,7 +1,7 @@
 {
   "app": "wondra-platform-v2",
   "route": "/jouer/",
-  "version": "5.3",
-  "contenu": "C01 + B01 + A01 — V5.3 (choix de langue déplacé dans un panneau Réglages ; en-têtes nettoyés)",
-  "date": "2026-09-21T21:14:09.880609+00:00"
+  "version": "5.3.1",
+  "contenu": "C01 + B01 + A01 — V5.3.1 (rafraîchissement automatique après mise à jour — plus de page en cache)",
+  "date": "2026-09-22T06:20:52.369904+00:00"
 }
